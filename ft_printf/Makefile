@@ -11,6 +11,15 @@
 # **************************************************************************** #
 
 SRCS	=	ft_printf.c\
+			ft_parser.c\
+			ft_printf_utils.c\
+			ft_conv_ch.c\
+			ft_conv_str.c\
+			ft_conv_dec.c\
+			ft_conv_int.c\
+			ft_conv_u_int.c\
+			ft_conv_hex.c\
+			ft_conv_ptr.c\
 
 INCLUDE	= printf.h
 
