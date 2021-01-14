@@ -58,7 +58,7 @@ int			fill_u_int(t_flaglist *tmp, unsigned int nb)
 				tmp->zero_padded == 1)
 			count += fill_space((tmp->width - len), '0');
 	}
-	ft_putnbr_base(nb, DEC_BASE);
+	ft_putnbr_base(nb, DEC);
 	count += len;
 	return (count);
 }
@@ -79,12 +79,14 @@ int			ft_len_un(unsigned int n, int len_base_to)
 void	ft_putnbr_base(unsigned int n, char *base_to)
 {
 	unsigned long long nb;
+	int len;
 
 	nb = n;
+	len = ft_strlen(base_to);
 	if (nb >= 10)
 	{
-		ft_putnbr(nb / ft_strlen(base_to));
-		ft_putchar(nb % ft_strlen(base_to) + '0');
+		ft_putnbr(nb / len);
+		ft_putchar(nb % len + '0');
 	}
 	else if (nb >= 0 && nb <= 9)
 		ft_putchar(nb + '0');

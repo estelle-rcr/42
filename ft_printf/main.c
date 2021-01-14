@@ -8,23 +8,24 @@ int	main(void)
 //	int x = 7;
 //	char *s = NULL;
 //	char c;
-	char *ptr;
+//	char *ptr = NULL;
+	unsigned int hex = 456789;
 	int ret1;
 	int ret2;
 
-	ptr = ft_strjoin("hello ", "world!");
+//	ptr = ft_strjoin("hello ", "world!");
 
 /*	c = 'c';
-	ret1 = ft_printf("hello %*s !\n", 20, s);
-	ret2 = printf("hello %*p !\n", 20, s);
+	ret1 = ft_printf("hello %0*s !\n", 20, s);
+	ret2 = printf("hello %0*p !\n", 20, s);
 	printf("ret1 %i ret2 %i\n", ret1, ret2);
 
  	if (str == NULL)
 		str = "(null)";*/ 
 
 
-	ret1 = ft_printf("%-*p\n", 30, ptr);
-	ret2 = printf("%-*p\n", 30, ptr); 
+	ret1 = ft_printf("%*.*X \n", 30, -10, hex);
+	ret2 = printf("%*.*X \n", 30, -10, hex); 
 	printf("ret1 %i ret2 %i\n", ret1, ret2);
 
 //	HEX:	

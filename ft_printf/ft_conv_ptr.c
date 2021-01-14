@@ -12,62 +12,44 @@
 
 #include "ft_printf.h"
 
-int			print_ptr(unsigned long nb, t_flaglist *tmp)
+int	print_ptr(void *ptr, t_flaglist *tmp)
 {
 	int count;
 	int size;
+	char *ar;
 
 	count = 0;
-	size = ((unsigned) tmp->size > (unsigned) ft_len_unl(nb, 10)) ? tmp->size :
-		ft_len_unl(nb, 10);
-	if (tmp->width > ft_len_unl(nb, 10))
+	ar = ft_strjoin("0x", ft_itoa_base((unsigned long long) ptr, HEX_L));
+	size = ft_strlen(ar);
+	if (tmp->width > size)
 	{
-		if (!tmp->precision || (tmp->precision && tmp->width > tmp->size))
-		{
-			if (tmp->left_justified == 1)
-			{
-				count += fill_ptr(tmp, nb);
-				count += fill_space((tmp->width - size), ' ');
-			}
-			else if (tmp->left_justified == 0 && tmp->zero_padded == 0)
-			{
-				count += fill_space((tmp->width - size), ' ');
-				count += fill_ptr(tmp, nb);
-			}
-		}
-		else
-			count = fill_ptr(tmp, nb);
+		if (tmp->left_justified == 0 && tmp->zero_padded == 0)
+			count += fill_space((tmp->width - size), ' ');
+		count += fill_ptr(tmp, ar);
+		if (tmp->left_justified == 1)
+			count += fill_space((tmp->width - size), ' ');
 	}
 	else
-		count = fill_ptr(tmp, nb);
+		count = fill_ptr(tmp, ar);
+	free(ar);
 	return (count);
 }
 
-int			fill_ptr(t_flaglist *tmp, unsigned long nb)
+int	fill_ptr(t_flaglist *tmp, char *ptr)
 {
 	int count;
-	int len;
+
 	count = 0;
-	len = ft_len_unl(nb, 10);
-	if (nb >= 0)
+	if (!ptr && tmp->size < 0)
 	{
-		if (tmp->precision && tmp->size > len)
-			count += fill_space((tmp->size - len), '0');
-		else if (!tmp->precision && tmp->left_justified == 0 &&
-				tmp->zero_padded == 1)
-			count += fill_space((tmp->width - len), '0');
-	}
-	ft_putstr("0x");
-	if (!nb && tmp->size < 0)
-	{
-		ft_putstr("0");
+		ft_putchar_fd('0', 1);
 		count++;
 	}
-	ft_putnbl_base(nb, HEX_L_BASE);
-	count += (len + 2);
+	ft_putstr_fd(ptr, 1);
+	count += ft_strlen(ptr);
 	return (count);
 }
-
+/*
 int			ft_len_unl(unsigned long n, int len_base_to)
 {
 	int		count;
@@ -83,20 +65,15 @@ int			ft_len_unl(unsigned long n, int len_base_to)
 
 void	ft_putnbl_base(unsigned long n, char *base_to)
 {
-	unsigned long long nb;
+	unsigned long nb;
 
 	nb = n;
 	if (nb >= 10)
 	{
-		ft_putnbr(nb / ft_strlen(base_to));
-		ft_putchar(nb % ft_strlen(base_to) + '0');
+		ft_putnbr_fd(nb / ft_strlen(base_to), 1);
+		ft_putchar_fd(base_to[nb % ft_strlen(base_to)] + '0', 1);
 	}
 	else if (nb >= 0 && nb <= 9)
-		ft_putchar(nb + '0');
+		ft_putchar_fd((base_to[nb + '0']), 1);
 	return ;
-}
-/* void	correct_val_ptr(t_flaglist *tmp)
-{
-	if (tmp->width && tmp->width < 0)
-		tmp->width = -tmp->width;
 }*/

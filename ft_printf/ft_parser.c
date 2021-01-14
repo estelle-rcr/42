@@ -35,9 +35,7 @@ void	get_flags(t_flaglist *tmp, const char *format, int *i, va_list args)
 			if (tmp->precision == 0)
 				tmp->width = va_arg(args, int);
 			else
-			{
 				tmp->size = va_arg(args, int);
-			}
 		}
 		else if (ft_isdigit(format[*i]))
 		{
@@ -45,8 +43,9 @@ void	get_flags(t_flaglist *tmp, const char *format, int *i, va_list args)
 				tmp->width = (tmp->width * 10) + (format[*i] - '0');
 			else
 				tmp->size = (tmp->size * 10) + (format[*i] - '0');
-		}
+		}	
 	}
+	correct_width(tmp);
 }
 
 int	is_flag(char c)
@@ -61,4 +60,18 @@ int	is_type(char c)
 	if (c == 'c' || c == 's' || c == 'p' || c == 'i' || c == 'u' || c == 'x' || c == 'X')
 		return (1);
 	return (0);
+}
+
+void	correct_width(t_flaglist *tmp)
+{
+	if (tmp->width && tmp->width < 0)
+	{
+		tmp->width = -tmp->width;
+		tmp->left_justified = 1;
+	}
+	if (tmp->precision && tmp->size < 0)
+	{
+		tmp->precision = 0;
+		tmp->size = 0;
+	}
 }

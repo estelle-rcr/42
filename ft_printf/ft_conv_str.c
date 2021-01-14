@@ -45,9 +45,9 @@ int	print_str(char *s, t_flaglist *tmp)
 
 void	correct_val_str(t_flaglist *tmp, int s_len)
 {
-	if (tmp->width && tmp->width < 0)
+	if (tmp->width && tmp->width < 0)	//a verifier avec correct_width if left aligned 1
 		tmp->width = -tmp->width;
-	if (!(tmp->size > s_len))
+	if (!(tmp->size > s_len))		//a modifier en mode int
 		tmp->size = s_len;
 /*	if (tmp->size && tmp->size > s_len)
 		tmp->size = s_len;
