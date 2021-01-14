@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/15 16:10:21 by erecuero          #+#    #+#             */
-/*   Updated: 2021/01/12 18:29:44 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/01/14 18:05:52 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,21 +50,21 @@ int	print_arg(t_flaglist *tmp, va_list args)
 	int	rtn;
 
 	rtn = 0;
-/*	if (tmp->type == 'c')
+	if (tmp->type == 'c')
 		rtn = print_char(va_arg(args, int), tmp);
 	else if (tmp->type == 's')
 		rtn = print_str(va_arg(args, char *), tmp);
-*/	 if (tmp->type == 'p')
+	else if (tmp->type == 'p')
 		rtn = print_ptr(va_arg(args, void *), tmp);
-/*	else if (tmp->type == 'i' || tmp->type == 'd')
+	else if (tmp->type == 'i' || tmp->type == 'd')
 		rtn = print_int(va_arg(args, int), tmp);
 	else if (tmp->type == 'u')
 		rtn = print_u_int(va_arg(args, unsigned int), tmp);
-*/	else if (tmp->type == 'x')
+	else if (tmp->type == 'x')
 		rtn = print_hex(va_arg(args, unsigned int), tmp);
 	else if (tmp->type == 'X')
 		rtn = print_hex(va_arg(args, unsigned int), tmp);
-/*	else if (tmp->type == '%')
-		rtn = print_char('%', tmp);*/
+	else if (tmp->type == '%')
+		rtn = print_char('%', tmp);
 	return (rtn);
 }

@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/15 16:09:40 by erecuero          #+#    #+#             */
-/*   Updated: 2021/01/11 18:26:38 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/01/14 18:13:01 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	is_flag(char c)
 
 int	is_type(char c)
 {
-	if (c == 'c' || c == 's' || c == 'p' || c == 'i' || c == 'u' || c == 'x' || c == 'X')
+	if (c == 'c' || c == 's' || c == 'p' || c == 'i' || c == 'd' || c == 'u' || c == 'x' || c == 'X')
 		return (1);
 	return (0);
 }

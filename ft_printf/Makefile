@@ -6,7 +6,7 @@
 #    By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/04 21:29:43 by erecuero          #+#    #+#              #
-#    Updated: 2021/01/04 21:30:33 by erecuero         ###   ########.fr        #
+#    Updated: 2021/01/14 16:08:06 by erecuero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,6 @@ SRCS	=	ft_printf.c\
 			ft_printf_utils.c\
 			ft_conv_ch.c\
 			ft_conv_str.c\
-			ft_conv_dec.c\
 			ft_conv_int.c\
 			ft_conv_u_int.c\
 			ft_conv_hex.c\
@@ -40,7 +39,7 @@ all : $(NAME)
 $(NAME) : $(OBJS)
 		$(MAKE) bonus -C ./libft
 		cp $(LIB) $(NAME)
-		ar rcs $(NAME) $(OBJS)
+		ar -vrc $(NAME) $(OBJS)
 
 .c.o:
 		$(CC) $(CFLAGS) -I $(INCLUDE) -c $< -o $(<:.c=.o)

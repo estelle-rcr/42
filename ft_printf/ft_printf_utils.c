@@ -37,3 +37,23 @@ int	fill_space(int i, char c)
 	}
 	return (count);
 }
+
+char	*ft_joinstr(char *s1, char *s2)
+{
+	char	*tab;
+	int		size1;
+	int		size2;
+
+	if (!s2)
+		return (NULL);
+	size1 = ft_strlen(s1);
+	size2 = ft_strlen(s2);
+	if (!(tab = malloc((size1 + size2 + 1) * sizeof(char))))
+		return (NULL);
+	ft_memmove(tab, s1, size1);
+	ft_memmove(tab + size1, s2, size2);
+	tab[size1 + size2] = '\0';
+	free(s1);
+	free(s2);
+	return (tab);
+}

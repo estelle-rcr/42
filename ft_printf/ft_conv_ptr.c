@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/15 16:05:04 by erecuero          #+#    #+#             */
-/*   Updated: 2021/01/12 11:49:35 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/01/14 18:47:17 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,12 @@ int	print_ptr(void *ptr, t_flaglist *tmp)
 {
 	int count;
 	int size;
+	char *pt;
 	char *ar;
 
 	count = 0;
-	ar = ft_strjoin("0x", ft_itoa_base((unsigned long long) ptr, HEX_L));
+	pt = ft_itoa_base((unsigned long long) ptr, HEX_L);
+	ar = ft_joinstr("0x", pt);
 	size = ft_strlen(ar);
 	if (tmp->width > size)
 	{
