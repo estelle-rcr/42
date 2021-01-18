@@ -18,7 +18,7 @@ int	ft_printf(const char *format, ...)
 	va_list		args;
 	t_flaglist	tmp;
 	int			i;
-	int 		count;
+	int			count;
 
 	count = 0;
 	if (!format)
@@ -31,17 +31,22 @@ int	ft_printf(const char *format, ...)
 		{
 			tmp = new_flaglist();
 			get_flags(&tmp, format, &i, args);
-			if (tmp.type != 0) 					// May not be necessary
-				count += print_arg(&tmp, args);
+			count += print_arg(&tmp, args);
 		}
 		else
-		{
-			ft_putchar_fd(format[i], 1);
-			count++;
-		}
+			count += print_regular(format[i]);
 		i++;
 	}
 	va_end(args);
+	return (count);
+}
+
+int	print_regular(char c)
+{
+	int count;
+
+	ft_putchar(c);
+	count = 1;
 	return (count);
 }
 

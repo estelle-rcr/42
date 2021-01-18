@@ -16,7 +16,6 @@
 # include <stdlib.h>
 # include <stdarg.h>
 # include "libft/libft.h"
-
 # define HEX_C		"0123456789ABCDEF"
 # define HEX_L		"0123456789abcdef"
 # define DEC		"0123456789"
@@ -34,6 +33,7 @@ typedef struct		s_flaglist
 int					ft_printf(const char *format, ...);
 void				get_flags(t_flaglist *tmp, const char *format,
 						int *i, va_list args);
+int					print_regular(char c);
 int					print_arg(t_flaglist *tmp, va_list args);
 t_flaglist			new_flaglist(void);
 int					is_flag(char c);

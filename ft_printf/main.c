@@ -5,17 +5,16 @@ int	main(void)
 {
 	int ret1;
 	int ret2;
-/*	int i = -1;
+	int i = -1;
 	int a = 0;
 	int j = 98;
 	char *t;
 	char c = '\0';
 	char *s = NULL;
 	char *z = "abc";
-	int x = 7;*/
 
 	printf("\nTests unsigned INT:\n");
-/*	unsigned int u = 0;
+	unsigned int u = 0;
 	unsigned int un = 4294967295;
 	unsigned int uns = 198;
 
@@ -69,10 +68,10 @@ int	main(void)
 
 	ret1 = ft_printf("-->|%0*.u|<--\n", 3, u);
 	ret2 = printf("-->|%0*.u|<--\n", 3, u);
-	printf("ret1 %i ret2 %i\n", ret1, ret2);*/
+	printf("ret1 %i ret2 %i\n", ret1, ret2);
 
 	printf("\nTests STRING & POINTER & CHAR:\n");
-/*	t = ft_joinstr("hello ", "world!");
+	t = ft_joinstr("hello ", "world!");
 	ret1 = ft_printf("%-16.s\n", s);
 	ret2 = printf("%-16.s\n", s);
 	printf("ret1 %i ret2 %i\n", ret1, ret2);
@@ -129,10 +128,10 @@ int	main(void)
 	ret2 = printf("hello %0*.% !\n", 4);
 	printf("ret1 %i ret2 %i\n", ret1, ret2);
 
-	free(t);*/
+	free(t);
 
 	printf("\nTests POINTER:\n");
-/*	char *p = NULL;
+	char *p = NULL;
 
 	ret1 = ft_printf("test2 %-*p !\n", 400, p);
 	ret2 = printf("test2 %-*p !\n", 400, p);
@@ -144,10 +143,10 @@ int	main(void)
 
 	ret1 = ft_printf("-->|%-15p|<--\n", p);
 	ret2 = printf("-->|%-15p|<--\n", p);
-	printf("ret1 %i ret2 %i\n", ret1, ret2);*/
+	printf("ret1 %i ret2 %i\n", ret1, ret2);
 
 	printf("\nTests %% :\n");
-/*	ret1 = ft_printf("-->|%0*.*%|<--\n", 2, -4);
+	ret1 = ft_printf("-->|%0*.*%|<--\n", 2, -4);
 	ret2 = printf("-->|%0*.*%|<--\n", 2, -4);
 	printf("ret1 %i ret2 %i\n", ret1, ret2);
 
@@ -181,11 +180,11 @@ int	main(void)
 
 	ret1 = ft_printf("-->|%0*.4%|<--\n", -2);
 	ret2 = printf("-->|%0*.4%|<--\n", -2);
-	printf("ret1 %i ret2 %i\n", ret1, ret2);*/
+	printf("ret1 %i ret2 %i\n", ret1, ret2);
 
 
 	printf("\nTests HEX:\n");
-/*	unsigned int hex = 456789;
+	unsigned int hex = 456789;
 	unsigned int he = 198;
 	unsigned int x = 0;
 
@@ -214,17 +213,16 @@ int	main(void)
 	
 	ret1 = ft_printf("-->|%04.x|<--\n", x);
 	ret2 = printf("-->|%04.x|<--\n", x); 
-	printf("ret1 %i ret2 %i\n", ret1, ret2);*/
+	printf("ret1 %i ret2 %i\n", ret1, ret2);
 
 	printf("\nTests INTEGER:\n");
-	int c = 4294967284;
+	int m = 4294967284;
 	
-	ret1 = ft_printf("Hello %1.0d !\n", c);
-	ret2 = printf("Hello %1.0d !\n", c);
+	ret1 = ft_printf("Hello %1.0d !\n", m);
+	ret2 = printf("Hello %1.0d !\n", m);
 	printf("ret1 %i ret2 %i\n", ret1, ret2);
 
 
-	/*
 	int b = -2147483648;
 	ret1 = ft_printf("Hello %0*i !\n", 8, b);
 	ret2 = printf("Hello %0*i !\n", 8, b);
@@ -283,6 +281,6 @@ int	main(void)
 
 	ret1 = ft_printf("-->|%-4i|<--\n", a);
 	ret2 = printf("-->|%-4i|<--\n", a); 
-	printf("ret1 %i ret2 %i\n", ret1, ret2);*/
+	printf("ret1 %i ret2 %i\n", ret1, ret2);
 	return (0);
 }
