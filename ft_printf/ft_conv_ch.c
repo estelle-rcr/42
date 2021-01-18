@@ -15,26 +15,34 @@
 int	print_char(int c, t_flaglist *tmp)
 {
 	int count;
+	int size;
 
 	count = 0;
+	size = 1;
+	if (tmp->type == '%' && tmp->size > 1 && tmp->zero_padded)
+		size = tmp->size;
 	if (tmp->width)
 	{
-		if (tmp->left_justified == 0 && tmp->width > 0)
-			count += fill_space((tmp->width - 1), ' ');
-		count += fill_ch(c);
-		if (tmp->left_justified == 1 && tmp->width > 0)
-			count += fill_space((tmp->width - 1), ' ');
+		if (tmp->left_justified == 0 && tmp->zero_padded == 0)
+			count += fill_space((tmp->width - size), ' ');
+		count += fill_ch(c, tmp);
+		if (tmp->left_justified == 1)
+			count += fill_space((tmp->width - size), ' ');
 	}
 	else
-			count += fill_ch(c);
+		count += fill_ch(c, tmp);
 	return (count);
 }
 
-int	fill_ch(char c)
+int	fill_ch(char c, t_flaglist *tmp)
 {
 	int count;
 
+	count = 0;
+	if (tmp->type == '%' && tmp->left_justified == 0 &&
+		tmp->zero_padded == 1)
+		count += fill_space((tmp->width - 1), '0');
 	ft_putchar(c);
-	count = 1;
+	count += 1;
 	return (count);
 }

@@ -14,68 +14,38 @@
 
 int	print_ptr(void *ptr, t_flaglist *tmp)
 {
-	int count;
-	int size;
-	char *pt;
-	char *ar;
+	int		count;
+	int		size;
+	char	*pt;
+	char	*ar;
 
 	count = 0;
-	pt = ft_itoa_base((unsigned long long) ptr, HEX_L);
-	ar = ft_joinstr("0x", pt);
+	pt = ft_itoa_base((unsigned long long)ptr, HEX_L);
+	ar = (!ptr && tmp->precision) ? ft_joinstr("0x", 0) :
+		ft_joinstr("0x", pt);
+	if (pt)
+		free(pt);
 	size = ft_strlen(ar);
 	if (tmp->width > size)
 	{
 		if (tmp->left_justified == 0 && tmp->zero_padded == 0)
 			count += fill_space((tmp->width - size), ' ');
-		count += fill_ptr(tmp, ar);
+		count += fill_ptr(ar);
 		if (tmp->left_justified == 1)
 			count += fill_space((tmp->width - size), ' ');
 	}
 	else
-		count = fill_ptr(tmp, ar);
+		count = fill_ptr(ar);
 	free(ar);
 	return (count);
 }
 
-int	fill_ptr(t_flaglist *tmp, char *ptr)
+int	fill_ptr(char *ptr)
 {
 	int count;
 
 	count = 0;
-	if (!ptr && tmp->size < 0)
-	{
-		ft_putchar_fd('0', 1);
-		count++;
-	}
 	ft_putstr_fd(ptr, 1);
 	count += ft_strlen(ptr);
 	return (count);
 }
-/*
-int			ft_len_unl(unsigned long n, int len_base_to)
-{
-	int		count;
-
-	count = 0;
-	while (n)
-	{
-		count++;
-		n /= len_base_to;
-	}
-	return (count);
-}
-
-void	ft_putnbl_base(unsigned long n, char *base_to)
-{
-	unsigned long nb;
-
-	nb = n;
-	if (nb >= 10)
-	{
-		ft_putnbr_fd(nb / ft_strlen(base_to), 1);
-		ft_putchar_fd(base_to[nb % ft_strlen(base_to)] + '0', 1);
-	}
-	else if (nb >= 0 && nb <= 9)
-		ft_putchar_fd((base_to[nb + '0']), 1);
-	return ;
-}*/

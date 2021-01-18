@@ -25,35 +25,50 @@ t_flaglist	new_flaglist(void)
 	return (tmp);
 }
 
-int	fill_space(int i, char c)
+int			is_type(char c)
+{
+	if (c == 'c' || c == 's' || c == 'p' || c == 'i' || c == 'd' || c == 'u'
+		|| c == 'x' || c == 'X')
+		return (1);
+	return (0);
+}
+
+int			fill_space(int i, char c)
 {
 	int count;
 
-	count = i;
+	count = 0;
 	while (i > 0)
 	{
 		write(1, &c, 1);
 		i--;
+		count++;
 	}
 	return (count);
 }
 
-char	*ft_joinstr(char *s1, char *s2)
+char		*ft_joinstr(char *s1, char *s2)
 {
 	char	*tab;
 	int		size1;
 	int		size2;
 
-	if (!s2)
-		return (NULL);
-	size1 = ft_strlen(s1);
-	size2 = ft_strlen(s2);
+	size1 = (s1) ? ft_strlen(s1) : 0;
+	size2 = (s2) ? ft_strlen(s2) : 0;
 	if (!(tab = malloc((size1 + size2 + 1) * sizeof(char))))
 		return (NULL);
-	ft_memmove(tab, s1, size1);
-	ft_memmove(tab + size1, s2, size2);
+	if (s1)
+		ft_memmove(tab, s1, size1);
+	if (s2)
+		ft_memmove(tab + size1, s2, size2);
 	tab[size1 + size2] = '\0';
-	free(s1);
-	free(s2);
 	return (tab);
+}
+
+void		correct_val_int(t_flaglist *tmp, int nb)
+{
+	if (tmp->precision && tmp->zero_padded == 1)
+		tmp->zero_padded = 0;
+	if (nb && tmp->precision && tmp->size == 0)
+		tmp->size = 1;
 }

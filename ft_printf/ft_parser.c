@@ -17,17 +17,15 @@ void	get_flags(t_flaglist *tmp, const char *format, int *i, va_list args)
 	while (format[*i])
 	{
 		*i = (*i) + 1;
-		if (is_type(format[*i]) || format[*i] == '%')
+		if (format[*i] == '0' && tmp->width == 0 && tmp->precision == 0)
+			tmp->zero_padded = 1;
+		else if (is_type(format[*i]) || format[*i] == '%')
 		{
 			tmp->type = format[*i];
-			break;
+			break ;
 		}
 		else if (format[*i] == '-')
 			tmp->left_justified = 1;
-		else if (format[*i] == '0' && tmp->width == 0 && tmp->precision == 0)
-		{
-				tmp->zero_padded = 1;
-		}
 		else if (format[*i] == '.')
 			tmp->precision = 1;
 		else if (format[*i] == '*')
@@ -38,31 +36,27 @@ void	get_flags(t_flaglist *tmp, const char *format, int *i, va_list args)
 				tmp->size = va_arg(args, int);
 		}
 		else if (ft_isdigit(format[*i]))
-		{
-			if (tmp->precision == 0)
-				tmp->width = (tmp->width * 10) + (format[*i] - '0');
-			else
-				tmp->size = (tmp->size * 10) + (format[*i] - '0');
-		}	
+			get_number(tmp, format[*i]);
 	}
-	correct_width(tmp);
+	correct_values(tmp);
 }
 
-int	is_flag(char c)
+int		is_flag(char c)
 {
 	if (c == '-' || c == '.' || c == '*')
 		return (1);
 	return (0);
 }
 
-int	is_type(char c)
+void	get_number(t_flaglist *tmp, char nb)
 {
-	if (c == 'c' || c == 's' || c == 'p' || c == 'i' || c == 'd' || c == 'u' || c == 'x' || c == 'X')
-		return (1);
-	return (0);
+	if (tmp->precision == 0)
+		tmp->width = (tmp->width * 10) + (nb - '0');
+	else
+		tmp->size = (tmp->size * 10) + (nb - '0');
 }
 
-void	correct_width(t_flaglist *tmp)
+void	correct_values(t_flaglist *tmp)
 {
 	if (tmp->width && tmp->width < 0)
 	{
@@ -74,4 +68,6 @@ void	correct_width(t_flaglist *tmp)
 		tmp->precision = 0;
 		tmp->size = 0;
 	}
+	if (tmp->zero_padded && tmp->left_justified)
+		tmp->zero_padded = 0;
 }
