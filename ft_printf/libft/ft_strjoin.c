@@ -17,7 +17,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	char	*tab;
 	int		size1;
 	int		size2;
-	
+
 	if (!s1 || !s2)
 		return (NULL);
 	size1 = ft_strlen(s1);

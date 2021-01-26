@@ -31,8 +31,8 @@ char		*ft_itoa_base(unsigned long long nb, char *base_to)
 {
 	int		count;
 	int		sign;
+	int		base_len;
 	char	*tab;
-	int 		base_len;
 
 	sign = 0;
 	base_len = ft_strlen(base_to);

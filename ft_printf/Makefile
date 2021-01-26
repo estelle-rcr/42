@@ -39,7 +39,7 @@ all : $(NAME)
 $(NAME) : $(OBJS)
 		$(MAKE) bonus -C ./libft
 		cp $(LIB) $(NAME)
-		ar -vrc $(NAME) $(OBJS)
+		ar rcs $(NAME) $(OBJS)
 
 .c.o:
 		$(CC) $(CFLAGS) -I $(INCLUDE) -c $< -o $(<:.c=.o)
