@@ -43,13 +43,12 @@ int	in_both(char c, char *s2)
 void	ft_inter(char *s1, char *s2)
 {
 	int i;
-	int j;
 
 	i = 0;
 	while (s1[i])
 	{
 		if (!char_seen(s1[i], s1, i) && in_both(s1[i], s2))
-			write (1, &s1[i], 1);
+			write(1, &s1[i], 1);
 		i++;
 	}		
 	write(1, "\n", 1);

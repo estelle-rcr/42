@@ -1,7 +1,7 @@
-#include <unistd.h>
 #include <stdlib.h>
-#include <stdio.h>
 #include <fcntl.h>
+#include <stdio.h>
+#include <unistd.h>
 
 int	ft_strlen(char *s)
 {
@@ -10,10 +10,10 @@ int	ft_strlen(char *s)
 	i = 0;
 	while (s && s[i])
 		i++;
-	return (i);
+	return(i);
 }
 
-int	ft_strchr(char	*s, char c)
+int	ft_str_search(char c, char *s)
 {
 	int i;
 
@@ -27,45 +27,40 @@ int	ft_strchr(char	*s, char c)
 	return (0);
 }
 
-void	*ft_memmove(char *d, char *s, int len)
-{
-	if (!d && !s)
-		return (NULL);
-	if (s < d)
-		while (len-- > 0)
-			d[len] = s[len];
-	else
-		while (len-- > 0)
-			*d++ = *s++;
-	return (d);
-}
-
-
 char	*ft_strjoin(char *s1, char *s2)
 {
-	char	*tab;
-	int	l1;
-	int	l2;
+	char *tab;
 	int i;
+	int j;
+	int l1;
+	int l2;
 
 	i = 0;
+	j = 0;
 	if (!s2)
-		return	(NULL);
+		return (NULL);
 	l1 = ft_strlen(s1);
 	l2 = ft_strlen(s2);
 	if (!(tab = malloc(sizeof(char) * (l1 + l2 + 1))))
 		return (NULL);
-	ft_memmove(tab, s1, l1);
-	ft_memmove(tab + l1, s2, l2);
-	tab[l1 + l2] = '\0';
+	while (s1 && s1[i])
+	{
+		tab[i] = s1[i];
+		i++;
+	}
+	while (s2 && s2[j])
+	{
+		tab[i++] = s2[j++];
+	}
+	tab[i] = '\0';
 	free(s1);
 	return (tab);
 }
 
 char	*new_line(char *str)
 {
+	int i;
 	char *temp;
-	int	i;
 
 	i = 0;
 	if (!str)
@@ -84,15 +79,15 @@ char	*new_line(char *str)
 	return (temp);
 }
 
-char	*trunc_str(char *str)
+char *trunc_str(char *str)
 {
 	char *temp;
 	int i;
 	int j;
 
-	i = 0;
 	if (!str)
 		return (NULL);
+	i = 0;
 	while (str[i] && str[i] != '\n')
 		i++;
 	if (!str[i])
@@ -114,31 +109,19 @@ char	*trunc_str(char *str)
 int	get_next_line(int fd, char **line)
 {
 	int	ret;
-	char	*buf;
-	static char	*str;
-	char *temp;
+	char buf[BUFFER_SIZE];
+	static char *str;
 
-	if (*line)
-	{
-		temp = *line;
-		free(temp);
-	}
 	if (fd < 0 || !line || BUFFER_SIZE <= 0)
 		return (-1);
-	if (!(buf = malloc(sizeof(char) * BUFFER_SIZE + 1)))
-		return (-1);
 	ret = 1;
-	while (!ft_strchr(str, '\n') && (ret != 0))
+	while (!ft_str_search('\n', str) && (ret != 0))
 	{
 		if ((ret = read(fd, buf, BUFFER_SIZE)) == -1)
-		{
-			free(buf);
 			return (-1);
-		}
 		buf[ret] = '\0';
 		str = ft_strjoin(str, buf);
 	}
-	free(buf);
 	*line = new_line(str);
 	str = trunc_str(str);
 	if (ret == 0)
@@ -153,6 +136,7 @@ int	main(int argc, char **argv)
 	int i;
 
 	fd = 0;
+	(void) argc;
 	if (argv[1] && (fd = open(argv[1], O_RDONLY)) == -1)
 		return (1);
 	i = 1;
