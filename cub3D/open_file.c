@@ -37,6 +37,7 @@ int	check_format(char *file, char *type)
 int	open_file(char *file)
 {
 	int	fd;
+
 	if (!check_format(file, ".cub"))
 	{
 		ft_putstr(strerror(errno));

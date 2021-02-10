@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 12:27:24 by erecuero          #+#    #+#             */
-/*   Updated: 2021/02/04 16:24:49 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/02/10 19:09:48 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,14 @@ int	open_file(char *file)
 
 	if (!check_format(file, ".cub"))
 	{
-		ft_putstr(strerror(errno));
-		perror("Error\nWrong type of file. The file extension must be .cub\n");
+		ft_putstr("Error\nWrong type of file. The file extension must be .cub\n");
 		return (-1);
 	}
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
 	{
-		ft_putstr(strerror(errno));
-		perror("Error\nCouldn't open the file correctly.\n");
+		printf("Error: %s\n", strerror(errno));
+		ft_putstr("Error\nCouldn't open the file correctly.\n");
 		return (-1);
 	}
 	return (fd);
@@ -57,7 +56,7 @@ int	open_file(char *file)
 int	main(int ac, char **av)
 {
 
-/*	if (ac == 3)
+/*	if (ac == 3 && ft_strlen(av[2]) == 6 && ft_strnstr(ac[2], '--save', 6))
 		option '--save'
 */
 	if (ac == 2 || ac == 3)
@@ -67,9 +66,8 @@ int	main(int ac, char **av)
 	}
 	else
 	{
-		ft_putstr(strerror(errno));
-		perror("Error\nThe number of arguments is not valid. Recommended use: ./play
-				map.cub or ./play map.cub --save\n");
+		ft_putstr("Error\nThe number of arguments is not valid. Recommended use:
+		./cub3D map.cub or ./cub3D map.cub --save\n");
 		return (1);
 	}
 }
