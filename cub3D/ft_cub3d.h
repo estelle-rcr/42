@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 11:23:37 by erecuero          #+#    #+#             */
-/*   Updated: 2021/02/10 20:36:13 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/02/10 23:04:41 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@
 # include "libft/libft.h"
 # include "get_next_line/get_next_line.h"
 
-
+# define VALID_UNICODES "RSFC"
+# define VALID_BICODES "NOSOWEEA"
+# define MAP_CHARSET "012NSEW"
+# define NB_SETTINGS 8
 
 typedef struct		s_axis
 {
@@ -40,8 +43,7 @@ typedef struct		s_axis
 typedef struct		s_settings
 {
 	int		fd;
-	int		res_x;
-	int		res_y;
+	t_axis	res;
 	char	*no_texture;
 	char	*so_texture;
 	char	*we_texture;
@@ -50,17 +52,6 @@ typedef struct		s_settings
 	char	*f_texture;
 	char	*c_texture;
 }					t_settings;
-
-typedef	enum	e_set
-{
-	R,
-	NO,
-
-}
-
-
-
-
 
 
 // ERRORS:
