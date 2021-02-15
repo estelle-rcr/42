@@ -39,17 +39,12 @@ int	open_file(char *file)
 	int	fd;
 
 	if (!check_format(file, ".cub"))
-	{
-		ft_putstr(strerror(errno));
-		perror("Error\nWrong type of file. The file extension must be .cub\n");
-		return (-1);
-	}
+		return (print_err_msg(ERR_EXTENSION));
+	fd = open(file, O_DIRECTORY);
+	if (fd != -1)
+		return (print_err_msg(ERR_OPENING_DIR));
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
-	{
-		ft_putstr(strerror(errno));
-		perror("Error\nCouldn't open the file correctly.\n");
-		return (-1);
-	}
+		return (print_err_msg(ERR_OPENING_FILE));
 	return (fd);
 }

@@ -53,14 +53,35 @@ typedef struct		s_settings
 	char	*c_texture;
 }					t_settings;
 
-
 // ERRORS:
 
-typedef enum e_errors
+typedef enum	e_errors
 {
+// main
+	ERR_NUMBER_ARGS,
 
-}
+// open_file
+	ERR_EXTENSION,
+	ERR_OPENING_FILE,
 
+// ft parse file
+	ERR_MALLOC,
+	ERR_MISSING_PARAMS,
 
+// ft check params 
+	ERR_CODE_NOT_VALID,
+	
+// ft check resolution
+	ERR_NEGATIVE_RES,
+	ERR_RES_ALREADY_ADDED,
+	ERR_RES_FORMAT,
+	ERR_RES_INPUTS,
+
+//ft check textures
+	ERR_TEX_INPUTS,
+	ERR_TEX_FORMAT,
+	ERR_TEX_ALREADY_ADDED,
+
+}				t_errors;
 
 #endif

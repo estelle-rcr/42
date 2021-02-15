@@ -10,49 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-int	check_format(char *file, char *type)
-{
-	int i;
-	int j;
-	int len;
-
-	i = 0;
-	j = 0;
-	len = 0;
-	len = ft_strlen(type);
-	while (file[i])
-	{
-		while (file[i + j] == type[j])
-		{
-			j++;
-			if (j == len && !file[i + j + 1])
-				return (1);
-		}
-		j = 0;
-		i++;
-	}
-	return (0);
-}
-
-int	open_file(char *file)
-{
-	int fd;
-
-	if (!check_format(file, ".cub"))
-	{
-		ft_putstr("Error\nWrong type of file. The file extension must be .cub\n");
-		return (-1);
-	}
-	fd = open(argv[1], O_RDONLY);
-	if (fd == -1)
-	{
-		printf("Error: %s\n", strerror(errno));
-		ft_putstr("Error\nCouldn't open the file correctly.\n");
-		return (-1);
-	}
-	return (fd);
-}
-
 int	main(int ac, char **av)
 {
 
@@ -66,8 +23,7 @@ int	main(int ac, char **av)
 	}
 	else
 	{
-		ft_putstr("Error\nThe number of arguments is not valid. Recommended use:
-		./cub3D map.cub or ./cub3D map.cub --save\n");
+		print_err_msg(ERR_NUMBER_ARGS);
 		return (1);
 	}
 }

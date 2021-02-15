@@ -27,14 +27,40 @@ int		count_elements(char **params)
 	return (i);
 }
 
-int	ft_isnum(int i)
+int	ft_atoi_exit(const char *str)
 {
-	while (i)
+	int		sign;
+	long	nb;
+
+	sign = 1;
+	nb = 0;
+	while ((*str >= 9 && *str <= 13) || *str == 32)
+		str++;
+	if (*str == '+' || *str == '-')
 	{
-		i /= 10;
-		if (i >= '0' && i <= '9')
-			return (1);
+		if (*str == '-')
+			sign = -1;
+		str++;
 	}
-	return (0);
+	while (*str >= '0' && *str <= '9')
+	{
+		nb = (nb * 10) + (*str - '0');
+		if (nb < 0 && sign == 1)
+			return (-1);
+		else if (nb < 0 && sign == -1)
+			return (0);
+		str++;
+	}
+	nb = is_integer(nb, *str);
+	return ((int)nb * sign);
 }
 
+long	is_integer(long n, char next)
+{
+	if (ft_isascii(next) && !ft_isdigit(next))
+		return (0);
+	else if (nb > 2147483647 || nb < -2147483648)
+		return (0);
+	else
+		return (n);
+}
