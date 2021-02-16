@@ -1,31 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strcapitalize.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/04 12:27:24 by erecuero          #+#    #+#             */
-/*   Updated: 2021/02/16 14:38:52 by erecuero         ###   ########.fr       */
+/*   Created: 2021/02/16 15:09:56 by erecuero          #+#    #+#             */
+/*   Updated: 2021/02/16 15:10:07 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_cub3d.h"
-
-int	main(int ac, char **av)
+char	*ft_strcapitalize(char *str)
 {
+	int i;
+	int flag;
 
-/*	if (ac == 3 && ft_strlen(av[2]) == 6 && ft_strnstr(ac[2], '--save', 6))
-		option '--save'
-*/
-	if (ac == 2 || ac == 3)
+	i = 0;
+	flag = 1;
+	while (str[i])
 	{
-		read_file(av[1]);
-		return (0);
+		if (flag == 1 && str[i] >= 'a' && str[i] <= 'z')
+		{
+			str[i] -= 32;
+		}
+		else if (flag == 0 && str[i] >= 'A' && str[i] <= 'Z')
+		{
+			str[i] += 32;
+		}
+		flag = 0;
+		if (str[i] < '0' || (str[i] > '9' && str[i] < 'A')
+				|| (str[i] > 'Z' && str[i] < 'a') || str[i] > 'z')
+		{
+			flag = 1;
+		}
+		i++;
 	}
-	else
-	{
-		print_err_msg(ERR_NUMBER_ARGS);
-		return (1);
-	}
+	return (str);
 }

@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 12:27:11 by erecuero          #+#    #+#             */
-/*   Updated: 2021/02/04 16:10:27 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/02/16 22:56:07 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,10 @@ char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_strtrim(char const *s1, char const *set);
 char				**ft_split(char const *s, char c);
 char				*ft_itoa(int n);
-char				*ft_itoa_base(unsigned long long nb, char *base_to);
 void				ft_putchar_fd(char c, int fd);
 void				ft_putstr_fd(char *s, int fd);
 void				ft_putendl_fd(char *s, int fd);
 void				ft_putnbr_fd(int n, int fd);
-void				ft_putchar(char c);
-void				ft_putnbr(int n);
-void				ft_putstr(char *s);
-char				*ft_strstr(char *str, char *to_find);
 t_list				*ft_lstnew(void *content);
 void				ft_lstadd_front(t_list **alst, t_list *new);
 int					ft_lstsize(t_list *lst);
@@ -73,5 +68,16 @@ void				ft_lstclear(t_list **lst, void (*del)(void*));
 void				ft_lstiter(t_list *lst, void (*f)(void *));
 t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
+void				ft_putchar(char c);
+void				ft_putnbr(int n);
+void				ft_putstr(char *s);
+char				*ft_strstr(char *str, char *to_find);
+char				*ft_itoa_base(unsigned long long nb, char *base_to);
+int					ft_strcmp(char *s1, char *s2);
+void				ft_rev_int_tab(int *tab, int size);
+void				ft_sort_int_tab(int *tab, int size);
+void				ft_swap(int *a, int *b);
+char				*ft_strcapitalize(char *str);
+int					ft_isspace(char c);
 
 #endif

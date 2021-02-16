@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 12:22:44 by erecuero          #+#    #+#             */
-/*   Updated: 2020/11/30 12:22:47 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/02/16 23:17:51 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 	return (dst);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_joinstr(char *s1, char *s2)
 {
 	char	*tab;
 	int		size1;

@@ -1,31 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_sort_int_tab.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/04 12:27:24 by erecuero          #+#    #+#             */
-/*   Updated: 2021/02/16 14:38:52 by erecuero         ###   ########.fr       */
+/*   Created: 2021/02/16 15:07:37 by erecuero          #+#    #+#             */
+/*   Updated: 2021/02/16 15:08:02 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_cub3d.h"
-
-int	main(int ac, char **av)
+void	ft_sort_int_tab(int *tab, int size)
 {
+	int count;
+	int swap;
+	int i;
 
-/*	if (ac == 3 && ft_strlen(av[2]) == 6 && ft_strnstr(ac[2], '--save', 6))
-		option '--save'
-*/
-	if (ac == 2 || ac == 3)
+	count = 1;
+	while (count < (size + 1))
 	{
-		read_file(av[1]);
-		return (0);
-	}
-	else
-	{
-		print_err_msg(ERR_NUMBER_ARGS);
-		return (1);
+		swap = tab[count];
+		i = count - 1;
+		while (i >= 0 && tab[i] > swap)
+		{
+			tab[i + 1] = tab[i];
+			i--;
+		}
+		tab[i + 1] = swap;
+		count++;
 	}
 }

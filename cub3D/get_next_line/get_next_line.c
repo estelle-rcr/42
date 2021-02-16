@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 12:22:54 by erecuero          #+#    #+#             */
-/*   Updated: 2020/11/30 12:22:56 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/02/16 23:25:06 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,11 @@ int		get_next_line(int fd, char **line)
 			return (-1);
 		}
 		buf[ret] = '\0';
-		str = ft_strjoin(str, buf);
+		if (!(str = ft_joinstr(str, buf)))
+			return (-1);
 	}
 	free(buf);
 	*line = new_line(str);
 	str = trunc_str(str);
-	if (ret == 0)
-		return (0);
-	return (1);
+	return (ret);
 }
