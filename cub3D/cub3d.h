@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_cub3d.h                                         :+:      :+:    :+:   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 11:23:37 by erecuero          #+#    #+#             */
-/*   Updated: 2021/02/16 23:10:08 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/02/26 00:12:33 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_CUB3D_H
-# define FT_CUB3D_H
+#ifndef CUB3D_H
+# define CUB3D_H
 
 # include <stdlib.h>
 # include <stdarg.h>
@@ -21,12 +21,12 @@
 # include <fcntl.h>
 # include <string.h>
 
-# include "libft/libft.h"
-# include "get_next_line/get_next_line.h"
+# include "libft/includes/libft.h"
+# include "libft/includes/get_next_line.h"
 
-# define VALID_UNICODES "RSFC"
-# define VALID_BICODES "NOSOWEEA"
 # define MAP_CHARSET "012NSEW"
+# define PLAY_CHARSET "02NSEW"
+# define DIR_CHARSET "NSEW"
 # define NB_SETTINGS 8
 
 typedef struct		s_axis
@@ -35,18 +35,18 @@ typedef struct		s_axis
 	float	y;
 }					t_axis;
 
-/* typedef struct		s_type
+typedef struct		s_player_pos
 {
 	float	player_x;
 	float	player_y;
-	... resolution;
-}					t_type;
-*/
+}					t_player_pos;
 
 typedef struct		s_settings
 {
 	int		fd;
 	t_axis	res;
+	t_player_pos	start_pos;
+	char	player_dir;
 	char	*no_texture;
 	char	*so_texture;
 	char	*we_texture;
@@ -55,6 +55,8 @@ typedef struct		s_settings
 	int		f_color;
 	int		c_color;
 	char 	**map;
+	int		map_width;
+	int		map_height;
 }					t_settings;
 
 // ERRORS:
@@ -92,6 +94,11 @@ typedef enum	e_errors
 	ERR_COLOR_INPUTS,
 	ERR_COLOR_FORMAT,
 	ERR_COLOR_ALREADY_ADDED,
+
+// map parser
+	ERR_NOT_MAP_LINE,
+	ERR_INVALID_MAP,
+	ERR_PLAYER_COUNT,
 }				t_errors;
 
 // main
@@ -101,12 +108,14 @@ int	main(int ac, char **av);
 t_settings	init_set(void);
 int	check_extension(char *file, char *type);
 int	open_file(char *file);
+
+// read_file
 int		is_whitespace(char *str);
 int	read_file(char *file);
+int	check_map(t_settings *set);
 
 //cub3d utils
-char	**free_tab(char **tab, int i);
-int		count_elements(char **params);
+char	**free_tab(char **tab);
 int	atoi_res(const char *str);
 int	check_atoi_colors(char *str);
 
@@ -134,5 +143,14 @@ int		get_g(int trgb);
 int		get_b(int trgb);
 //int		add_shade(double distance, int trgb);
 //int		get_opposite(int trgb);
+
+// parser_map
+int		is_map(char *s);
+int		get_map(char *line, t_settings *set);
+int 	copy_map(char *line, t_settings *set);
+int 	is_valid_map(t_settings *set);
+int 	valid_cells(char case1, char case2);
+int 	get_player_position(t_settings *set);
+// int flood_fill(char **copy_map, float pos_x, float pos_y);
 
 #endif

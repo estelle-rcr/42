@@ -6,23 +6,22 @@
 #    By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/04 11:22:26 by erecuero          #+#    #+#              #
-#    Updated: 2021/02/04 11:42:39 by erecuero         ###   ########.fr        #
+#    Updated: 2021/02/17 16:08:23 by erecuero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS	=	ft_printf.c\
-			ft_parser.c\
-			ft_printf_utils.c\
-			ft_conv_ch.c\
-			ft_conv_str.c\
-			ft_conv_int.c\
-			ft_conv_u_int.c\
-			ft_conv_hex.c\
-			ft_conv_ptr.c\
+SRCS	=	cub3d_utils.c\
+			ft_split_sep.c\
+			handle_errors.c\
+			main.c\
+			minilib_utils.c\
+			open_file.c\
+			parser.c\
+			parser_RTC.c\
 
-INCLUDE	= printf.h
+INCLUDE	= cub3d.h
 
-NAME	= libftprintf.a
+NAME	= cub3D.a
 
 CC	= clang
 

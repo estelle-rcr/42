@@ -6,9 +6,11 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 16:18:44 by erecuero          #+#    #+#             */
-/*   Updated: 2021/02/16 15:30:49 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/02/17 11:45:03 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "cub3d.h"
 
 int		create_trgb(int t, int r, int g, int b)
 {

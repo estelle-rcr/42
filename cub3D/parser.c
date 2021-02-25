@@ -6,11 +6,11 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 11:09:05 by erecuero          #+#    #+#             */
-/*   Updated: 2021/02/17 00:04:19 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/02/26 00:13:09 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_cub3d.h"
+#include "cub3d.h"
 
 int	check_params(char **params, t_settings *set)
 {
@@ -26,7 +26,6 @@ int	check_params(char **params, t_settings *set)
 		settings_fct[i] = &check_textures;
 	settings_fct[6] = &check_colors;
 	settings_fct[7] = &check_colors;
-//	settings_fct[8] = 0;
 	i = -1;
 	ret = -1;
 	while (valid_set[++i])
@@ -46,43 +45,33 @@ int		all_params(t_settings *set)
 	return (1);
 }
 
-/*int	is_blank_line(char *line)
-{
-	if (!line)
-		return (1);
-	while ((*line))
-	{
-		if (!ft_isspace(line))
-			return (1);
-		line++;
-	}
-	return (0);
-}*/
-
 int	parse_file(char *line, t_settings *set)
 {
 		char		**params;
 
-		if (!all_params(set)) // *line?
+		if (!all_params(set))
 		{
-			if (!(params = ft_split_whitespaces(line)))
+	//		if (!(params = ft_split_whitespaces(line)))
+			if (!(params = ft_split(line, ' ')))
 				return (print_err_msg(ERR_MALLOC));
 			if (!check_params(params, set))
 			{
-				free_tab(params, count_elements(params));
+				free_tab(params);
 				free(line);
 				return (0);
 			}
-			free_tab(params, count_elements(params));
+			free_tab(params);
 		}
-		/*
-		else if (all_params(set)) // *line?
+		else if (all_params(set))
 		{
-			if(!check_map(line, set))
+			if(!get_map(line, set))
 			{
+				if (set->map)
+            		free_tab(set->map);
 				free(line);
 				return (0);
 			}
-		}*/
+		}
 		return (1);
 }
+

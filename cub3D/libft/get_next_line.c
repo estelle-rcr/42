@@ -6,11 +6,23 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 12:22:54 by erecuero          #+#    #+#             */
-/*   Updated: 2021/02/16 23:25:06 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/02/17 15:56:32 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+# include "get_next_line.h"
+
+static size_t	ft_strlen(const char *s)
+{
+	size_t i;
+
+	i = 0;
+	while (s && s[i])
+	{
+		i++;
+	}
+	return (i);
+}
 
 char	*new_line(char *str)
 {
@@ -72,7 +84,7 @@ int		get_next_line(int fd, char **line)
 	if (!(buf = malloc(sizeof(char) * BUFFER_SIZE + 1)))
 		return (-1);
 	ret = 1;
-	while (!ft_strchr(str, '\n') && (ret != 0))
+	while (!ft_strfind(str, '\n') && (ret != 0))
 	{
 		if ((ret = read(fd, buf, BUFFER_SIZE)) == -1)
 		{

@@ -6,11 +6,11 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 16:25:49 by erecuero          #+#    #+#             */
-/*   Updated: 2021/02/16 23:09:58 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/02/26 00:23:44 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_cub3d.h"
+#include "cub3d.h"
 
 t_settings	init_set(void)
 {
@@ -27,6 +27,8 @@ t_settings	init_set(void)
 	settings.f_color = -1;
 	settings.c_color = -1;
 	settings.map = 0;
+	settings.map_width = 0;
+	settings.map_height = 0;
 	return (settings);
 }
 
@@ -92,14 +94,40 @@ int	read_file(char *file)
 		if (*line && !is_whitespace(line))
 		{
 			if (!parse_file(line, &set))
-				return (0);
+				exit(0);
 		}
 		free(line);
 		if (ret == 1)
 			line = 0;
 	}
-	if (!all_params(&set))
-		return (print_err_msg(ERR_MISSING_PARAMS));
 	close(set.fd);
+//	if (!check_map(&set))
+//		exit (0);
+	return (1);
+}
+
+int	check_map(t_settings *set)
+{
+	if (!is_valid_map(set))
+	{
+		if (set->map)
+            free_tab(set->map);
+		free(set);
+		return (print_err_msg(ERR_INVALID_MAP));
+	}
+    if (!get_player_position(set))
+	{
+		if (set->map)
+            free_tab(set->map);
+		free(set);
+		return (0);
+	}
+	if (!all_params(set))
+	{
+		if (set->map)
+            free_tab(set->map);
+		free(set);
+		return (print_err_msg(ERR_MISSING_PARAMS));
+	}
 	return (1);
 }

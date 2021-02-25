@@ -6,11 +6,11 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 12:27:24 by erecuero          #+#    #+#             */
-/*   Updated: 2021/02/16 14:38:52 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/02/17 11:44:31 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_cub3d.h"
+#include "cub3d.h"
 
 int	main(int ac, char **av)
 {

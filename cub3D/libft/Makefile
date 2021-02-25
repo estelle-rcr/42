@@ -6,7 +6,7 @@
 #    By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/18 15:30:27 by erecuero          #+#    #+#              #
-#    Updated: 2021/02/16 22:04:14 by erecuero         ###   ########.fr        #
+#    Updated: 2021/02/17 16:08:02 by erecuero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,9 @@ SRCS	= 	ft_atoi.c\
 		ft_sort_int_tab.c\
 		ft_swap.c\
 		ft_strcapitalize.c\
-		ft_isspace.c
+		ft_isspace.c\
+		get_next_line.c\
+		get_next_line_utils.c\
 
 BONUS	= 	ft_lstnew.c\
 		ft_lstadd_front.c\
@@ -70,7 +72,7 @@ OBJS	= ${SRCS:.c=.o}
 
 BONUSOBJS	= ${BONUS:.c=.o}
 
-INCLUDE	= libft.h
+INCLUDE	= includes
 
 NAME	= libft.a
 

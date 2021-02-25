@@ -6,11 +6,11 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 16:52:27 by erecuero          #+#    #+#             */
-/*   Updated: 2021/02/16 21:42:07 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/02/17 23:20:13 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_cub3d.h"
+#include "cub3d.h"
 
 static int			ft_is_sep(char *str)
 {
@@ -77,7 +77,7 @@ static char		**ft_create_tabs(char *str, char **tab)
 				i++;
 				if (!(tab[i] = malloc(sizeof(char) *
 								((ft_word_len(str) + 1)))))
-					return (free_tab(tab, i));
+					return (free_tab(tab));
 			}
 			tab[i][j] = *str;
 			tab[i][++j] = '\0';

@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 16:23:25 by erecuero          #+#    #+#             */
-/*   Updated: 2020/11/18 16:25:07 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/02/17 15:56:59 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ size_t	ft_strlen(const char *s)
 	size_t i;
 
 	i = 0;
-	while (s[i])
+	while (s && s[i])
 	{
 		i++;
 	}
