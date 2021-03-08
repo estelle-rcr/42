@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/04 16:55:32 by erecuero          #+#    #+#             */
-/*   Updated: 2021/02/17 23:19:55 by erecuero         ###   ########.fr       */
+/*   Created: 2021/03/01 16:14:32 by erecuero          #+#    #+#             */
+/*   Updated: 2021/03/01 16:16:09 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ char	**free_tab(char **tab)
 	int i;
 
 	i = -1;
-	while (tab[++i])
+	while (tab && tab[++i])
 		free(tab[i]);
 	free(tab);
 	return (0);
 }
 
-int	atoi_res(const char *str)
+int		atoi_res(const char *str)
 {
 	long	nb;
 
@@ -31,7 +31,7 @@ int	atoi_res(const char *str)
 	while ((*str >= 9 && *str <= 13) || *str == 32)
 		str++;
 	if (*str == '+' || *str == '-')
-			return (0);
+		return (0);
 	while (*str >= '0' && *str <= '9')
 	{
 		nb = (nb * 10) + (*str - '0');
@@ -43,10 +43,11 @@ int	atoi_res(const char *str)
 }
 
 /*
-** If there is a '+' or a '-' (or any unexpected char), the following function exits with an error code
+** If there is a '+' or a '-' (or any unexpected char),
+** the next function exits with an error code
 */
 
-int	check_atoi_colors(char *str)
+int		check_atoi_colors(char *str)
 {
 	int	nb;
 	int j;
@@ -63,7 +64,7 @@ int	check_atoi_colors(char *str)
 			nb = 0;
 		}
 		else
-			nb= (nb * 10) + (*str - '0');
+			nb = (nb * 10) + (*str - '0');
 		str++;
 	}
 	if (*str || (j != 2) || nb > 255)

@@ -5,20 +5,24 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/04 16:25:49 by erecuero          #+#    #+#             */
-/*   Updated: 2021/02/26 00:23:44 by erecuero         ###   ########.fr       */
+/*   Created: 2021/03/01 16:30:11 by erecuero          #+#    #+#             */
+/*   Updated: 2021/03/04 15:58:11 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-t_settings	init_set(void)
+t_settings		*init_set(void)
 {
-	t_settings 	settings;
+	t_settings	settings;
+	t_settings	*set;
 
 	settings.fd = -1;
 	settings.res.x = 0;
 	settings.res.y = 0;
+	settings.start_pos.player_x = -1.0;
+	settings.start_pos.player_y = -1.0;
+	settings.player_dir = '0';
 	settings.no_texture = 0;
 	settings.so_texture = 0;
 	settings.we_texture = 0;
@@ -29,10 +33,11 @@ t_settings	init_set(void)
 	settings.map = 0;
 	settings.map_width = 0;
 	settings.map_height = 0;
-	return (settings);
+	set = &settings;
+	return (set);
 }
 
-int	check_extension(char *file, char *type)
+int				check_extension(char *file, char *type)
 {
 	int i;
 	int j;
@@ -43,14 +48,14 @@ int	check_extension(char *file, char *type)
 	i = ft_strlen(file);
 	while (file[i - j] == type[len - j] && type[len - j])
 	{
-			j++;
-			if (j == len)
-				return (1);
+		j++;
+		if (j == len)
+			return (1);
 	}
 	return (0);
 }
 
-int	open_file(char *file)
+int				open_file(char *file)
 {
 	int	fd;
 
@@ -65,7 +70,7 @@ int	open_file(char *file)
 	return (fd);
 }
 
-int		is_whitespace(char *str)
+int				is_whitespace(char *str)
 {
 	int	i;
 
@@ -78,56 +83,31 @@ int		is_whitespace(char *str)
 	return (1);
 }
 
-int	read_file(char *file)
+t_settings		*read_file(char *file)
 {
-	char 		*line;
-	t_settings	set;
-	int 			ret;
+	char		*line;
+	t_settings	*set;
+	int			ret;
 
 	set = init_set();
-	if ((set.fd = open_file(file)) == 0)
-		return (0);
-	while ((ret = get_next_line(set.fd, &line)) >= 0)
+	if ((set->fd = open_file(file)) == 0)
+		exit(0);
+	while ((ret = get_next_line(set->fd, &line)) >= 0)
 	{
 		if (ret == -1)
-			return (print_err_msg(ERR_GNL));
+			exit(0);
 		if (*line && !is_whitespace(line))
 		{
-			if (!parse_file(line, &set))
+			if (!parse_file(line, set))
 				exit(0);
 		}
 		free(line);
-		if (ret == 1)
-			line = 0;
+		if (ret == 0)
+			break ;
+		line = 0;
 	}
-	close(set.fd);
-//	if (!check_map(&set))
-//		exit (0);
-	return (1);
-}
-
-int	check_map(t_settings *set)
-{
-	if (!is_valid_map(set))
-	{
-		if (set->map)
-            free_tab(set->map);
-		free(set);
-		return (print_err_msg(ERR_INVALID_MAP));
-	}
-    if (!get_player_position(set))
-	{
-		if (set->map)
-            free_tab(set->map);
-		free(set);
-		return (0);
-	}
-	if (!all_params(set))
-	{
-		if (set->map)
-            free_tab(set->map);
-		free(set);
-		return (print_err_msg(ERR_MISSING_PARAMS));
-	}
-	return (1);
+	close(set->fd);
+	if (!check_map(set))
+		exit(0);
+	return (set);
 }

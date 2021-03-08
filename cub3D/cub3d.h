@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: erecuero@student.42.fr <erecuero>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 11:23:37 by erecuero          #+#    #+#             */
-/*   Updated: 2021/02/26 00:12:33 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/03/01 15:41:02 by erecuero@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 
 # include "libft/includes/libft.h"
 # include "libft/includes/get_next_line.h"
+# include "minilibx-linux/mlx.h"
 
 # define MAP_CHARSET "012NSEW"
 # define PLAY_CHARSET "02NSEW"
@@ -58,6 +59,14 @@ typedef struct		s_settings
 	int		map_width;
 	int		map_height;
 }					t_settings;
+
+typedef struct  s_data {
+    void        *img;
+    char        *addr;
+    int         bits_per_pixel;
+    int         line_length;
+    int         endian;
+}               t_data;
 
 // ERRORS:
 
@@ -105,14 +114,11 @@ typedef enum	e_errors
 int	main(int ac, char **av);
 
 // open_file
-t_settings	init_set(void);
+t_settings	*init_set(void);
 int	check_extension(char *file, char *type);
 int	open_file(char *file);
-
-// read_file
 int		is_whitespace(char *str);
-int	read_file(char *file);
-int	check_map(t_settings *set);
+t_settings      *read_file(char *file);
 
 //cub3d utils
 char	**free_tab(char **tab);
@@ -134,6 +140,9 @@ char	**ft_split_whitespaces(char *str);
 
 // handle_errors
 int	print_err_msg(int error);
+int	error_files(int error);
+int	error_rtc(int error);
+int	error_map(int error);
 
 // minilib_utils_color
 int		create_trgb(int t, int r, int g, int b);
@@ -146,11 +155,23 @@ int		get_b(int trgb);
 
 // parser_map
 int		is_map(char *s);
+char	*replace_tabs(char *line);
 int		get_map(char *line, t_settings *set);
 int 	copy_map(char *line, t_settings *set);
-int 	is_valid_map(t_settings *set);
+void    free_map(char **map);
+
+// check_map
+int 	is_valid_map(char **map);
 int 	valid_cells(char case1, char case2);
 int 	get_player_position(t_settings *set);
-// int flood_fill(char **copy_map, float pos_x, float pos_y);
+int     comp_null_cells(char **map, int x, int y);
+int	    check_map(t_settings *set);
+
+// floodfill
+int flood_fill(char **copy_map, float pos_x, float pos_y);
+
+// init_mlx
+void	run_mlx(t_settings *set);
+void    my_mlx_pixel_put(t_data *data, int x, int y, int color);
 
 #endif

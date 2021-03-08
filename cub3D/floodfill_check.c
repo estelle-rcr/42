@@ -11,7 +11,42 @@
 /* ************************************************************************** */
 
 #include "cub3d.h"
+/*
+int	check_map(t_settings *set)
+{
+    char **copy_map;
+    int i;
 
+    i = set->map_height;
+    if (!(copy_map = malloc(sizeof(char *) * (set->map_height + 1))))
+        return (ERR_MALLOC);
+    while (set->map && set->map[--i])
+    {
+        copy_map[i] = ft_strdup(set->map[i]);
+    }
+    if (!get_player_position(set))
+	{
+		if (set->map)
+            free_tab(set->map);
+		return (0);
+	}
+    if (!(flood_fill(copy_map, set->start_pos.player_x , set->start_pos.player_y)))
+    {
+    	if (set->map)
+            free_tab(set->map);
+        free(copy_map);
+		return (print_err_msg(ERR_INVALID_MAP));
+	}
+    free(copy_map);
+	if (!all_params(set))
+	{
+		if (set->map)
+            free_tab(set->map);
+		return (print_err_msg(ERR_MISSING_PARAMS));
+	}
+	return (1);
+}
+*/
 int flood_fill(char **copy_map, float pos_x, float pos_y)
 {
 	int	wall;

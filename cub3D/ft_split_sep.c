@@ -6,23 +6,24 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 16:52:27 by erecuero          #+#    #+#             */
-/*   Updated: 2021/02/17 23:20:13 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/03/01 16:18:20 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static int			ft_is_sep(char *str)
+static int		ft_is_sep(char *str)
 {
 	int i;
 
 	i = 0;
-	if (*str == ' ' || *str == '\t' || *str == '\n' || *str == '\v' || *str == '\f' || *str == '\r')
+	if (*str == ' ' || *str == '\t' || *str == '\n' || *str == '\v'
+			|| *str == '\f' || *str == '\r')
 		return (1);
 	return (0);
 }
 
-static int			ft_word_len(char *str)
+static int		ft_word_len(char *str)
 {
 	int i;
 
@@ -38,7 +39,7 @@ static int			ft_word_len(char *str)
 	return (i);
 }
 
-static int			ft_word_count(char *str)
+static int		ft_word_count(char *str)
 {
 	int i;
 	int flag;
@@ -89,7 +90,7 @@ static char		**ft_create_tabs(char *str, char **tab)
 	return (tab);
 }
 
-char	**ft_split_whitespaces(char *str)
+char			**ft_split_whitespaces(char *str)
 {
 	char	**tab;
 	int		count;

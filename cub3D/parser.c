@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/04 11:09:05 by erecuero          #+#    #+#             */
-/*   Updated: 2021/02/26 00:13:09 by erecuero         ###   ########.fr       */
+/*   Created: 2021/03/01 16:41:22 by erecuero          #+#    #+#             */
+/*   Updated: 2021/03/04 15:25:10 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 
 int	check_params(char **params, t_settings *set)
 {
-	int		(*settings_fct[NB_SETTINGS + 1])(char**, t_settings*);
 	char	**valid_set;
-	int i;
-	int ret;
+	int		(*settings_fct[NB_SETTINGS + 1])(char**, t_settings*);
+	int 	i;
+	int		ret;
 
 	i = 0;
-	valid_set = (char *[NB_SETTINGS + 1]) {"R", "NO", "SO", "WE", "EA", "S", "F", "C", 0};
+	valid_set = (char *[NB_SETTINGS + 1]) {"R", "NO", "SO", "WE", "EA", "S",
+											"F", "C", 0};
 	settings_fct[0] = &check_resolution;
 	while (++i <= 5)
 		settings_fct[i] = &check_textures;
@@ -36,7 +37,7 @@ int	check_params(char **params, t_settings *set)
 	return (ret);
 }
 
-int		all_params(t_settings *set)
+int	all_params(t_settings *set)
 {
 	if (!set->res.x || !set->res.y || !set->no_texture || !set->so_texture ||
 		!set->ea_texture || !set->we_texture || !set->s_texture ||
@@ -47,31 +48,29 @@ int		all_params(t_settings *set)
 
 int	parse_file(char *line, t_settings *set)
 {
-		char		**params;
+	char	**params;
 
-		if (!all_params(set))
+	if (!all_params(set))
+	{
+		if (!(params = ft_split_whitespaces(line)))
+			return (print_err_msg(ERR_MALLOC));
+		if (!check_params(params, set))
 		{
-	//		if (!(params = ft_split_whitespaces(line)))
-			if (!(params = ft_split(line, ' ')))
-				return (print_err_msg(ERR_MALLOC));
-			if (!check_params(params, set))
-			{
-				free_tab(params);
-				free(line);
-				return (0);
-			}
 			free_tab(params);
+			free(line);
+			return (0);
 		}
-		else if (all_params(set))
+		free_tab(params);
+	}
+	else if (all_params(set))
+	{
+		if (!get_map(line, set))
 		{
-			if(!get_map(line, set))
-			{
-				if (set->map)
-            		free_tab(set->map);
-				free(line);
-				return (0);
-			}
+			if (set->map)
+				free_tab(set->map);
+			free(line);
+			return (0);
 		}
-		return (1);
+	}
+	return (1);
 }
-

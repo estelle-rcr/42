@@ -3,6 +3,15 @@
 #include <stdio.h>
 #include <unistd.h>
 
+#ifndef BUFFER_SIZE
+# define BUFFER_SIZE 1
+#endif
+
+#ifndef FD
+# define FD 0
+#endif
+
+
 int	ft_strlen(char *s)
 {
 	int i;
@@ -27,32 +36,37 @@ int	ft_str_search(char c, char *s)
 	return (0);
 }
 
+void	*ft_memmove(char *d, char *s, int len)
+{
+	if (!d && !s)
+		return (NULL);
+	if (s < d)
+		while (len-- > 0)
+			d[len] = s[len];
+	else
+		while (len-- > 0)
+			*d++ = *s++;
+	return (d);
+}
+
+
 char	*ft_strjoin(char *s1, char *s2)
 {
-	char *tab;
+	char	*tab;
+	int	l1;
+	int	l2;
 	int i;
-	int j;
-	int l1;
-	int l2;
 
 	i = 0;
-	j = 0;
 	if (!s2)
-		return (NULL);
+		return	(NULL);
 	l1 = ft_strlen(s1);
 	l2 = ft_strlen(s2);
 	if (!(tab = malloc(sizeof(char) * (l1 + l2 + 1))))
 		return (NULL);
-	while (s1 && s1[i])
-	{
-		tab[i] = s1[i];
-		i++;
-	}
-	while (s2 && s2[j])
-	{
-		tab[i++] = s2[j++];
-	}
-	tab[i] = '\0';
+	ft_memmove(tab, s1, l1);
+	ft_memmove(tab + l1, s2, l2);
+	tab[l1 + l2] = '\0';
 	free(s1);
 	return (tab);
 }
@@ -106,18 +120,18 @@ char *trunc_str(char *str)
 	return (temp);
 }
 
-int	get_next_line(int fd, char **line)
+int	get_next_line(char **line)
 {
 	int	ret;
 	char buf[BUFFER_SIZE];
 	static char *str;
 
-	if (fd < 0 || !line || BUFFER_SIZE <= 0)
+	if (FD < 0 || !line || BUFFER_SIZE <= 0)
 		return (-1);
 	ret = 1;
 	while (!ft_str_search('\n', str) && (ret != 0))
 	{
-		if ((ret = read(fd, buf, BUFFER_SIZE)) == -1)
+		if ((ret = read(FD, buf, BUFFER_SIZE)) == -1)
 			return (-1);
 		buf[ret] = '\0';
 		str = ft_strjoin(str, buf);
@@ -129,23 +143,26 @@ int	get_next_line(int fd, char **line)
 	return (1);
 }
 
-int	main(int argc, char **argv)
+int main()
 {
-	int fd;
-	char *tab;
-	int i;
+    int ret;
+    char *line;
 
-	fd = 0;
-	(void) argc;
-	if (argv[1] && (fd = open(argv[1], O_RDONLY)) == -1)
-		return (1);
-	i = 1;
-	while (i == 1)
-	{
-		printf("(result fd1:%i) - %s \n", (i = get_next_line(fd, &tab)), tab);
-	}
-	free(tab);
-	if (close(fd) == -1)
-		return (1);
-	return (0);
+    line = 0;
+    ret = get_next_line(&line);
+    while (ret > 0)
+    {
+        write(1, line, ft_strlen(line));
+        write(1, "\n", 1);
+        free(line);
+        line = 0;
+        ret = get_next_line(&line);
+    }
+    if (ret == 0)
+    {
+        write(1, line, ft_strlen(line));
+        write(1, "\n", 1);
+        free(line);
+        line = 0;
+    }
 }
