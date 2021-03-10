@@ -6,51 +6,68 @@
 #    By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/04 11:22:26 by erecuero          #+#    #+#              #
-#    Updated: 2021/02/17 16:08:23 by erecuero         ###   ########.fr        #
+#    Updated: 2021/03/10 19:35:49 by erecuero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS	=	cub3d_utils.c\
-			ft_split_sep.c\
-			handle_errors.c\
-			main.c\
-			minilib_utils.c\
-			open_file.c\
-			parser.c\
-			parser_RTC.c\
+SRCS	=	srcs/cub3d_utils.c\
+			srcs/floodfill_check.c\
+			srcs/ft_split_sep.c\
+			srcs/handle_errors.c\
+			srcs/init_mlx.c\
+			srcs/minilib_utils.c\
+			srcs/open_file.c\
+			srcs/parser.c\
+			srcs/parser_check_map.c\
+			srcs/parser_cpy_map.c\
+			srcs/parser_params.c\
 
-INCLUDE	= cub3d.h
+NAME = cub3D
 
-NAME	= cub3D.a
+MAIN = ./srcs/main.c
 
-CC	= clang
+OBJ_MAIN = ${MAIN:.c=.o}
 
-RM	= rm -rf
+PATH_SRCS = ./
 
-CFLAGS	= -Wall -Wextra -Werror
+_SRCS = ${addprefix ${PATH_SRCS}, ${SRCS}}
 
-LIB	= libft/libft.a
-OBJS	= ${SRCS:.c=.o}
+OBJS = ${_SRCS:.c=.o}
 
+LINK = ar rc
 
-all : $(NAME)
+CC = clang
 
-$(NAME) : $(OBJS)
-		$(MAKE) bonus -C ./libft
-		cp $(LIB) $(NAME)
-		ar rcs $(NAME) $(OBJS)
+FLAGS = -Wall -Werror -Wextra
+
+RM = rm -rf
+
+PATH_HEADER = ./
 
 .c.o:
-		$(CC) $(CFLAGS) -I $(INCLUDE) -c $< -o $(<:.c=.o)
+			${CC} ${FLAGS} -I${PATH_HEADER} -c $< -o ${<:.c=.o}
 
-clean :
-	$(MAKE) clean -C ./libft
-	$(RM) $(OBJS)
+MYLIB = mylib.a
 
-fclean: clean
-		$(MAKE) fclean -C ./libft
-		$(RM) $(NAME)
+PATH_MLX_LINUX = ./minilibx-linux/
 
-re : fclean all
+MLX_LINUX = ./minilibx-linux/libmlx_Linux.a
 
-.PHONY: all clean fclean re
+all:        ${NAME}
+
+${NAME}:    ${MV} ${OBJ_MAIN} ${OBJS}
+			${LINK} ${MYLIB} ${OBJS}
+			ranlib ${MYLIB}
+			make -C ${PATH_MLX_LINUX}
+			${CC} ${FLAGS} -o3 ${OBJ_MAIN} ${MYLIB} ${MLX_LINUX} -lm -lbsd -lX11 -lXext -o ${NAME} libft/libft.a
+
+clean:
+			${RM} ${OBJ_MAIN} ${OBJS}
+			make clean -C ${PATH_MLX_LINUX}
+
+fclean:     clean
+			${RM} ${NAME} ${MYLIB} ${MLX_LINUX}
+
+re:         fclean all
+
+.PHONY:     all clean fclean re
