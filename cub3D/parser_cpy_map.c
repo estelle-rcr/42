@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:46:11 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/04 15:46:24 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/03/09 18:49:28 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,27 @@ char	*replace_tabs(char *line)
 	return (line);
 }
 
+char	*ft_strdup_fill(const char *s1, int len)
+{
+	char	*s2;
+	int		i;
+	int		size;
+
+	size = 0;
+	i = 0;
+	if (!(s2 = malloc((len + 1) * sizeof(char))))
+		return (NULL);
+	while (s1 && s1[i])
+	{
+		s2[i] = s1[i];
+		i++;
+	}
+	while (s2 && s2[i] && i <= len)
+		s2[i++] = ' ';
+	s2[i] = '\0';
+	return (s2);
+}
+
 int		copy_map(char *line, t_settings *set)
 {
 	char	**tab;
@@ -65,9 +86,11 @@ int		copy_map(char *line, t_settings *set)
 		set->map_width = width;
 	while (tab && i < set->map_height && set->map && (*set->map))
 	{
+		// tab[i++] = ft_strdup_fill(*set->map, set->map_width);
 		tab[i++] = ft_strdup(*set->map);
 		set->map++;
 	}
+// if (!(tab[i] = ft_strdup_fill(line, set->map_width)))
 	if (!(tab[i] = ft_strdup(line)))
 	{
 		free_tab(tab);
@@ -76,15 +99,6 @@ int		copy_map(char *line, t_settings *set)
 	free_map(set->map);
 	set->map = tab;
 	return (1);
-}
-
-void	free_map(char **map)
-{
-	while (map && *map)
-	{
-		free(*map);
-		map++;
-	}
 }
 
 int		get_map(char *line, t_settings *set)

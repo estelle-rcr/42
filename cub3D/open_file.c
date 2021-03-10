@@ -6,38 +6,33 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 16:30:11 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/04 15:58:11 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/03/09 20:35:39 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-t_settings		*init_set(void)
+void	init_set(t_settings set)
 {
-	t_settings	settings;
-	t_settings	*set;
-
-	settings.fd = -1;
-	settings.res.x = 0;
-	settings.res.y = 0;
-	settings.start_pos.player_x = -1.0;
-	settings.start_pos.player_y = -1.0;
-	settings.player_dir = '0';
-	settings.no_texture = 0;
-	settings.so_texture = 0;
-	settings.we_texture = 0;
-	settings.ea_texture = 0;
-	settings.s_texture = 0;
-	settings.f_color = -1;
-	settings.c_color = -1;
-	settings.map = 0;
-	settings.map_width = 0;
-	settings.map_height = 0;
-	set = &settings;
-	return (set);
+	set.fd = -1;
+	set.res.x = 0;
+	set.res.y = 0;
+	set.start_pos.x = -1.0;
+	set.start_pos.y = -1.0;
+	set.player_dir = '0';
+	set.no_texture = 0;
+	set.so_texture = 0;
+	set.we_texture = 0;
+	set.ea_texture = 0;
+	set.s_texture = 0;
+	set.f_color = -1;
+	set.c_color = -1;
+	set.map = 0;
+	set.map_width = 0;
+	set.map_height = 0;
 }
 
-int				check_extension(char *file, char *type)
+int		check_extension(char *file, char *type)
 {
 	int i;
 	int j;
@@ -55,7 +50,7 @@ int				check_extension(char *file, char *type)
 	return (0);
 }
 
-int				open_file(char *file)
+int		open_file(char *file)
 {
 	int	fd;
 
@@ -70,7 +65,7 @@ int				open_file(char *file)
 	return (fd);
 }
 
-int				is_whitespace(char *str)
+int		is_whitespace(char *str)
 {
 	int	i;
 
@@ -83,22 +78,21 @@ int				is_whitespace(char *str)
 	return (1);
 }
 
-t_settings		*read_file(char *file)
+int		read_file(char *file, t_settings set)
 {
 	char		*line;
-	t_settings	*set;
 	int			ret;
 
-	set = init_set();
-	if ((set->fd = open_file(file)) == 0)
+	init_set(set);
+	if ((set.fd = open_file(file)) == 0)
 		exit(0);
-	while ((ret = get_next_line(set->fd, &line)) >= 0)
+	while ((ret = get_next_line(set.fd, &line)) >= 0)
 	{
 		if (ret == -1)
 			exit(0);
 		if (*line && !is_whitespace(line))
 		{
-			if (!parse_file(line, set))
+			if (!parse_file(line, &set))
 				exit(0);
 		}
 		free(line);
@@ -106,8 +100,8 @@ t_settings		*read_file(char *file)
 			break ;
 		line = 0;
 	}
-	close(set->fd);
-	if (!check_map(set))
+	close(set.fd);
+	if (!check_map(&set))
 		exit(0);
-	return (set);
+	return (0);
 }

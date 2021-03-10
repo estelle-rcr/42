@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 14:28:21 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/01 16:28:53 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/03/09 22:54:40 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	print_err_msg(int error)
 		return (error_rtc(error));
 	else if (error >= 18 && error <= 20)
 		return (error_map(error));
+	else if (error >= 21)
+		return (error_mlx(error));
 	else
 		return (0);
 }
@@ -81,5 +83,16 @@ int	error_map(int error)
 		ft_putstr("Error\nThe map is not playable (wrong element).\n");
 	else if (error == 20)
 		ft_putstr("Error\nThe player position must be given only once.\n");
+	return (0);
+}
+
+int	error_mlx(int error)
+{
+	if (error == 21)
+		ft_putstr("Error\nCouldn't generate mlx pointer.\n");
+	if (error == 22)
+		ft_putstr("Error\nCouldn't generate mlx window.\n");
+	if (error == 23)
+		ft_putstr("Error\nCouldn't generate mlx image correctly.\n");
 	return (0);
 }

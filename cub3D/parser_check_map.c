@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:44:54 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/04 15:45:33 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/03/08 23:47:10 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ int	get_player_position(t_settings *set)
 		{
 			if (ft_strchr(DIR_CHARSET, set->map[x][y]))
 			{
-				set->start_pos.player_x = (float)x;
-				set->start_pos.player_y = (float)y;
+				set->start_pos.x = (float)x;
+				set->start_pos.y = (float)y;
 				set->player_dir = set->map[x][y];
 				set->map[x][y] = '0';
 				nb_player++;
@@ -100,19 +100,19 @@ int	check_map(t_settings *set)
 	if (!is_valid_map(set->map))
 	{
 		if (set->map)
-			free_tab(set->map);
+			free_map(set->map);
 		return (print_err_msg(ERR_INVALID_MAP));
 	}
 	if (!get_player_position(set))
 	{
 		if (set->map)
-			free_tab(set->map);
+			free_map(set->map);
 		return (0);
 	}
 	if (!all_params(set))
 	{
 		if (set->map)
-			free_tab(set->map);
+			free_map(set->map);
 		return (print_err_msg(ERR_MISSING_PARAMS));
 	}
 	return (1);

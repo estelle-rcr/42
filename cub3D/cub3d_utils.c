@@ -6,11 +6,20 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 16:14:32 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/01 16:16:09 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/03/09 16:22:13 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	free_map(char **map)
+{
+	while (map && *map)
+	{
+		free(*map);
+		map++;
+	}
+}
 
 char	**free_tab(char **tab)
 {

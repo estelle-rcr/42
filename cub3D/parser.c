@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 16:41:22 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/04 15:25:10 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/03/08 18:12:45 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	parse_file(char *line, t_settings *set)
 		if (!get_map(line, set))
 		{
 			if (set->map)
-				free_tab(set->map);
+				free_map(set->map);
 			free(line);
 			return (0);
 		}
