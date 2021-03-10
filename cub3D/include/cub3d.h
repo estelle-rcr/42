@@ -214,5 +214,6 @@ int			flood_fill(char **copy_map, float pos_x, float pos_y);
 int			run_mlx(t_game *game, int save);
 void		my_mlx_pixel_put(t_img_data *data, int x, int y, int color);
 int			my_mlx_new_img(void *mlx, t_img_data *img, int x, int y);
+int			create_mlx_win(t_game *game);
 
 #endif
