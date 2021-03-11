@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 16:30:11 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/11 17:19:44 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/03/11 21:13:38 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,21 +79,21 @@ int		is_whitespace(char *str)
 	return (1);
 }
 
-int		read_file(char *file, t_settings set)
+int		read_file(char *file, t_settings *set)
 {
 	char		*line;
 	int			ret;
 
-	init_set(&set);
-	if ((set.fd = open_file(file)) == 0)
+	init_set(set);
+	if ((set->fd = open_file(file)) == 0)
 		exit(0);
-	while ((ret = get_next_line(set.fd, &line)) >= 0)
+	while ((ret = get_next_line(set->fd, &line)) >= 0)
 	{
 		if (ret == -1)
 			exit(0);
 		if (*line && !is_whitespace(line))
 		{
-			if (!parse_file(line, &set))
+			if (!parse_file(line, set))
 				exit(0);
 		}
 		free(line);
@@ -101,8 +101,8 @@ int		read_file(char *file, t_settings set)
 			break ;
 		line = 0;
 	}
-	close(set.fd);
-	if (!check_map(&set))
+	close(set->fd);
+	if (!check_map(set))
 		exit(0);
-	return (0);
+	return (1);
 }

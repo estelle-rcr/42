@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 12:27:24 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/09 22:45:02 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/03/11 20:31:01 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,13 @@ int	main(int ac, char **av)
 	}
 	if (ac == 2 || (ac == 3 && save == 1))
 	{
-		if (!read_file(av[1], game.set))
+		if (!read_file(av[1], &game.set))
 			return (1);
-		//if (!run_mlx(&game, save))
-		//	return (1);
-			// exit_game(&game);
-			// return (1);
+		if (!run_mlx(&game, save))
+			exit_game(&game);
+			return (1);
 		// event_management(&game);
-		// exit_game(&game);
+		exit_game(&game);
 		return (0);
 	}
 	else

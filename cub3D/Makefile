@@ -11,7 +11,9 @@ SRCS =	cub3d_utils.c\
 		parser.c\
 		parser_check_map.c\
 		parser_cpy_map.c\
-		parser_RTC.c\
+		parser_params.c\
+		parser_map_tabs.c\
+		exit_mlx.c\
 
 PATH_SRCS = srcs/
 
@@ -47,7 +49,7 @@ all:		${NAME}
 $(NAME):    ${OBJS}
 			make -C ${LIBFT_DIR}
 			make -C ${MLX_DIR}
-			${CC} ${CFLAGS} ${LFLAGS} ${LIBS} ${OBJS} -o ${NAME} libft/libft.a
+			${CC} ${CFLAGS} ${LFLAGS} ${LIBS} ${OBJS} -o ${NAME} ${LIBFT_LIB} ${MLX_LIB_LINUX}
 
 clean:
 			${RM} ${OBJS}

@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 11:23:37 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/11 19:45:18 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/03/11 20:31:30 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ t_settings		*init_set(t_settings *set);
 int			check_extension(char *file, char *type);
 int			open_file(char *file);
 int			is_whitespace(char *str);
-int			read_file(char *file, t_settings set);
+int			read_file(char *file, t_settings *set);
 
 //cub3d parser utils
 char		**free_tab(char **tab);
@@ -214,11 +214,15 @@ int			check_map(t_settings *set);
 
 // floodfill
 int			flood_fill(char **copy_map, float pos_x, float pos_y);
-/*
+
 // init_mlx
 int			run_mlx(t_game *game, int save);
 void		my_mlx_pixel_put(t_img_data *data, int x, int y, int color);
 int			my_mlx_new_img(void *mlx, t_img_data *img, int x, int y);
 int			create_mlx_win(t_game *game);
-*/
+
+
+// exit_mlx
+int			exit_game(t_game *game);
+
 #endif
