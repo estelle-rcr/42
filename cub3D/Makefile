@@ -1,56 +1,62 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/02/04 11:22:26 by erecuero          #+#    #+#              #
-#    Updated: 2021/02/17 16:08:23 by erecuero         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+NAME = cub3D
 
-SRCS	=	cub3d_utils.c\
-			ft_split_sep.c\
-			handle_errors.c\
-			main.c\
-			minilib_utils.c\
-			open_file.c\
-			parser.c\
-			parser_RTC.c\
+SRCS =	cub3d_utils.c\
+		floodfill_check.c\
+		ft_split_sep.c\
+		handle_errors.c\
+		init_mlx.c\
+		main.c\
+		minilib_utils.c\
+		open_file.c\
+		parser.c\
+		parser_check_map.c\
+		parser_cpy_map.c\
+		parser_RTC.c\
 
-INCLUDE	= cub3d.h
+PATH_SRCS = srcs/
 
-NAME	= cub3D.a
+OBJS = ${addprefix ${PATH_SRCS},${SRCS:.c=.o}}
 
-CC	= clang
+CC = clang
 
-RM	= rm -rf
+CFLAGS = -Wall -Werror -Wextra
 
-CFLAGS	= -Wall -Wextra -Werror
+LIBFT_DIR = libft
 
-LIB	= libft/libft.a
-OBJS	= ${SRCS:.c=.o}
+LIBFT_LIB = libft/libft.a
 
+MLX_DIR = minilibx-linux
 
-all : $(NAME)
+MLX_LIB_LINUX = minilibx-linux/libmlx_Linux.a
 
-$(NAME) : $(OBJS)
-		$(MAKE) bonus -C ./libft
-		cp $(LIB) $(NAME)
-		ar rcs $(NAME) $(OBJS)
+INC_DIR = includes
+
+HEADS = -I${LIBFT_DIR}/includes -I${MLX_DIR} -I${INC_DIR}
+
+LFLAGS = -L ${LIBFT_DIR} -L ${MLX_DIR}
+
+LIBS = -lm -lbsd -lXext -lX11 -lft
+
+RM = rm -rf
 
 .c.o:
-		$(CC) $(CFLAGS) -I $(INCLUDE) -c $< -o $(<:.c=.o)
+			${CC} ${CFLAGS} ${HEADS} -g -c $< -o ${<:.c=.o}
 
-clean :
-	$(MAKE) clean -C ./libft
-	$(RM) $(OBJS)
+all:		${NAME}
 
-fclean: clean
-		$(MAKE) fclean -C ./libft
-		$(RM) $(NAME)
+$(NAME):    ${OBJS}
+			make -C ${LIBFT_DIR}
+			make -C ${MLX_DIR}
+			${CC} ${CFLAGS} ${LFLAGS} ${LIBS} ${OBJS} -o ${NAME} libft/libft.a
 
-re : fclean all
+clean:
+			${RM} ${OBJS}
+			make clean -C ${MLX_DIR}
+			make clean -C ${LIBFT_DIR}
 
-.PHONY: all clean fclean re
+fclean:     clean
+			${RM} ${NAME} ${MLX_LIB_LINUX} ${LIBFT_LIB}
+
+re:         fclean all
+
+.PHONY:     all clean fclean re
