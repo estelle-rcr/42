@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:47:30 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/09 23:59:56 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/03/11 17:14:33 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	init_game(t_game *game)
 //	game->rays = 0;
 //	game->sprites = 0;
 }
-
+/*
 void	my_mlx_pixel_put(t_img_data *img, int x, int y, int color)
 {
 	char *dst;
@@ -27,7 +27,7 @@ void	my_mlx_pixel_put(t_img_data *img, int x, int y, int color)
 	dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
 }
-/*
+
 int		my_mlx_new_img(void *mlx, t_img_data *img, int x, int y)
 {
 	img->img = mlx_new_image(mlx, x, y);
@@ -88,6 +88,6 @@ int	run_mlx(t_game *game, int save)
 	mlx_put_image_to_window(game->mlx, game->win, &game->img, 0, 0);
 	mlx_loop(game->mlx);
 	return (1);
-}*/
-
+}
+*/
 

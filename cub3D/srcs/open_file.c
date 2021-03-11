@@ -6,30 +6,30 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 16:30:11 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/09 20:35:39 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/03/11 17:19:44 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-t_settings	init_set(t_settings set)
+t_settings	*init_set(t_settings *set)
 {
-	set.fd = -1;
-	set.res.x = 0;
-	set.res.y = 0;
-	set.start_pos.x = -1.0;
-	set.start_pos.y = -1.0;
-	set.player_dir = '0';
-	set.no_texture = 0;
-	set.so_texture = 0;
-	set.we_texture = 0;
-	set.ea_texture = 0;
-	set.s_texture = 0;
-	set.f_color = -1;
-	set.c_color = -1;
-	set.map = 0;
-	set.map_width = 0;
-	set.map_height = 0;
+	set->fd = -1;
+	set->res.x = 0;
+	set->res.y = 0;
+	set->start_pos.x = -1.0;
+	set->start_pos.y = -1.0;
+	set->player_dir = '0';
+	set->no_texture = 0;
+	set->so_texture = 0;
+	set->we_texture = 0;
+	set->ea_texture = 0;
+	set->s_texture = 0;
+	set->f_color = -1;
+	set->c_color = -1;
+	set->map = 0;
+	set->map_width = 0;
+	set->map_height = 0;
 	return (set);
 }
 
@@ -84,7 +84,7 @@ int		read_file(char *file, t_settings set)
 	char		*line;
 	int			ret;
 
-	init_set(set);
+	init_set(&set);
 	if ((set.fd = open_file(file)) == 0)
 		exit(0);
 	while ((ret = get_next_line(set.fd, &line)) >= 0)

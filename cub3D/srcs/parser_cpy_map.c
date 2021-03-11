@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:46:11 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/09 18:49:28 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/03/11 19:42:39 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,32 +21,6 @@ int		is_map(char *s)
 		s++;
 	}
 	return (1);
-}
-
-char	*replace_tabs(char *line)
-{
-	int		i;
-	int		j;
-	int		len;
-	char	*line_dup;
-
-	i = -1;
-	while (line && line[++i])
-	{
-		if (line[i] == '\t')
-		{
-			len = ft_strlen(line) + 4;
-			if (!(line_dup = malloc(sizeof(char) * len + 1)))
-				return (NULL);
-			line_dup = ft_strdup(line);
-			j = i;
-			while (j < i + 4)
-				line_dup[j++] = ' ';
-			free(line);
-			line = line_dup;
-		}
-	}
-	return (line);
 }
 
 char	*ft_strdup_fill(const char *s1, int len)
@@ -82,11 +56,11 @@ int		copy_map(char *line, t_settings *set)
 	width = ft_strlen(line);
 	if (width > set->map_width)
 		set->map_width = width;
-	while (tab && i < set->map_height && set->map && (*set->map))
+	while (tab && i < set->map_height && set->map && set->map[i])
 	{
 		// tab[i++] = ft_strdup_fill(*set->map, set->map_width);
-		tab[i++] = ft_strdup(*set->map);
-		set->map++;
+		tab[i] = ft_strdup(set->map[i]);
+		i++;
 	}
 // if (!(tab[i] = ft_strdup_fill(line, set->map_width)))
 	if (!(tab[i] = ft_strdup(line)))
