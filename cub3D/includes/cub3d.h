@@ -20,10 +20,11 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <string.h>
+# include <math.h>
 
-# include "libft/includes/libft.h"
-# include "libft/includes/get_next_line.h"
-# include "minilibx-linux/mlx.h"
+# include "../libft/includes/libft.h"
+# include "../libft/includes/get_next_line.h"
+# include "../minilibx-linux/mlx.h"
 
 # define MAP_CHARSET "012NSEW"
 # define PLAY_CHARSET "02NSEW"
@@ -152,7 +153,7 @@ typedef enum	e_errors
 int			main(int ac, char **av);
 
 // open_file
-void		init_set(t_settings);
+t_settings		init_set(t_settings);
 int			check_extension(char *file, char *type);
 int			open_file(char *file);
 int			is_whitespace(char *str);

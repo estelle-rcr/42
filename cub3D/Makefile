@@ -1,72 +1,61 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/02/04 11:22:26 by erecuero          #+#    #+#              #
-#    Updated: 2021/03/10 19:35:49 by erecuero         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
-SRCS	=	srcs/cub3d_utils.c\
-			srcs/floodfill_check.c\
-			srcs/ft_split_sep.c\
-			srcs/handle_errors.c\
-			srcs/init_mlx.c\
-			srcs/minilib_utils.c\
-			srcs/open_file.c\
-			srcs/parser.c\
-			srcs/parser_check_map.c\
-			srcs/parser_cpy_map.c\
-			srcs/parser_params.c\
-
 NAME = cub3D
 
-MAIN = ./srcs/main.c
+SRCS =	cub3d_utils.c\
+		floodfill_check.c\
+		ft_split_sep.c\
+		handle_errors.c\
+		init_mlx.c\
+		main.c\
+		minilib_utils.c\
+		open_file.c\
+		parser.c\
+		parser_check_map.c\
+		parser_cpy_map.c\
+		parser_RTC.c\
 
-OBJ_MAIN = ${MAIN:.c=.o}
+PATH_SRCS = srcs/
 
-PATH_SRCS = ./
-
-_SRCS = ${addprefix ${PATH_SRCS}, ${SRCS}}
-
-OBJS = ${_SRCS:.c=.o}
-
-LINK = ar rc
+OBJS = ${addprefix ${PATH_SRCS},${SRCS:.c=.o}}
 
 CC = clang
 
-FLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra
+
+LIBFT_DIR = libft
+
+LIBFT_LIB = libft/libft.a
+
+MLX_DIR = minilibx-linux
+
+MLX_LIB_LINUX = minilibx-linux/libmlx_Linux.a
+
+INC_DIR = includes
+
+HEADS = -I${LIBFT_DIR}/includes -I${MLX_DIR} -I${INC_DIR}
+
+LFLAGS = -L ${LIBFT_DIR} -L ${MLX_DIR}
+
+LIBS = -lm -lbsd -lXext -lX11 -lft
 
 RM = rm -rf
 
-PATH_HEADER = ./
-
 .c.o:
-			${CC} ${FLAGS} -I${PATH_HEADER} -c $< -o ${<:.c=.o}
+			${CC} ${CFLAGS} ${HEADS} -g -c $< -o ${<:.c=.o}
 
-MYLIB = mylib.a
+all:		${NAME}
 
-PATH_MLX_LINUX = ./minilibx-linux/
-
-MLX_LINUX = ./minilibx-linux/libmlx_Linux.a
-
-all:        ${NAME}
-
-${NAME}:    ${MV} ${OBJ_MAIN} ${OBJS}
-			${LINK} ${MYLIB} ${OBJS}
-			ranlib ${MYLIB}
-			make -C ${PATH_MLX_LINUX}
-			${CC} ${FLAGS} -o3 ${OBJ_MAIN} ${MYLIB} ${MLX_LINUX} -lm -lbsd -lX11 -lXext -o ${NAME} libft/libft.a
+$(NAME):    ${OBJS}
+			make -C ${LIBFT_DIR}
+			make -C ${MLX_DIR}
+			${CC} ${CFLAGS} ${LFLAGS} ${LIBS} ${OBJS} -o ${NAME} libft/libft.a
 
 clean:
-			${RM} ${OBJ_MAIN} ${OBJS}
-			make clean -C ${PATH_MLX_LINUX}
+			${RM} ${OBJS}
+			make clean -C ${MLX_DIR}
+			make clean -C ${LIBFT_DIR}
 
 fclean:     clean
-			${RM} ${NAME} ${MYLIB} ${MLX_LINUX}
+			${RM} ${NAME} ${MLX_LIB_LINUX} ${LIBFT_LIB}
 
 re:         fclean all
 

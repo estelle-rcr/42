@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-void	init_set(t_settings set)
+t_settings	init_set(t_settings set)
 {
 	set.fd = -1;
 	set.res.x = 0;
@@ -30,6 +30,7 @@ void	init_set(t_settings set)
 	set.map = 0;
 	set.map_width = 0;
 	set.map_height = 0;
+	return (set);
 }
 
 int		check_extension(char *file, char *type)

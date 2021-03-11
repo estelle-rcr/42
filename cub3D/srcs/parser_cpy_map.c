@@ -53,9 +53,7 @@ char	*ft_strdup_fill(const char *s1, int len)
 {
 	char	*s2;
 	int		i;
-	int		size;
 
-	size = 0;
 	i = 0;
 	if (!(s2 = malloc((len + 1) * sizeof(char))))
 		return (NULL);
