@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:47:30 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/11 21:14:55 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/03/12 15:42:45 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	my_mlx_pixel_put(t_img_data *img, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
+/*
 int		my_mlx_new_img(void *mlx, t_img_data *img, int x, int y)
 {
 	img->img = mlx_new_image(mlx, x, y);
@@ -36,6 +37,44 @@ int		my_mlx_new_img(void *mlx, t_img_data *img, int x, int y)
 	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length, &img->endian);
 	return (1);
 }
+
+int		create_mlx_win(t_game *game)
+{
+	int	x;
+	int y;
+
+	mlx_get_screen_size(game->mlx, &x, &y);
+	if (game->set.res.x > x)
+		game->set.res.x = x;
+	if (game->set.res.y > y)
+		game->set.res.y = y;
+	game->win = mlx_new_window(game->mlx, game->set.res.x, game->set.res.y, "Cub3D");
+	if (!game->win)
+		return (ERROR_INIT_MLX_WIN);
+	return (1);
+}*/
+
+//	if (!create_mlx_win(game))
+//		return (0);
+//	if (!my_mlx_new_img(game->mlx, &game->img, game->set.res.x, game->set.res.y))
+//			return (0);
+
+int	run_mlx(t_game *game, t_img_data *img, int save)
+{
+//	init_game(game);
+
+	(void)save;
+	if (!(game->mlx = mlx_init()))
+		return (ERROR_INIT_MLX);
+	game->win = mlx_new_window(game->mlx, 1920, 1080, "Cub3D");
+	img->img = mlx_new_image(game->mlx, 1920, 1080);
+	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length, &img->endian);
+	my_mlx_pixel_put(img, 5, 5, 0x00FF0000);
+	mlx_put_image_to_window(game->mlx, game->win, img->img, 0, 0);
+	mlx_loop(game->mlx);
+	return (1);
+}
+
 /*
 void	draw_rect(t_image_data	*img, t_point location, t_dimension dim, int color)
 {
@@ -54,52 +93,3 @@ void	draw_rect(t_image_data	*img, t_point location, t_dimension dim, int color)
 		x++;
 	}
 }*/
-
-int		create_mlx_win(t_game *game)
-{
-	int	x;
-	int y;
-
-	mlx_get_screen_size(game->mlx, &x, &y);
-	if (game->set.res.x > x)
-		game->set.res.x = x;
-	if (game->set.res.y > y)
-		game->set.res.y = y;
-	game->win = mlx_new_window(game->mlx, game->set.res.x, game->set.res.y, "Cub3D");
-	if (!game->win)
-		return (ERROR_INIT_MLX_WIN);
-	return (1);
-}
-
-int	run_mlx(t_game *game, int save)
-{
-	init_game(game);
-	(void)save;
-	if (!(game->mlx = mlx_init()))
-		return (ERROR_INIT_MLX);
-/*	if (!create_mlx_win(game))
-		return (0);
-	if (!my_mlx_new_img(game->mlx, &game->img, game->set.res.x, game->set.res.y))
-			return (0);*/
-	game->win = mlx_new_window(game->mlx, game->set.res.x, game->set.res.y, "Cub3D");
-	game->img.img = mlx_new_image(game->mlx, game->set.res.x, game->set.res.y);
-	game->img.addr = mlx_get_data_addr(game->img.img, &game->img.bits_per_pixel, &game->img.line_length, &game->img.endian);
-	my_mlx_pixel_put(&game->img, 5, 5, 0x00FF0000);
-	mlx_put_image_to_window(game->mlx, game->win, &game->img, 0, 0);
-	mlx_loop(game->mlx);
-	return (1);
-}
-/*
-int	run_mlx(t_game *game, int save)
-{
-    void    *mlx;
-    void    *mlx_win;
-
-	(void)game;
-	(void)save;
-    mlx = mlx_init();
-    mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
-    mlx_loop(mlx);
-	return (1);
-}
-*/
