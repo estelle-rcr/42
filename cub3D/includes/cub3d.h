@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 11:23:37 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/12 15:30:45 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/03/12 16:07:40 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,7 +216,7 @@ int			check_map(t_settings *set);
 int			flood_fill(char **copy_map, float pos_x, float pos_y);
 
 // init_mlx
-int			run_mlx(t_game *game, t_img_data *img, int save);
+int			run_mlx(t_game *game, int save);
 /*
 void		my_mlx_pixel_put(t_img_data *data, int x, int y, int color);
 int			my_mlx_new_img(void *mlx, t_img_data *img, int x, int y);

@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:47:30 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/12 15:42:45 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/03/12 16:09:43 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int		create_mlx_win(t_game *game)
 //	if (!my_mlx_new_img(game->mlx, &game->img, game->set.res.x, game->set.res.y))
 //			return (0);
 
-int	run_mlx(t_game *game, t_img_data *img, int save)
+int	run_mlx(t_game *game, int save)
 {
 //	init_game(game);
 
@@ -67,10 +67,10 @@ int	run_mlx(t_game *game, t_img_data *img, int save)
 	if (!(game->mlx = mlx_init()))
 		return (ERROR_INIT_MLX);
 	game->win = mlx_new_window(game->mlx, 1920, 1080, "Cub3D");
-	img->img = mlx_new_image(game->mlx, 1920, 1080);
-	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length, &img->endian);
-	my_mlx_pixel_put(img, 5, 5, 0x00FF0000);
-	mlx_put_image_to_window(game->mlx, game->win, img->img, 0, 0);
+	game->img.img = mlx_new_image(game->mlx, 1920, 1080);
+	game->img.addr = mlx_get_data_addr(game->img.img, &game->img.bits_per_pixel, &game->img.line_length, &game->img.endian);
+	my_mlx_pixel_put(&game->img, 5, 5, 0x00FF0000);
+	mlx_put_image_to_window(game->mlx, game->win, game->img.img, 0, 0);
 	mlx_loop(game->mlx);
 	return (1);
 }
