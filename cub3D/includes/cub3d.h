@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 11:23:37 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/12 15:30:45 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/03/16 00:18:55 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,15 @@
 # include <fcntl.h>
 # include <string.h>
 # include <math.h>
+# include <sys/types.h>
+# include <sys/uio.h>
+# include <X11/X.h>
+# include <X11/keysym.h>
 
 # include "../libft/includes/libft.h"
 # include "../libft/includes/get_next_line.h"
 # include "../minilibx-linux/mlx.h"
+# include "keys.h"
 
 # define MAP_CHARSET "012NSEW"
 # define PLAY_CHARSET "02NSEW"
@@ -58,7 +63,7 @@ typedef struct		s_settings
 typedef struct	s_img_data {
 	void	*img;
 	char	*addr;
-	int				bits_per_pixel;
+	int				bpp;
 	int				line_length;
 	int				endian;
 }				t_img_data;
@@ -216,19 +221,21 @@ int			check_map(t_settings *set);
 int			flood_fill(char **copy_map, float pos_x, float pos_y);
 
 // init_mlx
-int			run_mlx(t_game *game, t_img_data *img, int save);
-/*
+int			run_mlx(t_game *game, int save);
+
 void		my_mlx_pixel_put(t_img_data *data, int x, int y, int color);
 int			my_mlx_new_img(void *mlx, t_img_data *img, int x, int y);
 int			create_mlx_win(t_game *game);
-*/
+void	draw_rect(t_game *game, int x, int y, int color);
 
-// Tests:
-
-void           my_mlx_pixel_p(t_img_data *data, int x, int y, int color);
+int	render(t_game *game);
+int	handle_keypress(int keysym, t_game *game);
+int	handle_keyrelease(int keysym, t_game *game);
 
 
 // exit_mlx
 int			exit_game(t_game *game);
+
+void	render_background(t_img_data *img, int color);
 
 #endif
