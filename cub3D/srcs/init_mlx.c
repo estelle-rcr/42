@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:47:30 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/17 17:10:15 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/03/17 23:37:21 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,20 +61,19 @@ void	draw_rect(t_game *game, t_axis pos, int color)
 	float	j;
 
 	i = 0;
-	while (i < 10)
+	while (i < MAP_SIZE)
 	{
 		j = 0;
-		while (j < 10)
+		while (j < MAP_SIZE)
 		{
-//			if ((pos.x + i < game->set.res.x) && (pos.y + j < game->set.res.y) && (pos.x + i > 0) && (pos.y + j > 0))
-			my_mlx_pixel_put(&game->img, pos.x + i, pos.y + j, color);
+			if ((pos.x + i < game->set.res.x) && (pos.y + j < game->set.res.y) && (pos.x + i > 0) && (pos.y + j > 0))
+				my_mlx_pixel_put(&game->img, pos.x + i, pos.y + j, color);
 			j++;
 		}
 		i++;
 	}
 }
 
-//	game->img.addr = mlx_get_data_addr(game->img.img, &game->img.bits_per_pixel, &game->img.line_length, &game->img.endian);
 //	game->img.addr[x * 4 + 4 * game->img.line_length * y] = 0x0000FF00;
 //	render_background(&game->img, 0x00FFFFFF);
 
@@ -84,22 +83,28 @@ void	draw_map(t_game *game, t_settings *set, int color)
 	int	j;
 	t_axis pos;
 
-	j = 0;
-	while (set->map[j])
+	i = 0;
+	(void)pos;
+	while (set->map[i])
 	{
-		i = 0;
-		while (set->map[j][i])
+		j = 0;
+		while (set->map[i][j])
 		{
-			pos.x = i*10;
-			pos.y = j*10;
-			if (ft_strnstr(PLAY_CHARSET, &set->map[j][i], 1))
+			pos.x = j * MAP_SIZE;
+			pos.y = i * MAP_SIZE;
+			if (set->map[i][j] == '0')
 				draw_rect(game, pos, 0x00FFFFFF);
+			else if (set->map[i][j] == '2')
+				draw_rect(game, pos, 0x000000FF);				
 			else
-				draw_rect(game, pos, color);				
+				draw_rect(game, pos, color);		
 			j++;
 		}
 		i++;
 	}
+	pos.x = game->set.start_pos.x * MAP_SIZE;
+	pos.y = game->set.start_pos.y * MAP_SIZE;
+	draw_rect(game, pos, 0x0000FF00);
 }
 
 int	run_mlx(t_game *game, int save)
@@ -111,8 +116,6 @@ int	run_mlx(t_game *game, int save)
 		return (ERROR_INIT_MLX);
 	if (!create_mlx_win(game))
 		return (0);
-//	game->set.start_pos.x *= 10;
-//	game->set.start_pos.y *= 10;
 	if (!my_mlx_new_img(game->mlx, &game->img, game->set.res.x, game->set.res.y))
 		return (0);
 	mlx_loop_hook(game->mlx, &render, game);
@@ -138,13 +141,13 @@ int	render(t_game *game)
 int	handle_keypress(int keycode, t_game *game)
 {
 	if (keycode == ARROW_UP || keycode == W_KEY)
-		game->set.start_pos.y -= 20;
+		game->set.start_pos.y -= 1;
 	else if (keycode == ARROW_DOWN || keycode == S_KEY)
-		game->set.start_pos.y += 20;
+		game->set.start_pos.y += 1;
 	else if (keycode == ARROW_LEFT || keycode == A_KEY)
-		game->set.start_pos.x -= 20;
+		game->set.start_pos.x -= 1;
 	else if (keycode == ARROW_RIGHT || keycode == D_KEY)
-		game->set.start_pos.x += 20;
+		game->set.start_pos.x += 1;
 	else if (keycode == ESCAPE)
 	{
 		mlx_destroy_window(game->mlx, game->win);

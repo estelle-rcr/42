@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 11:23:37 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/16 15:45:34 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/03/17 23:10:18 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 # define PLAY_CHARSET "02NSEW"
 # define DIR_CHARSET "NSEW"
 # define NB_SETTINGS 8
+# define MAP_SIZE 10
 
 typedef struct		s_axis
 {

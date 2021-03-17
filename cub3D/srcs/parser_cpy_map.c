@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:46:11 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/16 12:27:23 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/03/17 22:59:53 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,11 @@ int		copy_map(char *line, t_settings *set)
 		set->map_width = width;
 	while (tab && i < set->map_height && set->map && set->map[i])
 	{
-		// tab[i++] = ft_strdup_fill(*set->map, set->map_width);
+		//tab[i] = ft_strdup_fill(set->map[i], set->map_width);
 		tab[i] = ft_strdup(set->map[i]);
 		i++;
 	}
-// if (!(tab[i] = ft_strdup_fill(line, set->map_width)))
+//if (!(tab[i] = ft_strdup_fill(line, set->map_width)))
 	if (!(tab[i] = ft_strdup(line)))
 	{
 		free_tab(tab);
