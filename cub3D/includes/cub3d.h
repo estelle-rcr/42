@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 11:23:37 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/16 00:18:55 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/03/16 15:45:34 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ typedef struct	s_text_data
 
 typedef struct	s_game
 {
-	t_settings	set;
 	void	*mlx;
 	void	*win;
 	t_img_data	img;
@@ -90,9 +89,10 @@ typedef struct	s_game
 	t_text_data	west_txt;
 	t_text_data	east_txt;
 	t_text_data	sprites_txt;
+	t_settings	set;
+	float	dst_projection;
 	//t_player	player;
 	//t_ray		*rays;
-	float	dst_projection;
 }				t_game;
 
 /*typedef struct	s_player
@@ -222,16 +222,17 @@ int			flood_fill(char **copy_map, float pos_x, float pos_y);
 
 // init_mlx
 int			run_mlx(t_game *game, int save);
-
 void		my_mlx_pixel_put(t_img_data *data, int x, int y, int color);
-int			my_mlx_new_img(void *mlx, t_img_data *img, int x, int y);
 int			create_mlx_win(t_game *game);
-void	draw_rect(t_game *game, int x, int y, int color);
+int			my_mlx_new_img(void *mlx, t_img_data *img, int x, int y);
+void	draw_rect(t_game *game, t_axis player_pos, int color);
 
 int	render(t_game *game);
 int	handle_keypress(int keysym, t_game *game);
 int	handle_keyrelease(int keysym, t_game *game);
 
+//void	print_map(t_game *game, char p, int x, int y);
+void	draw_map(t_game *game, t_settings *set, int color);
 
 // exit_mlx
 int			exit_game(t_game *game);

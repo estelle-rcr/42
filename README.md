@@ -14,5 +14,8 @@ This project asks to build functions to extract a line in any file. It can be re
 ### 3rd project: ft_printf
 We have to rebuild the essentials functionnalities of printf in order to re-use it in latter project. It can print any of the following specifiers: char, string, pointer, decimal, integer, unsigned integer, hexadecimal, capitalized hexadecimal and %. It integrates the following flags, width and precision : -0*.
 
+### 4th project: cub3D
+We create a small 3D game inspired from Wolfenstein, a 90's game played in first-person view. We first make a parser to ensure the input file provided by the user is correct and that all the required data is provided in the right format. Then, we use the minilibX to display the game in 2D and then in 3D using the raycasting method.
+
 
 That's all folks!
