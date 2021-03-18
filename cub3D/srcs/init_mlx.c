@@ -6,13 +6,11 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:47:30 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/17 23:37:21 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/03/18 12:15:31 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-#include <X11/X.h>
-#include <X11/keysym.h>
 
 void	init_game(t_game *game)
 {
@@ -55,57 +53,12 @@ int		my_mlx_new_img(void *mlx, t_img_data *img, int x, int y)
 	return (1);
 }
 
-void	draw_rect(t_game *game, t_axis pos, int color)
-{
-	float	i;
-	float	j;
 
-	i = 0;
-	while (i < MAP_SIZE)
-	{
-		j = 0;
-		while (j < MAP_SIZE)
-		{
-			if ((pos.x + i < game->set.res.x) && (pos.y + j < game->set.res.y) && (pos.x + i > 0) && (pos.y + j > 0))
-				my_mlx_pixel_put(&game->img, pos.x + i, pos.y + j, color);
-			j++;
-		}
-		i++;
-	}
-}
 
 //	game->img.addr[x * 4 + 4 * game->img.line_length * y] = 0x0000FF00;
 //	render_background(&game->img, 0x00FFFFFF);
 
-void	draw_map(t_game *game, t_settings *set, int color)
-{
-	int	i;
-	int	j;
-	t_axis pos;
 
-	i = 0;
-	(void)pos;
-	while (set->map[i])
-	{
-		j = 0;
-		while (set->map[i][j])
-		{
-			pos.x = j * MAP_SIZE;
-			pos.y = i * MAP_SIZE;
-			if (set->map[i][j] == '0')
-				draw_rect(game, pos, 0x00FFFFFF);
-			else if (set->map[i][j] == '2')
-				draw_rect(game, pos, 0x000000FF);				
-			else
-				draw_rect(game, pos, color);		
-			j++;
-		}
-		i++;
-	}
-	pos.x = game->set.start_pos.x * MAP_SIZE;
-	pos.y = game->set.start_pos.y * MAP_SIZE;
-	draw_rect(game, pos, 0x0000FF00);
-}
 
 int	run_mlx(t_game *game, int save)
 {
@@ -132,34 +85,9 @@ int	render(t_game *game)
 	if (game->win != NULL)
 	{
 //		draw_rect(game, game->set.start_pos, 0x000000FF);
-		draw_map(game, &game->set, 0x00FF0000);
+		draw_map(game, &game->set);
 		mlx_put_image_to_window(game->mlx, game->win, game->img.img, 0, 0);
 	}
-	return (1);
-}
-
-int	handle_keypress(int keycode, t_game *game)
-{
-	if (keycode == ARROW_UP || keycode == W_KEY)
-		game->set.start_pos.y -= 1;
-	else if (keycode == ARROW_DOWN || keycode == S_KEY)
-		game->set.start_pos.y += 1;
-	else if (keycode == ARROW_LEFT || keycode == A_KEY)
-		game->set.start_pos.x -= 1;
-	else if (keycode == ARROW_RIGHT || keycode == D_KEY)
-		game->set.start_pos.x += 1;
-	else if (keycode == ESCAPE)
-	{
-		mlx_destroy_window(game->mlx, game->win);
-		game->win = NULL;
-	}
-	return (1);
-}
-
-int	handle_keyrelease(int keycode, t_game *game)
-{
-	(void)game;
-	printf("keyrelease: %d\n", keycode);
 	return (1);
 }
 

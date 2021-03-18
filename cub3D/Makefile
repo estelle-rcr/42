@@ -1,11 +1,14 @@
 NAME = cub3D
 
 SRCS =	cub3d_utils.c\
+		events.c\
+		exit_mlx.c\
 		floodfill_check.c\
 		ft_split_sep.c\
 		handle_errors.c\
 		init_mlx.c\
 		main.c\
+		map_display.c\
 		minilib_utils.c\
 		open_file.c\
 		parser.c\
@@ -13,7 +16,6 @@ SRCS =	cub3d_utils.c\
 		parser_cpy_map.c\
 		parser_params.c\
 		parser_map_tabs.c\
-		exit_mlx.c\
 
 PATH_SRCS = srcs/
 

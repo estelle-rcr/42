@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 11:23:37 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/17 23:10:18 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/03/18 12:20:22 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@
 # include "../libft/includes/get_next_line.h"
 # include "../minilibx-linux/mlx.h"
 # include "keys.h"
+# include "settings.h"
 
 # define MAP_CHARSET "012NSEW"
 # define PLAY_CHARSET "02NSEW"
 # define DIR_CHARSET "NSEW"
 # define NB_SETTINGS 8
-# define MAP_SIZE 10
 
 typedef struct		s_axis
 {
@@ -226,14 +226,12 @@ int			run_mlx(t_game *game, int save);
 void		my_mlx_pixel_put(t_img_data *data, int x, int y, int color);
 int			create_mlx_win(t_game *game);
 int			my_mlx_new_img(void *mlx, t_img_data *img, int x, int y);
-void	draw_rect(t_game *game, t_axis player_pos, int color);
+void		draw_rect(t_game *game, t_axis pos, int color, int size);
+void		draw_map(t_game *game, t_settings *set);
+int			render(t_game *game);
+int			handle_keypress(int keysym, t_game *game);
+int			handle_keyrelease(int keysym, t_game *game);
 
-int	render(t_game *game);
-int	handle_keypress(int keysym, t_game *game);
-int	handle_keyrelease(int keysym, t_game *game);
-
-//void	print_map(t_game *game, char p, int x, int y);
-void	draw_map(t_game *game, t_settings *set, int color);
 
 // exit_mlx
 int			exit_game(t_game *game);
