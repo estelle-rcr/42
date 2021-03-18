@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 12:15:06 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/18 13:17:02 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/03/18 15:49:11 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	draw_map(t_game *game, t_settings *set)
 	t_axis pos;
 
 	i = 0;
-	(void)pos;
 	while (set->map[i])
 	{
 		j = 0;
@@ -56,7 +55,31 @@ void	draw_map(t_game *game, t_settings *set)
 		}
 		i++;
 	}
-	pos.x = game->set.start_pos.x * MAP_SIZE;
-	pos.y = game->set.start_pos.y * MAP_SIZE;
-	draw_rect(game, pos, MAP_PLAYER, PLAYER_SIZE);
 }
+
+void draw_player(t_game *game, int size)
+{
+    float	i;
+	float	j;
+    t_axis pos;
+
+	i = 0;
+    pos.x = game->set.player_pos.x * size;
+	pos.y = game->set.player_pos.y * size;
+	while (i < PLAYER_SIZE)
+	{
+		j = 0;
+		while (j < PLAYER_SIZE)
+		{
+			if ((pos.x + i < game->set.res.x) && (pos.y + j < game->set.res.y) && (pos.x + i > 0) && (pos.y + j > 0))
+				my_mlx_pixel_put(&game->img, pos.x + i, pos.y + j, MAP_PLAYER);
+			j++;
+		}
+		i++;
+	}
+}
+/*
+int hit_wall(char **map, t_axis pos)
+{
+    if (map[pos.y][pos.x] ==)
+}*/

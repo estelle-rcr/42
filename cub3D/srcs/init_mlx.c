@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:47:30 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/18 12:15:31 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/03/18 15:29:32 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,9 @@ int	run_mlx(t_game *game, int save)
 		return (0);
 	if (!my_mlx_new_img(game->mlx, &game->img, game->set.res.x, game->set.res.y))
 		return (0);
+	game->set.player_pos.x *= MAP_SIZE;
+	game->set.player_pos.y *= MAP_SIZE;
+	mlx_put_image_to_window(game->mlx, game->win, game->img.img, 0, 0);
 	mlx_loop_hook(game->mlx, &render, game);
 	mlx_hook(game->win, KeyPress, KeyPressMask, &handle_keypress, game);
 	mlx_hook(game->win, KeyRelease, KeyReleaseMask, &handle_keyrelease, game);
@@ -81,11 +84,10 @@ int	run_mlx(t_game *game, int save)
 
 int	render(t_game *game)
 {
-
 	if (game->win != NULL)
 	{
-//		draw_rect(game, game->set.start_pos, 0x000000FF);
 		draw_map(game, &game->set);
+		draw_player(game, 1);
 		mlx_put_image_to_window(game->mlx, game->win, game->img.img, 0, 0);
 	}
 	return (1);

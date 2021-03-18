@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 14:49:22 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/16 12:26:41 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/03/18 15:29:32 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	check_map(t_settings *set)
             free_tab(set->map);
 		return (0);
 	}
-    if (!(flood_fill(copy_map, set->start_pos.x , set->start_pos.y)))
+    if (!(flood_fill(copy_map, set->player_pos.x , set->player_pos.y)))
     {
     	if (set->map)
             free_tab(set->map);

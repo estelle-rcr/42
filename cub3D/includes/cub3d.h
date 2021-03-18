@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 11:23:37 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/18 12:20:22 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/03/18 15:29:32 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef struct		s_settings
 {
 	int		fd;
 	t_axis	res;
-	t_axis	start_pos;
+	t_axis	player_pos;
 	char	player_dir;
 	char	*no_texture;
 	char	*so_texture;
@@ -226,9 +226,14 @@ int			run_mlx(t_game *game, int save);
 void		my_mlx_pixel_put(t_img_data *data, int x, int y, int color);
 int			create_mlx_win(t_game *game);
 int			my_mlx_new_img(void *mlx, t_img_data *img, int x, int y);
+int			render(t_game *game);
+
+// map_display
 void		draw_rect(t_game *game, t_axis pos, int color, int size);
 void		draw_map(t_game *game, t_settings *set);
-int			render(t_game *game);
+void 		draw_player(t_game *game, int size);
+
+// events
 int			handle_keypress(int keysym, t_game *game);
 int			handle_keyrelease(int keysym, t_game *game);
 
@@ -236,6 +241,6 @@ int			handle_keyrelease(int keysym, t_game *game);
 // exit_mlx
 int			exit_game(t_game *game);
 
-void	render_background(t_img_data *img, int color);
+//void	render_background(t_img_data *img, int color);
 
 #endif
