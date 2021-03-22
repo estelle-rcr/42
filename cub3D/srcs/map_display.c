@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 12:15:06 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/18 15:49:11 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/03/22 12:53:41 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,14 @@ void draw_player(t_game *game, int size)
 /*
 int hit_wall(char **map, t_axis pos)
 {
-    if (map[pos.y][pos.x] ==)
+    if (map[pos.y][pos.x] == )
 }*/
+
+
+void    raycaster(t_game game, char **map)
+{
+    double dirX = -1;
+    double dirY = 0;
+    double planeX = 0;
+    double planeY = 0.66
+}
