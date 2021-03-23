@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 11:23:37 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/22 15:46:55 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/03/23 12:35:03 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@
 # define PLAY_CHARSET "02NSEW"
 # define DIR_CHARSET "NSEW"
 # define NB_SETTINGS 8
-# define PACE 0.1
 
 typedef struct		s_axis
 {
@@ -48,7 +47,7 @@ typedef struct		s_settings
 {
 	int		fd;
 	t_axis	res;
-	t_axis	start_pos;
+	t_axis	player_pos;
 	char	player_dir;
 	char	*no_texture;
 	char	*so_texture;
@@ -93,21 +92,15 @@ typedef struct	s_game
 	t_text_data	sprites_txt;
 	t_settings	set;
 	float	dst_projection;
-	t_player	player;
+	//t_player	player;
 	//t_ray		*rays;
 }				t_game;
 
-typedef struct	s_player
+/*typedef struct	s_player
 {
-	t_axis	pos;
-//	float	radius;
-	int		turn_dir;
-	int		walk_dir;
-	double	rotation_angle;
-	float	move_speed;
-	double	rotation_speed;
+
 }				t_player;
-/*s
+
 typedef struct	s_ray
 {
 
@@ -221,7 +214,7 @@ void		add_spaces(char *s, int i);
 // parser_check_map
 int 		is_valid_map(char **map);
 int 		valid_cells(char case1, char case2);
-int 		get_start_position(t_settings *set);
+int 		get_player_position(t_settings *set);
 int			comp_null_cells(char **map, int x, int y);
 int			check_map(t_settings *set);
 
@@ -238,7 +231,7 @@ int			render(t_game *game);
 // map_display
 void		draw_rect(t_game *game, t_axis pos, int color, int size);
 void		draw_map(t_game *game, t_settings *set);
-void 		draw_player(t_game *game, t_axis player_pos);
+void 		draw_player(t_game *game);
 
 // events
 int			handle_keypress(int keysym, t_game *game);
