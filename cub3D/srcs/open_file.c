@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 16:30:11 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/18 15:29:32 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/03/23 14:15:20 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ t_settings	*init_set(t_settings *set)
 	set->fd = -1;
 	set->res.x = 0;
 	set->res.y = 0;
-	set->player_pos.x = -1.0;
-	set->player_pos.y = -1.0;
+	set->start_pos.x = -1.0;
+	set->start_pos.y = -1.0;
 	set->player_dir = '0';
 	set->no_texture = 0;
 	set->so_texture = 0;

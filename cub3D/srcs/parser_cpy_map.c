@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:46:11 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/17 22:59:53 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/03/24 14:25:12 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,25 +21,6 @@ int		is_map(char *s)
 		s++;
 	}
 	return (1);
-}
-
-char	*ft_strdup_fill(const char *s1, int len)
-{
-	char	*s2;
-	int		i;
-
-	i = 0;
-	if (!(s2 = malloc((len + 1) * sizeof(char))))
-		return (NULL);
-	while (s1 && s1[i])
-	{
-		s2[i] = s1[i];
-		i++;
-	}
-	while (s2 && s2[i] && i <= len)
-		s2[i++] = ' ';
-	s2[i] = '\0';
-	return (s2);
 }
 
 int		copy_map(char *line, t_settings *set)
@@ -58,11 +39,9 @@ int		copy_map(char *line, t_settings *set)
 		set->map_width = width;
 	while (tab && i < set->map_height && set->map && set->map[i])
 	{
-		//tab[i] = ft_strdup_fill(set->map[i], set->map_width);
 		tab[i] = ft_strdup(set->map[i]);
 		i++;
 	}
-//if (!(tab[i] = ft_strdup_fill(line, set->map_width)))
 	if (!(tab[i] = ft_strdup(line)))
 	{
 		free_tab(tab);

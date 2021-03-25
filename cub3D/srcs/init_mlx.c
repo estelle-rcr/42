@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:47:30 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/23 12:34:54 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/03/25 01:14:51 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,41 +71,47 @@ int	run_mlx(t_game *game, int save)
 		return (0);
 	if (!my_mlx_new_img(game->mlx, &game->img, game->set.res.x, game->set.res.y))
 		return (0);
-	game->set.player_pos.x *= MAP_SIZE;
-	game->set.player_pos.y *= MAP_SIZE;
-	mlx_put_image_to_window(game->mlx, game->win, game->img.img, 0, 0);
-	mlx_loop_hook(game->mlx, &render, game);
+	init_player(game);
+	game->dst_projection_plane = (game->set.res.x / 2) / tan(degree_to_radian(FOV / 2));
 	mlx_hook(game->win, KeyPress, KeyPressMask, &handle_keypress, game);
 	mlx_hook(game->win, KeyRelease, KeyReleaseMask, &handle_keyrelease, game);
+	mlx_loop_hook(game->mlx, &render, game);
 	mlx_loop(game->mlx);
 	exit_game(game);
 	return (1);
+}
+
+void	init_player(t_game *game)
+{
+	game->player.pos.x = game->set.start_pos.x * MAP_SIZE;
+	game->player.pos.y = game->set.start_pos.y * MAP_SIZE;
+	game->player.turn_dir = 0; // -1 if left, +1 irght
+	game->player.walk_dir = 0; // -1 if back, +1 front
+	game->player.move_speed = MOVE_SPEED;
+	game->player.rotation_speed = ROTATION_SPEED * (M_PI / 180);
+	if (game->set.player_dir == 'N')
+		game->player.rotation_angle = M_PI + M_PI / 2;
+	else if (game->set.player_dir == 'S')
+		game->player.rotation_angle = M_PI / 2;
+	else if (game->set.player_dir == 'W')
+		game->player.rotation_angle = M_PI;
+	else if (game->set.player_dir == 'E')
+		game->player.rotation_angle = 0;
 }
 
 int	render(t_game *game)
 {
 	if (game->win != NULL)
 	{
+		render_background(game);
 		draw_map(game, &game->set);
-		draw_player(game);
+		draw_line(game);
+		//	raycasting(game);
+		//cast_all_rays
+		//render_wall
+		//render_sprites
+		update_player(game);
 		mlx_put_image_to_window(game->mlx, game->win, game->img.img, 0, 0);
 	}
 	return (1);
-}
-
-void	render_background(t_img_data *img, int color)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < 510)
-	{
-		j = 0;
-		while (j < 620)
-		{
-			my_mlx_pixel_put(img, j++, i, color);
-		}
-		++i;
-	}
 }

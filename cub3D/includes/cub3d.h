@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 11:23:37 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/23 12:35:03 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/03/25 00:57:08 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef struct		s_settings
 {
 	int		fd;
 	t_axis	res;
-	t_axis	player_pos;
+	t_axis	start_pos;
 	char	player_dir;
 	char	*no_texture;
 	char	*so_texture;
@@ -61,29 +61,56 @@ typedef struct		s_settings
 	int		map_height;
 }					t_settings;
 
-typedef struct	s_img_data {
+typedef struct		s_img_data {
 	void	*img;
 	char	*addr;
 	int				bpp;
 	int				line_length;
 	int				endian;
-}				t_img_data;
+}					t_img_data;
 
-typedef struct	s_text_data
+typedef struct		s_text_data
 {
 	void	*img;
 	char	*addr;
-	int				bits_per_pixel;
+	int				bpp;
 	int				line_length;
 	int				endian;
 	int				width;
 	int				height;
-}				t_text_data;
+}					t_text_data;
 
-typedef struct	s_game
+typedef struct		s_player
 {
-	void	*mlx;
-	void	*win;
+	t_axis		pos;
+	double		turn_dir;
+	double		walk_dir;
+	double		rotation_angle;
+	double		move_speed;
+	double		rotation_speed;
+	double		direction_angle;
+}					t_player;
+
+
+typedef struct	s_ray
+{
+	float	distance;
+	float	angle;
+	t_axis	axis_hit;
+	char	axis_content;
+	int		facing_down;
+	int		facing_left;
+	int		hit_vertical;
+	int		north_wall;
+	int		south_wall;
+	int		west_wall;
+	int		east_wall;
+}				t_ray;
+
+typedef struct		s_game
+{
+	void		*mlx;
+	void		*win;
 	t_img_data	img;
 	t_text_data	north_txt;
 	t_text_data	south_txt;
@@ -91,21 +118,10 @@ typedef struct	s_game
 	t_text_data	east_txt;
 	t_text_data	sprites_txt;
 	t_settings	set;
-	float	dst_projection;
-	//t_player	player;
-	//t_ray		*rays;
-}				t_game;
-
-/*typedef struct	s_player
-{
-
-}				t_player;
-
-typedef struct	s_ray
-{
-
-}				t_ray;
-*/
+	t_player	player;
+	t_ray		*rays;
+	float		dst_projection_plane;
+}					t_game;
 
 // ERRORS:
 
@@ -202,7 +218,7 @@ int			get_b(int trgb);
 
 // parser_cpy_map
 int			is_map(char *s);
-char		*ft_strdup_fill(const char *s1, int len);
+char		*ft_strdup_fill(char *s1, int len);
 int 		copy_map(char *line, t_settings *set);
 int			get_map(char *line, t_settings *set);
 
@@ -214,7 +230,7 @@ void		add_spaces(char *s, int i);
 // parser_check_map
 int 		is_valid_map(char **map);
 int 		valid_cells(char case1, char case2);
-int 		get_player_position(t_settings *set);
+int 		get_start_position(t_settings *set);
 int			comp_null_cells(char **map, int x, int y);
 int			check_map(t_settings *set);
 
@@ -226,21 +242,30 @@ int			run_mlx(t_game *game, int save);
 void		my_mlx_pixel_put(t_img_data *data, int x, int y, int color);
 int			create_mlx_win(t_game *game);
 int			my_mlx_new_img(void *mlx, t_img_data *img, int x, int y);
+void		init_player(t_game *game);
 int			render(t_game *game);
+void 		update_angle(t_game *game);
 
 // map_display
-void		draw_rect(t_game *game, t_axis pos, int color, int size);
+void		draw_rect(t_game *game, t_axis pos, t_axis end, int color);
 void		draw_map(t_game *game, t_settings *set);
 void 		draw_player(t_game *game);
+void		draw_line(t_game *game);
+int 		printable_map(t_game *game, float x, float y);
+int 		hit_wall(char **map, int x, int y);
+int			hit_screen(t_game *game, float x, float y);
 
 // events
 int			handle_keypress(int keysym, t_game *game);
 int			handle_keyrelease(int keysym, t_game *game);
 
-
 // exit_mlx
 int			exit_game(t_game *game);
 
-//void	render_background(t_img_data *img, int color);
+// raycasting
+int 	raycasting(t_game *game);
+void	draw_ray(t_game *game, double ray_angle);
+void	render_background(t_game *game);
+void	update_player(t_game *game);
 
 #endif
