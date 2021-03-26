@@ -6,40 +6,15 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 15:15:20 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/25 01:10:44 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/03/26 15:59:20 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int raycasting(t_game *game)
-{
-    double column_id;
-    double ray_angle;
-    float num_rays;
-    int i;
-    
-    i = 0;
-    column_id = 0.0;
-    num_rays = 10; //game->set.res.x / 2;
-    //num_rays = M_PI / 2;
-    ray_angle = game->player.rotation_angle - (FOV / 2);
-    draw_ray(game, ray_angle);
-    /*
-    while (i < num_rays)
-    {
-        draw_ray(game, ray_angle);
-        ray_angle += (FOV / 2) / num_rays;
-        column_id++;
-        i++;
-    }
-    */
-    return (1);
-}
-
 void	cast_all_rays(t_game *game)
 {
-	float	ray_angle;
+	double	ray_angle;
 	int		i;
 	int		num_rays;
 
@@ -48,15 +23,42 @@ void	cast_all_rays(t_game *game)
 	while(i < num_rays)
 	{
 		ray_angle = game->player.rotation_angle + atan((i - (num_rays / 2)) / game->dst_projection_plane);
-		init_ray(&game->rays[i], normalize_angle(ray_angle));
-		//find_horizontal_intercept(game, &game->rays[i]);
-		//find_vertical_intercept(game, &game->rays[i]);
+	    ray_angle = normalize_angle(&ray_angle);
+		draw_ray(game, ray_angle);
+		init_ray(&game->rays[i], ray_angle);
+		find_horizontal_intersept(game, &game->rays[i]);
+		//find_vertical_intersept(game, &game->rays[i]);
+		i++;
 	}
 }
 
-// is_wall_raycasting return (map[next_y][next_x])
+double	normalize_angle(double *ray_angle)
+{
+	*ray_angle =  fmod(*ray_angle, 2 * M_PI);
+	if (*ray_angle < 0)
+		*ray_angle = (2 * M_PI) + *ray_angle;
+	return (*ray_angle);
+}
 
-/*
+void	find_horizontal_intersept(t_game *game, t_ray *ray)
+{
+	double	xstep;
+	double	ystep;
+	double	xintercept;
+	double	yintercept;
+	
+	(void)xstep;
+	(void)ystep;
+	yintercept = (int)(game->player.pos.y / MAP_SIZE) * MAP_SIZE;
+	xintercept = game->player.pos.x + (yintercept - game->player.pos.y) / tan(ray->angle);
+}
+
+void	find_vertical_intersept(t_game *game, t_ray *ray)
+{
+	(void)game;
+	(void)ray;
+}
+
 void	draw_ray(t_game *game, double ray_angle)
 {
     float	i;
@@ -75,4 +77,6 @@ void	draw_ray(t_game *game, double ray_angle)
 		i++;
 	}	
 }
-*/
+
+// is_wall_raycasting return (map[next_y][next_x])
+

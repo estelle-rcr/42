@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 11:23:37 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/25 00:57:08 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/03/26 15:58:40 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,14 @@
 # include "../minilibx-linux/mlx.h"
 # include "keys.h"
 # include "settings.h"
+# include "errors.h"
+
+#ifndef M_PI
+# define M_PI 3.14159265358979323846264338327950288
+#endif
+
+#define degToRad(angleInDegrees) ((angleInDegrees) * M_PI / 180.0)
+#define radToDeg(angleInRadians) ((angleInRadians) * 180.0 / M_PI)
 
 # define MAP_CHARSET "012NSEW"
 # define PLAY_CHARSET "02NSEW"
@@ -91,16 +99,16 @@ typedef struct		s_player
 	double		direction_angle;
 }					t_player;
 
-
 typedef struct	s_ray
 {
 	float	distance;
 	float	angle;
-	t_axis	axis_hit;
+	t_axis	wall_hit;
 	char	axis_content;
 	int		facing_down;
 	int		facing_left;
 	int		hit_vertical;
+	int		hit_horizontal;
 	int		north_wall;
 	int		south_wall;
 	int		west_wall;
@@ -122,54 +130,6 @@ typedef struct		s_game
 	t_ray		*rays;
 	float		dst_projection_plane;
 }					t_game;
-
-// ERRORS:
-
-typedef enum	e_errors
-{
-// main
-	ERR_ARGS,
-
-// open_file
-	ERR_EXTENSION,
-	ERR_OPENING_DIR,
-	ERR_OPENING_FILE,
-
-// ft_parse_file
-	ERR_MALLOC,
-	ERR_MISSING_PARAMS,
-	ERR_GNL,
-
-// ft check params
-	ERR_CODE_NOT_VALID,
-
-// ft check resolution
-	ERR_NEGATIVE_RES,
-	ERR_RES_ALREADY_ADDED,
-	ERR_RES_FORMAT,
-	ERR_RES_INPUTS,
-
-//ft check textures
-	ERR_TEX_INPUTS,
-	ERR_TEX_FORMAT,
-	ERR_TEX_ALREADY_ADDED,
-
-// ft check colors
-	ERR_COLOR_INPUTS,
-	ERR_COLOR_FORMAT,
-	ERR_COLOR_ALREADY_ADDED,
-
-// map parser
-	ERR_NOT_MAP_LINE,
-	ERR_INVALID_MAP,
-	ERR_PLAYER_COUNT,
-
-// mlx error
-	ERROR_INIT_MLX,
-	ERROR_INIT_MLX_WIN,
-	ERROR_IMG_MLX,
-
-}				t_errors;
 
 // main
 int			main(int ac, char **av);
@@ -238,22 +198,12 @@ int			check_map(t_settings *set);
 int			flood_fill(char **copy_map, float pos_x, float pos_y);
 
 // init_mlx
+
 int			run_mlx(t_game *game, int save);
 void		my_mlx_pixel_put(t_img_data *data, int x, int y, int color);
 int			create_mlx_win(t_game *game);
 int			my_mlx_new_img(void *mlx, t_img_data *img, int x, int y);
-void		init_player(t_game *game);
 int			render(t_game *game);
-void 		update_angle(t_game *game);
-
-// map_display
-void		draw_rect(t_game *game, t_axis pos, t_axis end, int color);
-void		draw_map(t_game *game, t_settings *set);
-void 		draw_player(t_game *game);
-void		draw_line(t_game *game);
-int 		printable_map(t_game *game, float x, float y);
-int 		hit_wall(char **map, int x, int y);
-int			hit_screen(t_game *game, float x, float y);
 
 // events
 int			handle_keypress(int keysym, t_game *game);
@@ -263,9 +213,32 @@ int			handle_keyrelease(int keysym, t_game *game);
 int			exit_game(t_game *game);
 
 // raycasting
-int 	raycasting(t_game *game);
-void	draw_ray(t_game *game, double ray_angle);
-void	render_background(t_game *game);
-void	update_player(t_game *game);
+void		cast_all_rays(t_game *game);
+double		normalize_angle(double *ray_angle);
+void		find_horizontal_intersept(t_game *game, t_ray *ray);
+void		find_vertical_intersept(t_game *game, t_ray *ray);
+void		draw_ray(t_game *game, double ray_angle);
+
+// raycasting init
+int			init_game(t_game *game);
+void		init_ray(t_ray *ray, float ray_angle);
+void		init_player(t_game *game);
+
+// raycasting_setup
+int			hit_screen(t_game *game, float x, float y);
+void		draw_rect(t_game *game, t_axis pos, t_axis end, int color);
+void		render_background(t_game *game);
+void		update_player(t_game *game, t_player *player);
+
+
+
+
+// map_display_bonus
+
+void		draw_map(t_game *game, t_settings *set);
+void 		draw_player(t_game *game);
+void		draw_line(t_game *game);
+int 		printable_map(t_game *game, float x, float y);
+int 		hit_wall(char **map, int x, int y);
 
 #endif

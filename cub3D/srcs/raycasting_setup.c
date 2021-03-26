@@ -6,40 +6,36 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 00:58:49 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/25 00:59:50 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/03/26 15:37:55 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "cub3d.h"
 
-void	init_ray(t_ray *ray, float ray_angle)
+int	hit_screen(t_game *game, float x, float y)
 {
-	ray->angle = ray_angle;
-	ray->axis_hit.x = 0;
-	ray->axis_hit.y = 0;
-	ray->distance = 0;
-	//...
+	if (x >= 0 && y >= 0 && x <= (float)game->set.res.x &&  y <= (float)game->set.res.y)
+		return (0);
+	return (1);
 }
 
-void	update_player(t_game *game)
+void	draw_rect(t_game *game, t_axis pos, t_axis end, int color)
 {
-	float move_step;
-	t_axis next;
-	t_axis step;
-	
-	game->player.rotation_angle += game->player.turn_dir * game->player.rotation_speed;
-	move_step = game->player.walk_dir * game->player.move_speed;
-	step.x = cos(game->player.rotation_angle); // +game->player.direction_angle
-	step.y = sin(game->player.rotation_angle); // +game->player.direction_angle
-    next.x = game->player.pos.x + (step.x * move_step);
-	next.y = game->player.pos.y + (step.y * move_step);
-	if (!hit_wall(game->set.map, (int)(next.x / MAP_SIZE), (int)(next.y / MAP_SIZE)))
+	float	i;
+	float	j;
+
+	i = 0;
+	while (pos.x + i < end.x)
 	{
-		game->player.pos.x = next.x;
-		game->player.pos.y = next.y;
-		draw_player(game);
+		j = 0;
+		while (pos.y + j < end.y)
+		{
+			if (!hit_screen(game, pos.x + i, pos.y + j)) 
+				my_mlx_pixel_put(&game->img, pos.x + i, pos.y + j, color);
+			j++;
+		}
+		i++;
 	}
-	//game->player.rotation_angle = normalize_angle(game->player.rotation_angle);
 }
 
 void	render_background(t_game *game)
@@ -59,4 +55,25 @@ void	render_background(t_game *game)
 	floor_end.y = game->set.res.x;
 	draw_rect(game, ceil_start, ceil_end, game->set.c_color);
 	draw_rect(game, floor_start, floor_end, game->set.f_color);
+}
+
+void	update_player(t_game *game, t_player *player)
+{
+	float move_step;
+	t_axis next;
+	t_axis step;
+	
+	player->rotation_angle += player->turn_dir * player->rotation_speed;
+	move_step = player->walk_dir * player->move_speed;
+	step.x = cos(player->rotation_angle); // +game->player.direction_angle
+	step.y = sin(player->rotation_angle); // +game->player.direction_angle
+    next.x = player->pos.x + (step.x * move_step);
+	next.y = player->pos.y + (step.y * move_step);
+	if (!hit_wall(game->set.map, (int)(next.x / MAP_SIZE), (int)(next.y / MAP_SIZE)))
+	{
+		player->pos.x = next.x;
+		player->pos.y = next.y;
+		draw_player(game);
+	}
+//	game->player.rotation_angle = normalize_angle(game->player.rotation_angle);
 }
