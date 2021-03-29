@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 15:07:52 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/26 15:56:09 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/03/29 23:36:03 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ void	init_player(t_game *game)
 void	init_ray(t_ray *ray, float ray_angle)
 {
 	ray->angle = ray_angle;
-	ray->wall_hit.x = 0;
+    ray->wall_hit.x = 0;
 	ray->wall_hit.y = 0;
 	ray->distance = 0;
-	ray->axis_content = 0;
+	ray->wall_content = 0;
 	ray->facing_down = (ray_angle > 0 && ray_angle < M_PI);
-	ray->facing_left = (ray_angle > M_PI / 2 && ray_angle < M_PI + M_PI / 2);
+	ray->facing_right = (ray_angle < M_PI / 2 && ray_angle > 1.5 * M_PI);
 	ray->north_wall = 0;
 	ray->south_wall = 0;
 	ray->west_wall = 0;

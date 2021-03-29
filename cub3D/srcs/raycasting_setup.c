@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 00:58:49 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/26 15:37:55 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/03/29 16:48:47 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	update_player(t_game *game, t_player *player)
 	step.y = sin(player->rotation_angle); // +game->player.direction_angle
     next.x = player->pos.x + (step.x * move_step);
 	next.y = player->pos.y + (step.y * move_step);
-	if (!hit_wall(game->set.map, (int)(next.x / MAP_SIZE), (int)(next.y / MAP_SIZE)))
+	if (!hit_wall(game, (int)(next.x / MAP_SIZE), (int)(next.y / MAP_SIZE)))
 	{
 		player->pos.x = next.x;
 		player->pos.y = next.y;

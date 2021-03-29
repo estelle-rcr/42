@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 12:15:06 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/26 15:12:11 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/03/29 14:17:06 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void draw_player(t_game *game)
 		i++;
 	}
 }
-
+/*
 void	draw_line(t_game *game)
 {
     float	i;
@@ -81,7 +81,7 @@ void	draw_line(t_game *game)
 			my_mlx_pixel_put(&game->img, x, y, MAP_PLAYER);	
 		i++;
 	}	
-}
+}*/
 
 int printable_map(t_game *game, float x, float y)
 {
@@ -95,14 +95,4 @@ int printable_map(t_game *game, float x, float y)
 				(int)game->set.map[(int)y / MAP_SIZE][(int)x / MAP_SIZE]))
 		return(1);
 	return (0);
-}
-
-int hit_wall(char **map, int x, int y)
-{
-    if (!map[y] || !map[y][x])
-		return (1);
-	else if (map[y][x] == '1')
-		return (1);
-	else
-		return (0);
 }
