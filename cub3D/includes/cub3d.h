@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 11:23:37 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/29 23:32:21 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/03/30 15:48:47 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,13 +106,15 @@ typedef struct	s_ray
 	t_axis	wall_hit;
 	char	wall_content;
 	int		facing_down;
-	int		facing_right;
+	int		facing_left;
 	int		hit_vertical;
 	int		hit_horizontal;
 	int		north_wall;
 	int		south_wall;
 	int		west_wall;
 	int		east_wall;
+	double	next_x;
+	double	next_y;
 }				t_ray;
 
 typedef struct		s_game
@@ -218,15 +220,7 @@ double		normalize_angle(double *ray_angle);
 void		find_horizontal_intercept(t_game *game, t_ray *ray);
 void		find_vertical_intercept(t_game *game, t_ray *ray);
 double		distance_btw_points(double x1, double y1, double x2, double y2);
-void		draw_ray(t_game *game, t_ray *ray);
-void	draw_ray_test(t_game *game, t_axis start, t_axis end);
-
-
-// raycasting_wall
-double	fishbowl(t_game *game, t_ray *ray);
-void	render_wall(t_game *game);
-void	draw_wall(t_game *game, t_ray *ray, double wall_height, int ray_index);
-void	wall_setup(t_axis res, double wall_height, int *top_pixel, int *bottom_pixel);
+void		draw_ray(t_game *game, t_axis start, t_axis end);
 
 // raycasting init
 int			init_game(t_game *game);
@@ -239,12 +233,18 @@ void		draw_rect(t_game *game, t_axis pos, t_axis end, int color);
 void		render_background(t_game *game);
 void		update_player(t_game *game, t_player *player);
 
-
 // map_display_bonus
 void		draw_map(t_game *game, t_settings *set);
 void 		draw_player(t_game *game);
 void		draw_line(t_game *game);
 int 		printable_map(t_game *game, float x, float y);
 int 		hit_wall(t_game *game, int x, int y);
+int			is_wall(t_game *game, float x, float y);
+
+// raycasting_wall
+double		fishbowl(t_game *game, t_ray *ray);
+void		render_wall(t_game *game);
+void		draw_wall(t_game *game, t_ray *ray, double wall_height, int ray_index);
+void		wall_setup(t_axis res, double wall_height, int *top_pixel, int *bottom_pixel);
 
 #endif

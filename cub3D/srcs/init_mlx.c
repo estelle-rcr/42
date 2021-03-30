@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:47:30 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/26 15:33:55 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/03/30 16:17:36 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,10 @@ int	render(t_game *game)
 {
 	if (game->win != NULL)
 	{
-	//	render_background(game);
+		render_background(game);
 		draw_map(game, &game->set);
-	//	draw_line(game);
-		//	raycasting(game);
 		cast_all_rays(game);
-		//render_wall
+		render_wall(game);
 		//render_sprites
 		update_player(game, &game->player);
 		mlx_put_image_to_window(game->mlx, game->win, game->img.img, 0, 0);

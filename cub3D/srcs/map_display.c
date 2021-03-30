@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 12:15:06 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/29 14:17:06 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/03/30 16:10:39 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ void draw_player(t_game *game)
 {
     float	i;
 	float	j;
-	int x;
-	int y;
+	float x;
+	float y;
 
 	i = 0;
 	while (i < PLAYER_SIZE)
@@ -57,7 +57,7 @@ void draw_player(t_game *game)
 			x = game->player.pos.x + j;
 			y = game->player.pos.y + i;
 			if (!hit_screen(game, x, y))
-				my_mlx_pixel_put(&game->img, x, y, MAP_PLAYER);
+				my_mlx_pixel_put(&game->img, x / MAP_SIZE, y / MAP_SIZE, MAP_PLAYER);
 			j++;
 		}
 		i++;

@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 23:08:35 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/29 23:09:27 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/03/30 17:00:41 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	render_wall(t_game *game)
 	while (i < game->set.res.x)
 	{
 		wall_height = game->dst_projection_plane / game->rays[i].distance;
-		//fishbowl
+		fishbowl(game, &game->rays[i]);
 		draw_wall(game, &game->rays[i], wall_height, i);
 		//map_texture;
 		i++;
@@ -50,10 +50,20 @@ void	draw_wall(t_game *game, t_ray *ray, double wall_height, int ray_index)
 	
 	wall_setup(game->set.res, wall_height, &top_pixel, &bottom_pixel);
 	y = top_pixel;
+	(void)ray;
 	//text_offset
+		if (ray->north_wall)
+			color = WALL_COLOR_N;
+		else if (ray->south_wall)
+			color = WALL_COLOR_S;
+		else if (ray->west_wall)
+			color = WALL_COLOR_W;
+		else if (ray->east_wall)
+			color = WALL_COLOR_E;
+		else
+			color = WALL_ERROR;
 	while(y < bottom_pixel)
 	{
-		color = WALL_COLOR;
 		my_mlx_pixel_put(&game->img, ray_index, y, color);
 		y++;
 	}
