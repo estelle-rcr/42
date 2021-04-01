@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 15:15:20 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/30 17:02:21 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/01 22:42:02 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,58 +32,106 @@ void	cast_all_rays(t_game *game)
 	}
 }
 
-double	normalize_angle(double *ray_angle)
+
+/*
+void	find_horizontal_intercept(t_game *game, t_ray *ray)
 {
-	*ray_angle =  fmod(*ray_angle, 2 * M_PI);
-	if (*ray_angle < 0)
-		*ray_angle = (2 * M_PI) + *ray_angle;
-	return (*ray_angle);
-}
+	t_axis	first;
+	t_axis	step;
+
+	first.y = floor(game->player.pos.y);
+	if (ray->facing_down)
+		first.y += 1;
+	first.x = game->player.pos.x + ((first.y - game->player.pos.y) / tan(ray->angle));
+	step.y = 1;
+	if (!ray->facing_down)
+		step.y *= -1;
+	step.x = 1 / tan(ray->angle);
+	if ((ray->facing_left && step.x > 0) || (!ray->facing_left && step.x < 0))
+		step.x *= -1;
+	find_horizontal_intercept_loop(game, ray, first, step);
+}*/
 
 void	find_horizontal_intercept(t_game *game, t_ray *ray)
 {
 	t_axis	step;
 	t_axis	intercept;
-	t_axis	next;
-	double	offset;
-	char	wall_content;
-	
-	intercept.y = floor(game->player.pos.y / MAP_SIZE) * MAP_SIZE;
-	intercept.y += ray->facing_down * MAP_SIZE; 
-	intercept.x = game->player.pos.x + (intercept.y - game->player.pos.y) / tan(ray->angle);
-	step.y = MAP_SIZE;
+
+	intercept.y = floor(game->player.pos.y);
+	if (ray->facing_down)
+		intercept.y += 1;
+	intercept.x = game->player.pos.x + ((intercept.y - game->player.pos.y) / tan(ray->angle));
+	step.y = 1;
 	if (!ray->facing_down)
 		step.y *= -1;
-	step.x = MAP_SIZE / tan(ray->angle);
+	step.x = 1 / tan(ray->angle);
 	if ((ray->facing_left && step.x > 0) || (!ray->facing_left && step.x < 0))
 		step.x *= -1;
-	next.x = intercept.x;
-	next.y = intercept.y;
+	horizontal_loop(game, ray, intercept, step);
+}
+
+void	horizontal_loop(t_game *game, t_ray *ray, t_axis intercept, t_axis step)
+{
+	t_axis	next;
+	t_axis	next_step;
+	double	offset;
+	char	wall_content;
+
+	set_axis(&next, intercept.x, intercept.y);
 	offset = 0.0;
-	if ((!ray->facing_down))
+	if (!ray->facing_down)
 		offset = 1.0;
-	while (!hit_screen(game, next.x, next.y))
+	while (next.x >= 0 && next.x < game->set.res.x && next.y >= 0 && next.y < game->set.res.y) //(!hit_screen(game, next.x, next.y))
 	{
-		wall_content = is_wall(game, next.x, next.y - offset); // 
-		if (wall_content == '1') 
+		set_axis(&next_step, next.x, next.y - offset);
+		wall_content = is_wall(game, next_step.x, next_step.y); // is_wall_raycasting(game, next_step);
+		if (wall_content == '1' || wall_content == ' ')
 		{
+			set_axis(&ray->wall_hit, next.x, next.y);
+			//ray->distance = distance_points(game->player.pos, ray->wall_hit);
+			ray->wall_content = wall_content;
+			ray->north_wall = !offset;
+			ray->south_wall = !ray->north_wall;
 			ray->hit_horizontal = 1;
-			ray->wall_hit.x = next.x;
-			ray->wall_hit.y = next.y;
-			ray->north_wall = ray->facing_down;
-			ray->south_wall = !ray->facing_down;
 			ray->distance = distance_btw_points(game->player.pos.x, game->player.pos.y, ray->wall_hit.x, ray->wall_hit.y);
-			//ray->wall_content = 
-			break;
+			//ray->wall_content =
+			break ;
 		}
-		else
-		{
-			next.x += step.x;
-			next.y += step.y;
-		}
+		set_axis(&next, next.x + step.x, next.y + step.y);
 	}
 }
 
+
+/*
+void	horizontal_loop(t_game *game, t_ray *ray, t_axis next, t_axis step)
+{
+	t_axis	next_touch;
+	float	offset_facing_up;
+	char	wall_content;
+
+	offset_facing_up = 0.0;
+	if (!ray->facing_down)
+		offset_facing_up = 1.0;
+	while (next.x >= 0 && next.x < game->set.res.x
+		&& next.y >= 0 && next.y < game->set.res.y)
+	{
+		set_axis(&next_touch, next.x, next.y - offset_facing_up);
+		wall_content = is_wall_raycasting(game, next_touch);
+		if (wall_content == '1' || wall_content == ' ')
+		{
+			set_axis(&ray->wall_hit, next.x, next.y);
+			ray->distance = distance_points(game->player.pos,
+				ray->wall_hit);
+			ray->wall_content = wall_content;
+			ray->north_wall = !offset_facing_up;
+			ray->south_wall = !ray->north_wall;
+			break ;
+		}
+		set_axis(&next, next.x + step.x, next.y + step.y);
+	}
+}*/
+
+/*
 void	find_vertical_intercept(t_game *game, t_ray *ray)
 {
 	t_axis	step;
@@ -91,12 +139,12 @@ void	find_vertical_intercept(t_game *game, t_ray *ray)
 	t_axis	next;
 	double	distance;
 	char wall_content;
-	
+
 	intercept.x = (int)(game->player.pos.x / MAP_SIZE) * MAP_SIZE;
 	if (!ray->facing_down)
-		intercept.x += 1 * MAP_SIZE; 
+		intercept.x += 1 * MAP_SIZE;
 	intercept.y = game->player.pos.y + (intercept.x - game->player.pos.x) * tan(ray->angle);
-	
+
 	step.x = MAP_SIZE;
 	if (ray->facing_left)
 		step.x *= -1;
@@ -107,15 +155,15 @@ void	find_vertical_intercept(t_game *game, t_ray *ray)
 	//	printf(" step y %f \n", step.y);
 	}
 	next.x = intercept.x;
-	next.y = intercept.y;		
+	next.y = intercept.y;
 	while (!hit_screen(game, next.x, next.y))
 	{
-		wall_content = is_wall(game, next.x- (ray->facing_left), next.y); // 
-		if (wall_content == '1') 
+		wall_content = is_wall(game, next.x- (ray->facing_left), next.y); //
+		if (wall_content == '1')
 		{
-			distance = distance_btw_points(game->player.pos.x, game->player.pos.y, next.x, next.y);		
+			distance = distance_btw_points(game->player.pos.x, game->player.pos.y, next.x, next.y);
 			if (distance < ray->distance)
-			{	
+			{
 				ray->hit_vertical = 1;
 				ray->hit_horizontal = 0;
 				ray->wall_hit.x = next.x;
@@ -124,9 +172,9 @@ void	find_vertical_intercept(t_game *game, t_ray *ray)
 				ray->south_wall = 0;
 				ray->west_wall = ray->facing_left;
 				ray->east_wall = !ray->facing_left;
-				ray->distance = distance;			
+				ray->distance = distance;
 			}
-			break;	
+			break;
 		}
 		else
 		{
@@ -137,36 +185,4 @@ void	find_vertical_intercept(t_game *game, t_ray *ray)
 		}
 	}
 }
-
-double	distance_btw_points(double x1, double y1, double x2, double y2)
-{
-		return (sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1)));
-}
-
-void	draw_ray(t_game *game, t_axis start, t_axis end)
-{
-	t_axis	delta;
-	t_axis	step;
-	t_axis	pos;
-	int		limit;
-	int 	i;
-	
-	delta.x = end.x - start.x;
-	delta.y = end.y - start.y;
-	if (fabs(delta.x) > fabs(delta.y))
-		limit = fabs(delta.x);
-	else
-		limit = fabs(delta.y);
-	step.x = delta.x / (double)limit;
-	step.y = delta.y / (double)limit;
-	pos.x = start.x; //+ (PLAYER_SIZE / 2)
-	pos.y = start.y; //+ (PLAYER_SIZE / 2)
-	i = 0;
-	while (i < limit && !hit_screen(game, pos.x, pos.y) && printable_map(game, pos.x, pos.y))
-	{
-		my_mlx_pixel_put(&game->img, pos.x, pos.y, MAP_PLAYER);	
-		pos.x += step.x;
-		pos.y += step.y;
-		i++;
-	}
-}
+*/

@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 12:00:38 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/30 16:57:07 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/01 23:10:31 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # define MAP_WALL 0x00606060
 # define MAP_SPRITES 0x000000FF
 # define MAP_PLAYER 0x0000FF00
-# define MOVE_SPEED 0.3 // school : 0.3
+# define MOVE_SPEED 0.1 // school : 0.3
 # define ROTATION_SPEED 0.8 // school : 1.5
 # define FOV 60
 
