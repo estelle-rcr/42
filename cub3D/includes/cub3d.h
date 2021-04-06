@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 11:23:37 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/01 22:51:26 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/07 01:11:27 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,38 +83,8 @@ typedef struct		s_img_data {
 	int				endian;
 }					t_img_data;
 
-typedef struct		s_player
-{
-	t_axis		pos;
-	double		turn_dir;
-	double		walk_dir;
-	double		rotation_angle;
-	double		move_speed;
-	double		rotation_speed;
-	double		direction_angle;
-	double		right;
-	double		left;
-}					t_player;
 
-typedef struct	s_ray
-{
-	float	distance;
-	float	angle;
-	t_axis	wall_hit;
-	char	wall_content;
-	int		facing_down;
-	int		facing_left;
-	int		hit_vertical;
-	int		hit_horizontal;
-	int		north_wall;
-	int		south_wall;
-	int		west_wall;
-	int		east_wall;
-	double	next_x;
-	double	next_y;
-}				t_ray;
-
-typedef struct		s_text_data
+typedef struct		s_texture
 {
 	void	*img;
 	char	*addr;
@@ -123,7 +93,45 @@ typedef struct		s_text_data
 	int				endian;
 	int				width;
 	int				height;
-}					t_text_data;
+}					t_texture;
+
+typedef struct		s_player
+{
+	t_axis		pos;
+	int			forward;
+	int			back;
+	int			left;
+	int			right;
+	int			rotation_left;
+	int			rotation_right;
+	double		move_speed;
+	double		rotation_speed;
+}					t_player;
+
+typedef struct	s_ray
+{
+	t_dblaxis	pos;
+	t_dblaxis	dir;
+	t_dblaxis	plan;
+	t_dblaxis	ray_dir;
+	double		camerax;
+	int			map_x;
+	int			map_y;
+	t_dblaxis	side_dist;
+	t_dblaxis	delta_dist;
+	int			step_x;
+	int			step_y;
+	int			hit;
+	int			side;
+	double		perp_wall_dist;
+	int			line_height;
+	int			start;
+	int			end;
+	int			x;
+	double		move_speed;
+	double		rotation_speed;
+	int			texture;
+}				t_ray;
 
 typedef	struct s_sprite
 {
@@ -146,15 +154,15 @@ typedef struct		s_game
 	int			save;
 	float		dst_projection_plane;
 	t_settings	set;
-	t_axis		screen_size;
 	t_img_data	img;
 	t_player	player;
-	t_ray		*rays;
-	t_text_data	north_txt;
-	t_text_data	south_txt;
-	t_text_data	west_txt;
-	t_text_data	east_txt;
-	t_text_data	sprites_txt;
+	t_ray		ray;
+	t_sprite	sprite;
+	t_texture	north_txt;
+	t_texture	south_txt;
+	t_texture	west_txt;
+	t_texture	east_txt;
+	t_texture	sprites_txt;
 }					t_game;
 
 // main
@@ -225,7 +233,7 @@ int			flood_fill(char **copy_map, float pos_x, float pos_y);
 
 // init_mlx
 
-int			run_mlx(t_game *game, int save);
+int			run_mlx(t_game *game);
 void		my_mlx_pixel_put(t_img_data *data, int x, int y, int color);
 int			create_mlx_win(t_game *game);
 int			my_mlx_new_img(void *mlx, t_img_data *img, int x, int y);
@@ -241,32 +249,24 @@ int			exit_game(t_game *game);
 // raycasting
 
 
-void		cast_all_rays(t_game *game);
-/*
+// raycasting_player
+void	ft_move_forward_back(t_ray *ray, t_player *player, char **map)
+void	ft_move_left_right(t_ray *ray, t_player *player, char **map);
+void	ft_rotation_left_right(t_ray *ray, t_player *player);
+void	update_player(t_game *game, t_player *player);
 
-void		find_vertical_intercept(t_game *game, t_ray *ray);
-
-*/
-
-void		find_horizontal_intercept(t_game *game, t_ray *ray);
-void	horizontal_loop(t_game *game, t_ray *ray, t_axis intercept, t_axis step);
-//void	horizontal_loop(t_game *game, t_ray *ray, t_axis next, t_axis step);
-/*
-void	find_horizontal_intercept_loop(t_game *game, t_ray *ray, t_axis next, t_axis step);
-void	find_horizontal_intercept(t_game *game, t_ray *ray);
-*/
 // raycasting init
-int			init_game(t_game *game);
-void		init_ray(t_ray *ray, float ray_angle);
-void		init_player(t_game *game);
+
 
 
 // raycasting_setup
-int			hit_screen(t_game *game, float x, float y);
-void		draw_rect(t_game *game, t_axis pos, t_axis end, int color);
-void		render_background(t_game *game);
-int 		hit_wall(t_game *game, int x, int y);
-void		update_player(t_game *game, t_player *player);
+
+
+//raycasting_utils
+void		set_axis(t_axis *point, float x, float y);
+int 		is_wall(t_game *game, int axis_x, int axis_y);
+
+// raycasting_wall
 
 
 // map_display_bonus
@@ -276,33 +276,5 @@ void		draw_line(t_game *game);
 int 		printable_map(t_game *game, float x, float y);
 void		draw_ray(t_game *game, t_axis start, t_axis end);
 
-//raycasting_utils
-int 		is_wall(t_game *game, int x, int y);
-double		normalize_angle(double *ray_angle);
-double		distance_btw_points(double x1, double y1, double x2, double y2);
-void		set_axis(t_axis *point, float x, float y);
-
-// raycasting_wall
-double		fishbowl(t_game *game, t_ray *ray);
-void		render_wall(t_game *game);
-void		draw_wall(t_game *game, t_ray *ray, double wall_height, int ray_index);
-void		wall_setup(t_axis res, double wall_height, int *top_pixel, int *bottom_pixel);
-
-// raycasting_correct
-
-char	is_wall_raycasting(t_game *game, t_axis next_touch);
-
-//void	init_ray(t_ray *ray, float ray_angle);
-//void	cast_all_rays(t_game *game);
-
-void	reset_ray_setting(t_ray *ray, float vertical_len, t_axis wall_found, char hit_content);
-void	find_vertical_intercept_loop(t_game *game, t_ray *ray, t_axis next, t_axis step);
-void	find_vertical_intercept(t_game *game, t_ray *ray);
-//void	init_player(t_player *player, t_settings set);
-//int		is_wall(t_game *game, float x, float y);
-//void	update_player_position(t_game *game, t_player *player);
-
-float	distance_points(t_axis start, t_axis end);
-//float	degree_to_radian(float angle);
 
 #endif

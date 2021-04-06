@@ -1,40 +1,4 @@
-typedef struct		s_axis
-{
-	float	x;
-	float	y;
-}					t_axis;
 
-typedef struct		s_dblaxis
-{
-	double	x;
-	double	y;
-}					t_dblaxis;
-
-typedef struct		s_settings
-{
-	int		fd;
-	t_axis	res;
-	t_axis	start_pos;
-	char	player_dir;
-	char	*no_texture;
-	char	*so_texture;
-	char	*we_texture;
-	char	*ea_texture;
-	char	*s_texture;
-	int		f_color;
-	int		c_color;
-	char 	**map;
-	int		map_width;
-	int		map_height;
-}					t_settings;
-
-typedef struct		s_img_data {
-	void	*img;
-	char	*addr;
-	int				bpp;
-	int				line_length;
-	int				endian;
-}					t_img_data;
 
 typedef struct		s_text_data
 {

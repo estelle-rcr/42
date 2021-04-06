@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:47:30 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/01 22:52:31 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/07 00:46:51 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int		create_mlx_win(t_game *game)
 		game->set.res.x = x;
 	if (game->set.res.y > y)
 		game->set.res.y = y;
-	set_axis(&game->screen_size, (float)x, (float)y);
 	game->win = mlx_new_window(game->mlx, game->set.res.x, game->set.res.y, "Cub3D");
 	if (!game->win)
 		return (ERROR_INIT_MLX_WIN);
@@ -49,9 +48,8 @@ int		my_mlx_new_img(void *mlx, t_img_data *img, int x, int y)
 }
 
 
-int	run_mlx(t_game *game, int save)
+int	run_mlx(t_game *game)
 {
-	(void)save;
 	if (!(game->mlx = mlx_init()))
 		return (ERROR_INIT_MLX);
 	if (!create_mlx_win(game))
@@ -59,8 +57,8 @@ int	run_mlx(t_game *game, int save)
 	if (!my_mlx_new_img(game->mlx, &game->img, game->set.res.x, game->set.res.y))
 		return (0);
 	init_game(game);
-	//init_player(&game->player, game->set);
 	init_player(game);
+	init_texture(game);
 	mlx_hook(game->win, KeyPress, KeyPressMask, &handle_keypress, game);
 	mlx_hook(game->win, KeyRelease, KeyReleaseMask, &handle_keyrelease, game);
 	mlx_loop_hook(game->mlx, &render, game);
@@ -77,7 +75,7 @@ int	render(t_game *game)
 		render_wall(game);
 		//render_sprites
 		draw_map(game, &game->set);
-		cast_all_rays(game);
+		cast_rays(game);
 		update_player(game, &game->player);
 		//update_player_map(game, &game->player);
 		mlx_put_image_to_window(game->mlx, game->win, game->img.img, 0, 0);

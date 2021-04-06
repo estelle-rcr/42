@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 12:27:24 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/16 12:32:04 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/02 11:25:42 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,16 @@ int	main(int ac, char **av)
     t_game	game;
 	int		save;
 
-	save = 0;
+	game->save = 0;
 	if (ac == 3 && ft_strlen(av[2]) == 6 && ft_strnstr(av[2], "--save", 6))
 	{
-		save = 1;
+		game->save = 1;
 	}
 	if (ac == 2 || (ac == 3 && save == 1))
 	{
 		if (!read_file(av[1], &game.set))
 			return (1);
-		if (!run_mlx(&game, save))
+		if (!run_mlx(&game))
 		{
 		//	exit_game(&game);
 			return (1);
