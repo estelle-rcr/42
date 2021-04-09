@@ -18,10 +18,8 @@ SRCS =	cub3d_utils.c\
 		parser_map_tabs.c\
 		raycasting.c\
 		raycasting_init.c\
-		raycasting_setup.c\
+		raycasting_player.c\
 		raycasting_utils.c\
-		raycasting_walls.c\
-		ray_correct.c\
 
 PATH_SRCS = srcs/
 

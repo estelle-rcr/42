@@ -6,21 +6,20 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:47:30 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/07 00:46:51 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/09 21:13:25 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-//	game->img.addr[x * 4 + 4 * game->img.line_length * y] = 0x0000FF00;
-
+/*
 void	my_mlx_pixel_put(t_img_data *img, int x, int y, int color)
 {
 	char *dst;
 
 	dst = img->addr + (y * img->line_length + x * (img->bpp / 8));
 	*(unsigned int *)dst = color;
-}
+}*/
 
 int		create_mlx_win(t_game *game)
 {
@@ -47,7 +46,6 @@ int		my_mlx_new_img(void *mlx, t_img_data *img, int x, int y)
 	return (1);
 }
 
-
 int	run_mlx(t_game *game)
 {
 	if (!(game->mlx = mlx_init()))
@@ -56,29 +54,15 @@ int	run_mlx(t_game *game)
 		return (0);
 	if (!my_mlx_new_img(game->mlx, &game->img, game->set.res.x, game->set.res.y))
 		return (0);
-	init_game(game);
-	init_player(game);
-	init_texture(game);
+	if (!load_texture(game))
+		return (0);
+	if (!init_game(game))
+		return (0);
+	// if save ? => launch a first cast_rays ?
 	mlx_hook(game->win, KeyPress, KeyPressMask, &handle_keypress, game);
 	mlx_hook(game->win, KeyRelease, KeyReleaseMask, &handle_keyrelease, game);
-	mlx_loop_hook(game->mlx, &render, game);
+	mlx_loop_hook(game->mlx, &cast_rays, game);
 	mlx_loop(game->mlx);
 	exit_game(game);
-	return (1);
-}
-
-int	render(t_game *game)
-{
-	if (game->win != NULL)
-	{
-		render_background(game);
-		render_wall(game);
-		//render_sprites
-		draw_map(game, &game->set);
-		cast_rays(game);
-		update_player(game, &game->player);
-		//update_player_map(game, &game->player);
-		mlx_put_image_to_window(game->mlx, game->win, game->img.img, 0, 0);
-	}
 	return (1);
 }

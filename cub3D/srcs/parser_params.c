@@ -46,9 +46,8 @@ int	check_textures(char **params, t_settings *set)
 	if (!(ft_strnstr(params[1], "./", 2)) || ft_strlen(params[1]) <= 2)
 		return (print_err_msg(ERR_TEX_FORMAT));
 	valid_set = (char *[NB_SETTINGS - 2]) {"NO", "SO", "WE", "EA", "S", 0};
-	textures_set = (char **[NB_SETTINGS - 2]) {&set->no_texture,
-					&set->so_texture, &set->we_texture, &set->ea_texture,
-					&set->s_texture, 0};
+	textures_set = (char **[NB_SETTINGS - 2]) {&set->no_txt, &set->so_txt,
+                    &set->we_txt, &set->ea_txt, &set->s_txt, 0};
 	i = -1;
 	while (valid_set[++i])
 	{

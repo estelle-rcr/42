@@ -1,3 +1,17 @@
+
+#ifndef M_PI
+# define M_PI 3.14159265358979323846264338327950288
+#endif
+
+#define degToRad(angleInDegrees) ((angleInDegrees) * M_PI / 180.0)
+#define radToDeg(angleInRadians) ((angleInRadians) * 180.0 / M_PI)
+
+typedef struct		obj
+{
+	float	x;
+	float	y;
+}					t_axis;
+
 typedef struct		s_player
 {
 	t_axis		pos;
@@ -42,16 +56,16 @@ typedef struct		s_text_data
 
 typedef	struct s_sprite
 {
-	t_dblaxis	sprite_pos;
+	t_dblaxis	s_pos;
 	t_dblaxis	transform;
 	double		*distance;
 	double		invdet;
 	double		*zbuffer;
-	float				sprite_screenx;
-	float				sprite_height;
-	float				sprite_width;
-	t_axis		sprite_start;
-	t_axis		sprite_end;
+	float				s_screenx;
+	float				s_height;
+	float				s_width;
+	t_axis		s_start;
+	t_axis		s_end;
 }					t_sprite;
 
 typedef struct		s_game
@@ -83,7 +97,6 @@ void	find_vertical_intercept(t_game *game, t_ray *ray);
 int			init_game(t_game *game);
 void		init_ray(t_ray *ray, float ray_angle);
 void		init_player(t_game *game);
-
 
 // raycasting_setup
 int			hit_screen(t_game *game, float x, float y);

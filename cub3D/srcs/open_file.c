@@ -20,11 +20,11 @@ t_settings	*init_set(t_settings *set)
 	set->start_pos.x = -1.0;
 	set->start_pos.y = -1.0;
 	set->player_dir = '0';
-	set->no_texture = 0;
-	set->so_texture = 0;
-	set->we_texture = 0;
-	set->ea_texture = 0;
-	set->s_texture = 0;
+	set->no_txt = 0;
+	set->so_txt = 0;
+	set->we_txt = 0;
+	set->ea_txt = 0;
+	set->s_txt = 0;
 	set->f_color = -1;
 	set->c_color = -1;
 	set->map = 0;

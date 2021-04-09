@@ -28,6 +28,5 @@
 # define WALL_COLOR_W 0x0048B99A
 # define WALL_COLOR_E 0x00B0F2B6
 # define WALL_ERROR 0x00000000
-#include <stdio.h>
 
 #endif

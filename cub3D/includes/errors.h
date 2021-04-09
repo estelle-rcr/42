@@ -56,6 +56,7 @@ typedef enum	e_errors
 	ERROR_INIT_MLX,
 	ERROR_INIT_MLX_WIN,
 	ERROR_IMG_MLX,
+    ERROR_TXT_LOAD_IMG,
 
 }				t_errors;
 

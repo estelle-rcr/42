@@ -39,8 +39,8 @@ int	check_params(char **params, t_settings *set)
 
 int	all_params(t_settings *set)
 {
-	if (!set->res.x || !set->res.y || !set->no_texture || !set->so_texture ||
-		!set->ea_texture || !set->we_texture || !set->s_texture ||
+	if (!set->res.x || !set->res.y || !set->no_txt || !set->so_txt ||
+		!set->ea_txt || !set->we_txt || !set->s_txt ||
 		set->c_color == -1 || set->f_color == -1)
 		return (0);
 	return (1);

@@ -94,5 +94,7 @@ int	error_mlx(int error)
 		ft_putstr("Error\nCouldn't generate mlx window.\n");
 	if (error == 23)
 		ft_putstr("Error\nCouldn't generate mlx image correctly.\n");
+    if (error == 24)
+        ft_putstr("Error\nCouldn't retrieve texture image.")
 	return (0);
 }

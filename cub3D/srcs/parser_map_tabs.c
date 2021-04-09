@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/11 19:36:53 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/11 19:44:09 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/07 12:28:33 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*dup_space(char *line)
 	char	*line_dup;
 
 	if (!(line_dup = malloc(sizeof(char) * (ft_strlen(line) + 4 + 1))))
-		return (NULL);
+		return (print_err_msg(ERR_MALLOC));
 	line_dup[ft_strlen(line) + 4] = '\0';
 	j = 0;
 	while (line[j] && line[j] != '\t')
