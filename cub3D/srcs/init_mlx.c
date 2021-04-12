@@ -6,20 +6,11 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:47:30 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/09 21:13:25 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/12 22:31:46 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-/*
-void	my_mlx_pixel_put(t_img_data *img, int x, int y, int color)
-{
-	char *dst;
-
-	dst = img->addr + (y * img->line_length + x * (img->bpp / 8));
-	*(unsigned int *)dst = color;
-}*/
 
 int		create_mlx_win(t_game *game)
 {
@@ -58,7 +49,9 @@ int	run_mlx(t_game *game)
 		return (0);
 	if (!init_game(game))
 		return (0);
-	// if save ? => launch a first cast_rays ?
+	if (game->save == 1)
+		cast_rays(game);
+	mlx_hook(game->win, 33, 1L << 17, &mlx_loop_end, game->mlx);
 	mlx_hook(game->win, KeyPress, KeyPressMask, &handle_keypress, game);
 	mlx_hook(game->win, KeyRelease, KeyReleaseMask, &handle_keyrelease, game);
 	mlx_loop_hook(game->mlx, &cast_rays, game);

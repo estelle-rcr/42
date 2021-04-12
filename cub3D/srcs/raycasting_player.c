@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 11:31:08 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/09 21:10:44 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/13 01:18:35 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	move_forward_back(t_ray *ray, t_player *player, char **map)
 			ray->pos.y -= ray->dir.y * ray->move_speed;
     }
 }
+
+// si sprite == 2 => walkable, si sprite == 3 non walkable
 
 void	move_left_right(t_ray *ray, t_player *player, char **map)
 {
@@ -80,3 +82,42 @@ void	rotation_left_right(t_ray *ray, t_player *player)
         ray->plane.y = old_plane_x * sin(ray->rotation_speed) + ray->plane.y * cos(ray->rotation_speed);
     }
 }
+
+/* BONUS
+void	look_up_down(t_game *game, t_cf_data *cf)
+{
+		if (game->cf.pitch > 0)
+		{
+			if ((game->cf.pitch - 100 * game->ray.move_speed) > 0)
+				game->cf.pitch = game->cf.pitch - 100 * game->ray.move_speed;
+			else
+				game->cf.pitch = 0;
+		}
+		if (game->cf.pitch < 0)
+		{
+			if ((game->cf.pitch + 100 * game->ray.move_speed) > 0)
+				game->cf.pitch = game->cf.pitch + 100 * game->ray.move_speed;
+			else
+				game->cf.pitch = 0;
+		}
+		move_jump_crouch(game, cf);
+}
+
+void	move_jump_crouch(t_game *game, t_cf_data *cf)
+{
+	if (game->cf.pos_z > 0)
+	{
+		if ((game->cf.pos_z - 100 * game->ray.move_speed) > 0)
+			game->cf.pitch = game->cf.pos_z - 100 * game->ray.move_speed;
+		else
+			game->cf.pitch = 0;
+	}
+	if (game->cf.pos_z < 0)
+	{
+		if ((game->cf.pos_z + 100 * game->ray.move_speed) > 0)
+			game->cf.pos_z = game->cf.pos_z + 100 * game->ray.move_speed;
+		else
+			game->cf.pos_z = 0;
+	}
+}
+*/

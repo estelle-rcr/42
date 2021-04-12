@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 14:49:22 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/23 14:15:20 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/12 20:07:45 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ int	check_map(t_settings *set)
     {
     	if (set->map)
             free_tab(set->map);
-        free(copy_map);
+        free_tab(copy_map);
 		return (print_err_msg(ERR_INVALID_MAP));
 	}
-    free(copy_map);
+    free_tab(copy_map);
 	if (!all_params(set))
 	{
 		if (set->map)

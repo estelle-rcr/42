@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 11:23:37 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/09 21:13:09 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/13 01:22:22 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
 # include "keys.h"
 # include "settings.h"
 # include "errors.h"
+# include "bitmap.h"
+# include "bonus.h"
 
 # define MAP_CHARSET "012NSEW"
 # define PLAY_CHARSET "02NSEW"
@@ -165,7 +167,7 @@ typedef struct		s_game
 	t_texture	wall;
 	t_sprite	sprite;
 	t_dblaxis	*obj;
-    t_text_data textures[5];
+    t_text_data textures[5];				// bonus => 7
 }					t_game;
 
 // main
@@ -228,6 +230,7 @@ int			flood_fill(char **copy_map, float pos_x, float pos_y); 		// useless
 // minilib_utils_color
 int			create_trgb(int t, int r, int g, int b);
 int			add_shade(double distance, int trgb);
+void		my_mlx_pixel_put(t_img_data *img, int x, int y, int color);
 /*
 int			get_t(int trgb); 								// useless
 int			get_r(int trgb);
@@ -282,16 +285,13 @@ void		render_sprite(t_game *game);
 
 // save
 void		screenshot(t_game *game);
+void		create_bmp_header(t_game *game, int fd);
 
 // exit_mlx
 int			exit_game(t_game *game);								// must free
+int 		exit_free_mlx_components(t_game *game);
+void		exit_free_settings(t_game *game);
 
 
-// map_display_bonus
-void		draw_map(t_game *game, t_settings *set);
-void 		draw_player(t_game *game);
-void		draw_line(t_game *game);							// delete this one or draw_ray
-int 		printable_map(t_game *game, float x, float y);
-void		draw_ray(t_game *game, t_axis start, t_axis end);
 
 #endif

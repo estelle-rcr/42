@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_errors.c                                    :+:      :+:    :+:   */
+/*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 14:28:21 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/16 12:26:50 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/12 20:34:20 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 int	print_err_msg(int error)
 {
-	if (error >= 0 && error <= 7)
+	if ((error >= 0 && error <= 7) || error >= 25)
 		return (error_files(error));
 	else if (error >= 8 && error <= 17)
 		return (error_rtc(error));
 	else if (error >= 18 && error <= 20)
 		return (error_map(error));
-	else if (error >= 21)
+	else if (error >= 21 && error <= 23)
 		return (error_mlx(error));
-	else
-		return (0);
+
+	return (0);
 }
 
 int	error_files(int error)
@@ -47,6 +47,12 @@ int	error_files(int error)
 		ft_putstr("Error\nGet_next_line function encountered an error.\n");
 	else if (error == 7)
 		ft_putstr("Error\nOne parameter's code is not valid.\n");
+	else if (error == 25)
+		ft_putstr("Error\nCoudln't open the BMP file (fd)\n");
+	else if (error == 26)
+		ft_putstr("Error\nCoudln't close the BMP file (fd)\n");
+	else if (error == 27)
+		ft_putstr("Error\nCoudln't close the settings file (fd)\n");
 	return (0);
 }
 
@@ -95,6 +101,8 @@ int	error_mlx(int error)
 	if (error == 23)
 		ft_putstr("Error\nCouldn't generate mlx image correctly.\n");
     if (error == 24)
-        ft_putstr("Error\nCouldn't retrieve texture image.")
+		ft_putstr("Error\nCouldn't retrieve texture image.");
+	if (error == 25)
+		ft_putstr("Error\nCouldn't destroy correctly MLX components.");
 	return (0);
 }

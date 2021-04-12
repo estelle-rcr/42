@@ -6,15 +6,11 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 12:27:24 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/02 11:25:42 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/12 19:30:02 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-/*
-** Do the "--save" and the floodfill algo
-*/
 
 int	main(int ac, char **av)
 {
@@ -35,7 +31,6 @@ int	main(int ac, char **av)
 		//	exit_game(&game);
 			return (1);
 		}
-		// event_management(&game);
 	//	exit_game(&game);
 		return (0);
 	}

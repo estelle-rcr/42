@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/11 19:36:53 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/07 12:28:33 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/12 19:45:44 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*dup_space(char *line)
 	add_spaces(&line_dup[j], 4);
 	while (line[j++])
 		line_dup[j + 3] = line[j];
-//	free(line);
+//	free(*line);
 	return (line_dup);
 }
 

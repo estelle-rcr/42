@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 11:28:39 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/09 21:06:12 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/13 00:03:46 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,19 +58,19 @@ int	load_texture(t_game *game)
 
 void	get_addr_texture(t_game *game)
 {
-	game->texture[0].addr = (int *)mlx_get_data_addr(game->textures[0].img,
+	game->textures[0].addr = (int *)mlx_get_data_addr(game->textures[0].img,
 		&game->textures[0].bpp, &game->textures[0].line_length,
 		&game->textures[0].endian);
-	game->texture[1].addr = (int *)mlx_get_data_addr(game->textures[1].img,
+	game->textures[1].addr = (int *)mlx_get_data_addr(game->textures[1].img,
 		&game->textures[1].bpp, &game->textures[1].line_length,
 		&game->textures[1].endian);
-	game->texture[2].addr = (int *)mlx_get_data_addr(game->textures[2].img,
+	game->textures[2].addr = (int *)mlx_get_data_addr(game->textures[2].img,
 		&game->textures[2].bpp, &game->textures[2].line_length,
 		&game->textures[2].endian);
-	game->texture[3].addr = (int *)mlx_get_data_addr(game->textures[3].img,
+	game->textures[3].addr = (int *)mlx_get_data_addr(game->textures[3].img,
 		&game->textures[3].bpp, &game->textures[3].line_length,
 		&game->textures[3].endian);
-	game->texture[4].addr = (int *)mlx_get_data_addr(game->textures[4].img,
+	game->textures[4].addr = (int *)mlx_get_data_addr(game->textures[4].img,
 		&game->textures[4].bpp, &game->textures[4].line_length,
 		&game->textures[4].endian);
 }
@@ -89,5 +89,6 @@ void	setup_wall_textures(t_game *game, t_ray *ray)
 	game->wall.step = 1.0 * game->textures[game->wall.txt_dir].height /
 						ray->line_height;
 	game->wall.txt_pos = (ray->draw_start - game->set.res.y / 2 +
-							ray->line_height / 2) * game->wall.step;
+							ray->line_height / 2) * game->wall.step; 		// 	game->wall.txt_pos = (ray->draw_start - game->cf.pitch - (game->cf.posZ / ray->perp_wall_dist) - game->set.res.y / 2 + ray->line_height / 2) * game->wall.step;
+
 }

@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 20:19:48 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/09 21:12:31 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/13 00:04:47 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	cast_rays(t_game *game)
 	game->ray.x = 0;
 	while (game->ray.x < game->set.res.x)
 	{
-		init_ray(&game->ray);
+		init_ray(game, &game->ray);
 		step_side_dist(game, &game->ray);
 		draw_color(game, &game->ray);
 		game->sprite.zbuffer[game->ray.x] = game->ray.perp_wall_dist;
@@ -29,7 +29,7 @@ void	cast_rays(t_game *game)
 	mlx_put_image_to_window(game->mlx, game->win, game->img.img, 0, 0);
 	move_forward_back(&game->ray, &game->player, &game->set.map);
 	move_left_right(&game->ray, &game->player, &game->set.map);
-	rotation_left_right((&game->ray, &game->player);
+	rotation_left_right(&game->ray, &game->player);
 	//swap ?
 	return (1);
 }
@@ -38,12 +38,12 @@ void	step_side_dist(t_game *game, t_ray *ray)
 {
 	if (ray->ray_dir.x < 0)
 	{
-		ray->step.x = -1;
+		ray->step_x = -1;
 		ray->side_dist.x = (ray->pos.x - ray->map_x) * ray->delta_dist.x;
 	}
 	else
 	{
-		ray->step.x = 1;
+		ray->step_x = 1;
 		ray->side_dist.x = (ray->map_x + 1.0 - ray->pos.x) * ray->delta_dist.x;
 	}
 	if (ray->ray_dir.y < 0)
@@ -53,7 +53,7 @@ void	step_side_dist(t_game *game, t_ray *ray)
 	}
 	else
 	{
-		ray->step.y = 1;
+		ray->step_y = 1;
 		ray->side_dist.y = (ray->map_y + 1.0 - ray->pos.y) * ray->delta_dist.y;
 	}
 	perform_dda_loop(game, ray);
@@ -90,10 +90,10 @@ void	create_wall_stripes(t_game *game, t_ray *ray)
 		ray->perp_wall_dist = ((double)ray->map_y - ray->pos.y + (1 -
 								(double)ray->step_y) / 2) / ray->ray_dir.y;
 	ray->line_height = (int)(game->set.res.y / ray->perp_wall_dist);
-	ray->draw_start = -ray->line_height / 2 + game->set.res.y / 2;
+	ray->draw_start = -ray->line_height / 2 + game->set.res.y / 2;			// ray->draw_start = -ray->line_height / 2 + game->set.res.y / 2 + game->cf.pitch + (game->cf.posZ / ray->perp_wall_dist);
 	if (ray->draw_start < 0)
 		ray->draw_start = 0;
-	ray->draw_end = ray->line_height / 2 + game->set.res.y / 2;
+	ray->draw_end = ray->line_height / 2 + game->set.res.y / 2;				// + game->cf.pitch + (game->cf.posZ / ray->perp_wall_dist);
 	if (ray->draw_end >= game->set.res.y || ray->draw_end < 0)
 		ray->draw_end = game->set.res.y - 1;
 }
@@ -113,9 +113,9 @@ void	draw_color(t_game *game, t_ray *ray)
 	while (++j >= ray->draw_start && j <= ray->draw_end)
     {
         game->wall.txt_y = (int)game->wall.txt_pos &
-							(textures[game->wall.txt_dir].height - 1);
+							(game->textures[game->wall.txt_dir].height - 1);
 		game->wall.txt_pos += game->wall.step;
-		if (y < game->set.res.y && x < game->set.res.x)
+		if (j < game->set.res.y && ray->x < game->set.res.x)
 			game->img.addr[j * game->img.line_length / 4 + ray->x] =
 				game->textures[game->wall.txt_dir].addr[game->wall.txt_y *
 				game->textures[game->wall.txt_dir].line_length / 4
@@ -135,5 +135,9 @@ void	draw_color(t_game *game, t_ray *ray)
 **		color = (color >> 1) & 8355711;
 **	game->img.addr[j * game->img.line_length / 4 + ray->x] = color;
 **
-** OR : add_shade(ray->perp_wall_dist, color);
+** OR :
+** int color;
+**	color = game->textures[game->wall.txt_dir].addr[game->wall.txt_y *
+**	game->textures[game->wall.txt_dir].line_length / 4 + game->wall.txt_x];
+**	add_shade(ray->perp_wall_dist, color);
 */

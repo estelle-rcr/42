@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 16:30:11 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/23 14:15:20 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/12 19:44:45 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,8 @@ int		read_file(char *file, t_settings *set)
 			break ;
 		line = 0;
 	}
-	close(set->fd);
+	if (close(set->fd) == -1)
+		return (ERROR_CLOSE_FILE);
 	if (!check_map(set))
 		exit(0);
 	return (1);

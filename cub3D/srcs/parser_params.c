@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 16:49:56 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/16 12:27:25 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/12 20:00:08 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	check_textures(char **params, t_settings *set)
 		return (print_err_msg(ERR_TEX_FORMAT));
 	valid_set = (char *[NB_SETTINGS - 2]) {"NO", "SO", "WE", "EA", "S", 0};
 	textures_set = (char **[NB_SETTINGS - 2]) {&set->no_txt, &set->so_txt,
-                    &set->we_txt, &set->ea_txt, &set->s_txt, 0};
+					&set->we_txt, &set->ea_txt, &set->s_txt, 0};
 	i = -1;
 	while (valid_set[++i])
 	{

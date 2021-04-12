@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:19:20 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/25 13:20:27 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/12 20:34:53 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,13 @@ typedef enum	e_errors
 	ERROR_INIT_MLX,
 	ERROR_INIT_MLX_WIN,
 	ERROR_IMG_MLX,
-    ERROR_TXT_LOAD_IMG,
+	ERROR_TXT_LOAD_IMG,
+	ERR_MLX_DESTROY,
+
+// BMP error
+	ERROR_OPEN_BMP,
+	ERROR_CLOSE_BMP,
+	ERROR_CLOSE_FILE,
 
 }				t_errors;
 
