@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 01:13:55 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/13 01:23:12 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/18 22:05:10 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,13 @@
 # include "cub3d.h"
 
 // mettre cf_data et map dans game
+#define CEIL './textures/metal.xpm'
+#define	FLOOR './textures/metal.xpm'
 
 typedef struct s_cf_data
 {
+	char		*ceil_txt;
+	char		*floor_txt;
 	t_dblaxis	ray_dir_0;
 	t_dblaxis	ray_dir_1;
 	float		pos_z;
@@ -45,8 +49,9 @@ typedef struct s_map
 }				t_map;
 
 // raycasting cf text
-void	draw_textured_cf(t_game *game, t_ray *ray, t_cf_data *cf);
-void	setup_additionnal_text(t_game *game, t_ray *ray, t_cf_data *cf, int i);
+void	draw_textured_cf(t_game *game, t_ray *ray);
+void	setup_additionnal_text(t_game *game, t_ray *ray, int i);
+int		load_texture_cf(t_game *game);
 
 // raycasting player
 void	look_up_down(t_game *game, t_cf_data *cf);

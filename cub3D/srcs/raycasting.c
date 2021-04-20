@@ -6,18 +6,18 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 20:19:48 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/13 00:04:47 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/19 23:55:39 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	cast_rays(t_game *game)
+int		cast_rays(t_game *game)
 {
 	game->ray.x = 0;
 	while (game->ray.x < game->set.res.x)
 	{
-		init_ray(game, &game->ray);
+		init_ray(game);
 		step_side_dist(game, &game->ray);
 		draw_color(game, &game->ray);
 		game->sprite.zbuffer[game->ray.x] = game->ray.perp_wall_dist;
@@ -26,11 +26,13 @@ void	cast_rays(t_game *game)
 	render_sprite(game);
 	if (game->save)
 		screenshot(game);
-	mlx_put_image_to_window(game->mlx, game->win, game->img.img, 0, 0);
-	move_forward_back(&game->ray, &game->player, &game->set.map);
-	move_left_right(&game->ray, &game->player, &game->set.map);
-	rotation_left_right(&game->ray, &game->player);
-	//swap ?
+	else
+	{
+		mlx_put_image_to_window(game->mlx, game->win, game->img.img, 0, 0);
+		move_forward_back(&game->ray, &game->player, game->set.map);
+		move_left_right(&game->ray, &game->player, game->set.map);
+		rotation_left_right(&game->ray, &game->player);		
+	}
 	return (1);
 }
 
@@ -75,7 +77,7 @@ void	perform_dda_loop(t_game *game, t_ray *ray)
 			ray->map_y += ray->step_y;
 			ray->side = 1;
 		}
-		if (game->set.map[ray->map_x][ray->map_y] == '1')
+		if (game->set.map[ray->map_x][ray->map_y] == '1') // valid_memory(&game->set, game->set.map, ray->map_x, ray->map_y) &&
 			ray->hit = 1;
 	}
 	create_wall_stripes(game, ray);
@@ -109,35 +111,10 @@ void	draw_color(t_game *game, t_ray *ray)
     while (++j < ray->draw_start)
 		game->img.addr[j * game->img.line_length / 4 + ray->x] =
 			game->set.c_color;
-	setup_wall_textures(game, ray);
-	while (++j >= ray->draw_start && j <= ray->draw_end)
-    {
-        game->wall.txt_y = (int)game->wall.txt_pos &
-							(game->textures[game->wall.txt_dir].height - 1);
-		game->wall.txt_pos += game->wall.step;
-		if (j < game->set.res.y && ray->x < game->set.res.x)
-			game->img.addr[j * game->img.line_length / 4 + ray->x] =
-				game->textures[game->wall.txt_dir].addr[game->wall.txt_y *
-				game->textures[game->wall.txt_dir].line_length / 4
-				+ game->wall.txt_x];
-	}
-    while (++j > ray->draw_end && j < game->set.res.y)
+	if (j <= ray->draw_end)
+		setup_wall_textures(game, j - 1);
+	j = i;
+    while (++j < game->set.res.y)
 		game->img.addr[j * game->img.line_length / 4 + ray->x] =
 			game->set.f_color;
 }
-
-/*
-** darker shades on side:
-** int color;
-**	color = game->textures[game->wall.txt_dir].addr[game->wall.txt_y *
-**  game->textures[game->wall.txt_dir].line_length / 4 + game->wall.txt_x];
-**   if (ray->side == 1)
-**		color = (color >> 1) & 8355711;
-**	game->img.addr[j * game->img.line_length / 4 + ray->x] = color;
-**
-** OR :
-** int color;
-**	color = game->textures[game->wall.txt_dir].addr[game->wall.txt_y *
-**	game->textures[game->wall.txt_dir].line_length / 4 + game->wall.txt_x];
-**	add_shade(ray->perp_wall_dist, color);
-*/

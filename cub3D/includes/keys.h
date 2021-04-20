@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 00:11:48 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/16 00:21:42 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/18 22:19:51 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,9 @@
 # define ARROW_DOWN 65364
 # define ARROW_LEFT 65361
 # define ARROW_RIGHT 65363
+# define Q_KEY 113
+# define E_KEY 101
+# define M_KEY 109
+# define G_KEY 103
 
 #endif

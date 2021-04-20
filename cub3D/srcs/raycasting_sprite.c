@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/07 16:37:23 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/09 20:55:39 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/19 21:03:45 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	sort_distance_order(t_game *game)
 	i = -1;
 	while (++i < game->sprite.nb)
 	{
-		j = - 1
+		j = -1;
 		while (++j < game->sprite.nb - 1)
 		{
 			if (game->sprite.distance[j] < game->sprite.distance[j + 1])
@@ -52,32 +52,27 @@ void	sort_distance_order(t_game *game)
 	}
 }
 
-void	setup_sprites(t_game *game, t_ray *ray, t_sprite *sprite, int i)
+void	setup_sprites(t_game *game, t_ray *ray, int i)
 {
-	sprite->s_pos.x = game->obj[sprite->order[i]].x - ray->pos.x;
-	sprite->s_pos.y = game->obj[sprite->order[i]].y - ray->pos.y;
-	sprite->inv_det = 1.0 / (ray->plane.x * ray->dir.y - ray->dir.x *
-						ray->plane.y);
-	sprite->transform.x = sprite->inv_det * (ray->dir.y * sprite->s_pos.x
-							- ray->dir.x * sprite->s_pos.y);
-	sprite->transform.y = sprite->inv_det * (-ray->plane.y * sprite->s_pos.x
-							+ ray->plane.x * sprite->s_pos.y);
-	sprite->s_screenx = (int)((game->set.res.x / 2) * (1 + sprite->transform.x
-							/ sprite->transform.y));
-	sprite->s_height = abs((int)game->set.res.y / (sprite->transform.y));
-	sprite->s_start.y = -sprite->s_height / 2 + game->set.res.y / 2;
-	if (sprite->s_start.y < 0)
-		sprite->s_start.y = 0;
-	sprite->s_end.y = sprite->s_height / 2 + game->set.res.y / 2;
-	if (sprite->s_end.y >= game->set.res.y)
-		sprite->s_end.y = game->set.res.y - 1;
-	sprite->s_width = abs((int)(game->set.res.y / (sprite->transform.y)));		// error? >> (game->set.res.x / (sprite->transform.x)
-	sprite->s_start = -sprite->s_width / 2 + sprite->s_screenx;
-	if (sprite->s_start.x < 0)
-		sprite->s_start.x = 0;
-	sprite->s_end = sprite->s_width / 2 + sprite->s_screenx;
-	if (sprite->s_end.x >= game->set.res.x)
-		sprite->s_end.x = game->set.res.x - 1;
+	game->sprite.s_pos.x = game->obj[game->sprite.order[i]].x - ray->pos.x;
+	game->sprite.s_pos.y = game->obj[game->sprite.order[i]].y - ray->pos.y;
+	game->sprite.inv_det = 1.0 / (ray->plane.x * ray->dir.y - ray->dir.x * ray->plane.y);
+	game->sprite.transform.x = game->sprite.inv_det * (ray->dir.y * game->sprite.s_pos.x - ray->dir.x * game->sprite.s_pos.y);
+	game->sprite.transform.y = game->sprite.inv_det * (-ray->plane.y * game->sprite.s_pos.x + ray->plane.x * game->sprite.s_pos.y);
+	game->sprite.s_screenx = (int)((game->set.res.x / 2) * (1 + game->sprite.transform.x / game->sprite.transform.y));
+	game->sprite.s_height = abs((int)(game->set.res.y / (game->sprite.transform.y)));			// error recopy () ?
+	game->sprite.s_start.y = -game->sprite.s_height / 2 + game->set.res.y / 2;
+	if (game->sprite.s_start.y < 0)
+		game->sprite.s_start.y = 0;
+	game->sprite.s_end.y = game->sprite.s_height / 2 + game->set.res.y / 2;
+	if (game->sprite.s_end.y >= game->set.res.y) game->sprite.s_end.y = game->set.res.y - 1;
+	game->sprite.s_width = abs((int)(game->set.res.y / (game->sprite.transform.y)));		// error? >> (game->set.res.x / (game->sprite.transform.x)
+	game->sprite.s_start.x = -game->sprite.s_width / 2 + game->sprite.s_screenx;				// error ? .x
+	if (game->sprite.s_start.x < 0)
+		game->sprite.s_start.x = 0;
+	game->sprite.s_end.x = game->sprite.s_width / 2 + game->sprite.s_screenx;					// error ? .x
+	if (game->sprite.s_end.x >= game->set.res.x)
+		game->sprite.s_end.x = game->set.res.x - 1;
 }
 
 void	loop_draw_sprite(t_game *game, int tex_x, int stripe)
@@ -89,10 +84,10 @@ void	loop_draw_sprite(t_game *game, int tex_x, int stripe)
 	y = game->sprite.s_start.y;
 	while (y < game->sprite.s_end.y)
 	{
-		d = (y) * 256 - game->set.res.y * 128 + game->sprite.s_height 128;
+		d = (y) * 256 - game->set.res.y * 128 + game->sprite.s_height * 128;
 		tex_y = ((d * game->textures[4].height) / game->sprite.s_height) / 256;
 		if (game->textures[4].addr[tex_y * game->textures[4].line_length / 4 +
-			tex_x] != -16777216)																// if((color & 0x00FFFFFF) != 0)
+			tex_x] != 0)																// if((color & 0x00FFFFFF) != 0)
 			game->img.addr[y * game->img.line_length / 4 + stripe] =
 				game->textures[4].addr[tex_y * game->textures[4].line_length
 				/ 4 + tex_x];
@@ -106,14 +101,15 @@ void	render_sprite(t_game *game)
 	int	tex_x;
 	int stripe;
 
+	i = -1;
 	setup_distance_order(game, &game->ray);
 	while (++i < game->sprite.nb)
 	{
-		setup_sprites(game, &game->ray, &game->sprite, i);
+		setup_sprites(game, &game->ray, i);
 		stripe = game->sprite.s_start.x;
 		while (stripe < game->sprite.s_end.x)
 		{
-			tex_x = (int)(256 * (stripe - (-game->sprite->s_width / 2 +
+			tex_x = (int)(256 * (stripe - (-game->sprite.s_width / 2 +
 				game->sprite.s_screenx)) * game->textures[4].width /
 				game->sprite.s_width) / 256;
 			if (game->sprite.transform.y > 0 && stripe > 0 && stripe <

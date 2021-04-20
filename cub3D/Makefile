@@ -1,33 +1,64 @@
 NAME = cub3D
 
 SRCS =	cub3d_utils.c\
+		errors.c\
 		events.c\
 		exit_mlx.c\
 		floodfill_check.c\
+		ft_get_file.c\
 		ft_split_sep.c\
-		handle_errors.c\
 		init_mlx.c\
 		main.c\
-		map_display.c\
 		minilib_utils.c\
 		open_file.c\
-		parser.c\
 		parser_check_map.c\
 		parser_cpy_map.c\
-		parser_params.c\
 		parser_map_tabs.c\
-		raycasting.c\
+		parser_params.c\
+		parser.c\
 		raycasting_init.c\
 		raycasting_player.c\
-		raycasting_utils.c\
+		raycasting_sprite.c\
+		raycasting_textures.c\
+		raycasting.c\
+		save.c\
+
+BONUS =	cub3d_utils.c\
+		errors.c\
+		events.c\
+		exit_mlx.c\
+		floodfill_check.c\
+		ft_get_file.c\
+		ft_split_sep.c\
+		init_mlx.c\
+		main.c\
+		minilib_utils.c\
+		open_file.c\
+		parser_check_map.c\
+		parser_cpy_map.c\
+		parser_map_tabs.c\
+		parser_params.c\
+		parser.c\
+		raycasting_init.c\
+		raycasting_player.c\
+		raycasting_sprite.c\
+		raycasting_textures.c\
+		raycasting.c\
+		save.c\
+		map_display.c\
+		raycasting_text_cf.c\
 
 PATH_SRCS = srcs/
 
 OBJS = ${addprefix ${PATH_SRCS},${SRCS:.c=.o}}
 
+PATH_BONUS = bonus/
+
+BONUSOBJS = ${addprefix ${PATH_BONUS},${BONUS:.c=.o}}
+
 CC = clang
 
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g3 -fsanitize=address
 
 LIBFT_DIR = libft
 
@@ -58,7 +89,7 @@ $(NAME):    ${OBJS}
 			${CC} ${CFLAGS} ${LFLAGS} ${LIBS} ${OBJS} -o ${NAME} ${LIBFT_LIB} ${MLX_LIB_LINUX}
 
 clean:
-			${RM} ${OBJS}
+			${RM} ${OBJS} ${BONUSOBJS}
 			make clean -C ${MLX_DIR}
 			make clean -C ${LIBFT_DIR}
 
@@ -67,4 +98,9 @@ fclean:     clean
 
 re:         fclean all
 
-.PHONY:     all clean fclean re
+bonus:		${BONUSOBJS}
+			make -C ${LIBFT_DIR}
+			make -C ${MLX_DIR}
+			${CC} ${CFLAGS} ${LFLAGS} ${LIBS} ${BONUSOBJS} -o ${NAME} ${LIBFT_LIB} ${MLX_LIB_LINUX}
+
+.PHONY:     all clean fclean re bonus

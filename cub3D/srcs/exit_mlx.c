@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/11 20:09:37 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/12 20:51:42 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/19 23:54:43 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,13 @@
 
 int		exit_game(t_game *game)
 {
-	exit_free_settings(game);
+	if (!exit_free_mlx_components(game))
+	{
+		if (game->mlx)
+			free(game->mlx);
+		exit (0);
+	}
+	exit_free_settings(&game->set);
 	if (game->sprite.zbuffer)
 		free(game->sprite.zbuffer);
 	if (game->obj)
@@ -23,15 +29,9 @@ int		exit_game(t_game *game)
 		free(game->sprite.order);
 	if (game->sprite.distance)
 		free(game->sprite.distance);
-	if (!exit_free_mlx_components(game))
-	{
-		if (game->mlx)
-		free(game->mlx);
-		exit (0);
-	}
 	if (game->mlx)
 		free(game->mlx);
-	return (1);
+	exit (1);
 }
 
 int 	exit_free_mlx_components(t_game *game)
@@ -39,13 +39,13 @@ int 	exit_free_mlx_components(t_game *game)
 	int i;
 
 	if (game->mlx && game->img.img)
-		if (!mlx_destroy_image(game->mlx, &game->img.img))
+		if (!mlx_destroy_image(game->mlx, game->img.img))
 			return (ERR_MLX_DESTROY);
 	i = -1;
 	while (++i < 5)
 	{
 		if (game->mlx && game->textures[i].img)
-			if(!mlx_destroy_image(game->mlx, &game->textures[i].img))
+			if(!mlx_destroy_image(game->mlx, game->textures[i].img))
 				return (ERR_MLX_DESTROY);
 	}
 	if (game->mlx && game->win)
@@ -54,20 +54,22 @@ int 	exit_free_mlx_components(t_game *game)
 	if (game->mlx)
 		if (!(mlx_destroy_display(game->mlx)))
 			return (ERR_MLX_DESTROY);
+	game->win = NULL;
 	return (1);
 }
 
-void	exit_free_settings(t_game *game)
+void	exit_free_settings(t_settings *set)
 {
-	if (game->set.no_txt)
-		free(game->set.no_txt);
-	if (game->set.so_txt)
-		free(game->set.so_txt);
-	if (game->set.ea_txt)
-		free(game->set.ea_txt);
-	if (game->set.we_txt)
-		free(game->set.we_txt);
-	if (game->set.s_txt)
-		free(game->set.s_txt);
-	if (game->set.map && *game->set.map)
-		free_map(game->set.map);
+	if (set->no_txt)
+		free(set->no_txt);
+	if (set->so_txt)
+		free(set->so_txt);
+	if (set->ea_txt)
+		free(set->ea_txt);
+	if (set->we_txt)
+		free(set->we_txt);
+	if (set->s_txt)
+		free(set->s_txt);
+	if (set->map && *set->map)
+		free_tab(set->map);
+}

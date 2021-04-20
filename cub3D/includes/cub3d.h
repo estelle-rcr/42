@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 11:23:37 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/13 01:22:22 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/19 23:51:32 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,17 @@
 # include "settings.h"
 # include "errors.h"
 # include "bitmap.h"
-# include "bonus.h"
+//# include "bonus.h"
 
 # define MAP_CHARSET "012NSEW"
 # define PLAY_CHARSET "02NSEW"
 # define DIR_CHARSET "NSEW"
 # define NB_SETTINGS 8
 
-typedef struct		obj
+typedef struct		s_axis
 {
-	float	x;
-	float	y;
+	int	x;
+	int	y;
 }					t_axis;
 
 typedef struct		s_dblaxis
@@ -55,8 +55,8 @@ typedef struct		s_dblaxis
 typedef struct		s_settings
 {
 	int		fd;
-	t_axis	res;
-	t_axis	start_pos;
+	t_dblaxis	res;
+	t_dblaxis	start_pos;
 	char	player_dir;
 	char	*no_txt;
 	char	*so_txt;
@@ -102,15 +102,12 @@ typedef struct		s_texture
 
 typedef struct		s_player
 {
-	t_axis		pos;
 	int			forward;
 	int			back;
 	int			left;
 	int			right;
 	int			rotation_left;
 	int			rotation_right;
-	double		move_speed;
-	double		rotation_speed;
 }					t_player;
 
 typedef struct	s_ray
@@ -147,9 +144,9 @@ typedef	struct s_sprite
 	double		*distance;
 	double		inv_det;
 	double		*zbuffer;
-	float				s_screenx;
-	float				s_height;
-	float				s_width;
+	int				s_screenx;
+	int				s_height;
+	int				s_width;
 	t_axis		s_start;
 	t_axis		s_end;
 }					t_sprite;
@@ -159,7 +156,6 @@ typedef struct		s_game
 	void		*mlx;
 	void		*win;
 	int			save;
-	float		dst_projection_plane;
 	t_settings	set;
 	t_img_data	img;
 	t_player	player;
@@ -167,7 +163,7 @@ typedef struct		s_game
 	t_texture	wall;
 	t_sprite	sprite;
 	t_dblaxis	*obj;
-    t_text_data textures[5];				// bonus => 7
+    t_text_data textures[5];
 }					t_game;
 
 // main
@@ -207,10 +203,12 @@ int			error_map(int error);
 int			error_mlx(int error);
 
 // parser_cpy_map
-int			is_map(char *s);
-char		*ft_strdup_fill(char *s1, int len);
+int			is_map(char *s, t_settings *set);
+//char		*ft_strdup_fill(char *s1, int len);
 int 		copy_map(char *line, t_settings *set);
 int			get_map(char *line, t_settings *set);
+int 		get_start_position(t_settings *set);
+char 		**ft_get_file(int fd, int lvl);
 
 // parser_map_tabs.c									// issues freeing
 char		*replace_tabs(char *line);
@@ -218,9 +216,9 @@ char		*dup_space(char *line);
 void		add_spaces(char *s, int i);
 
 // parser_check_map
-int 		is_valid_map(char **map);
+int 		is_valid_map(t_settings *set, char **map);
 int 		valid_cells(char case1, char case2);
-int 		get_start_position(t_settings *set);
+int			valid_memory(t_settings *set, char **map, int x, int y);
 int			comp_null_cells(char **map, int x, int y);
 int			check_map(t_settings *set);
 
@@ -251,47 +249,47 @@ int			handle_keypress(int keysym, t_game *game);
 int			handle_keyrelease(int keysym, t_game *game);
 
 // raycasting
-void		cast_rays(t_game *game);
+int			cast_rays(t_game *game);
 void		step_side_dist(t_game *game, t_ray *ray);
 void		perform_dda_loop(t_game *game, t_ray *ray);
 void		create_wall_stripes(t_game *game, t_ray *ray);
 void		draw_color(t_game *game, t_ray *ray);
 
 // raycasting_player
-void		move_forward_back(t_ray *ray, t_player *player, char **map)
+void		move_forward_back(t_ray *ray, t_player *player, char **map);
 void		move_left_right(t_ray *ray, t_player *player, char **map);
 void		rotation_left_right(t_ray *ray, t_player *player);
 
 // raycasting init
 int			init_game(t_game *game);
-void		init_ray(t_game *game, t_ray *ray);
-void		init_ray_direction(t_settings *set, t_ray *ray);
-void		init_texture(t_game *game, t_ray *ray);
-void		init_sprite(t_game *game);
+void		init_ray(t_game *game);
+void		init_ray_direction(t_game *game);
+void		init_texture(t_game *game);
+void		init_obj(t_game *game);
+int			init_sprite(t_game *game);
 
 //raycasting_textures
 //void		set_axis(t_axis *point, float x, float y);			// useless
 //int 		is_wall(t_game *game, int axis_x, int axis_y);		// useless except map?
 int			load_texture(t_game *game);
 void		get_addr_texture(t_game *game);
-void		setup_wall_textures(t_game *game, t_ray *ray);
+void		setup_wall_textures(t_game *game, int y);
+int			darken_side_color(t_game *game);
 
 // raycasting_sprites
 void		setup_distance_order(t_game *game, t_ray *ray);
 void		sort_distance_order(t_game *game);
-void		setup_sprites(t_game *game, t_ray *ray, t_sprite *sprite, int i);
+void		setup_sprites(t_game *game, t_ray *ray, int i);
 void		loop_draw_sprite(t_game *game, int tex_x, int stripe);
 void		render_sprite(t_game *game);
-
-// save
-void		screenshot(t_game *game);
-void		create_bmp_header(t_game *game, int fd);
 
 // exit_mlx
 int			exit_game(t_game *game);								// must free
 int 		exit_free_mlx_components(t_game *game);
-void		exit_free_settings(t_game *game);
+void		exit_free_settings(t_settings *set);
 
-
+//save
+int		screenshot(t_game *game);
+void	create_bmp_header(t_game *game, int fd);
 
 #endif

@@ -1,0 +1,127 @@
+==12383== Memcheck, a memory error detector
+==12383== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==12383== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==12383== Command: ./cub3D map.cub
+==12383== 
+==12383==Shadow memory range interleaves with an existing memory mapping. ASan cannot proceed correctly. ABORTING.
+==12383==ASan shadow was supposed to be located in the [0x00007fff7000-0x10007fff7fff] range.
+==12383==This might be related to ELF_ET_DYN_BASE change in Linux 4.12.
+==12383==See https://github.com/google/sanitizers/issues/856 for possible workarounds.
+==12383==Process memory map follows:
+	0x000000400000-0x000000563000	/media/sf_42course/cub3D/cub3D
+	0x000000763000-0x000000764000	/media/sf_42course/cub3D/cub3D
+	0x000000764000-0x00000076b000	/media/sf_42course/cub3D/cub3D
+	0x00000076b000-0x0000013d1000	
+	0x000004000000-0x000004027000	/lib/x86_64-linux-gnu/ld-2.27.so
+	0x000004027000-0x00000403c000	
+	0x000004041000-0x000004058000	
+	0x000004227000-0x000004228000	/lib/x86_64-linux-gnu/ld-2.27.so
+	0x000004228000-0x000004229000	/lib/x86_64-linux-gnu/ld-2.27.so
+	0x000004229000-0x00000422a000	
+	0x00000422a000-0x00000422b000	
+	0x000004a2a000-0x000004a2b000	/usr/lib/valgrind/vgpreload_core-amd64-linux.so
+	0x000004a2b000-0x000004c2a000	/usr/lib/valgrind/vgpreload_core-amd64-linux.so
+	0x000004c2a000-0x000004c2b000	/usr/lib/valgrind/vgpreload_core-amd64-linux.so
+	0x000004c2b000-0x000004c2c000	/usr/lib/valgrind/vgpreload_core-amd64-linux.so
+	0x000004c2c000-0x000004c3b000	/usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so
+	0x000004c3b000-0x000004e3a000	/usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so
+	0x000004e3a000-0x000004e3b000	/usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so
+	0x000004e3b000-0x000004e3c000	/usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so
+	0x000004e3c000-0x000004fd9000	/lib/x86_64-linux-gnu/libm-2.27.so
+	0x000004fd9000-0x0000051d8000	/lib/x86_64-linux-gnu/libm-2.27.so
+	0x0000051d8000-0x0000051d9000	/lib/x86_64-linux-gnu/libm-2.27.so
+	0x0000051d9000-0x0000051da000	/lib/x86_64-linux-gnu/libm-2.27.so
+	0x0000051da000-0x0000051ed000	/lib/x86_64-linux-gnu/libbsd.so.0.8.7
+	0x0000051ed000-0x0000053ec000	/lib/x86_64-linux-gnu/libbsd.so.0.8.7
+	0x0000053ec000-0x0000053ed000	/lib/x86_64-linux-gnu/libbsd.so.0.8.7
+	0x0000053ed000-0x0000053ee000	/lib/x86_64-linux-gnu/libbsd.so.0.8.7
+	0x0000053ee000-0x0000053ef000	
+	0x0000053ef000-0x000005400000	/usr/lib/x86_64-linux-gnu/libXext.so.6.4.0
+	0x000005400000-0x0000055ff000	/usr/lib/x86_64-linux-gnu/libXext.so.6.4.0
+	0x0000055ff000-0x000005600000	/usr/lib/x86_64-linux-gnu/libXext.so.6.4.0
+	0x000005600000-0x000005601000	/usr/lib/x86_64-linux-gnu/libXext.so.6.4.0
+	0x000005601000-0x000005734000	/usr/lib/x86_64-linux-gnu/libX11.so.6.3.0
+	0x000005734000-0x000005934000	/usr/lib/x86_64-linux-gnu/libX11.so.6.3.0
+	0x000005934000-0x000005935000	/usr/lib/x86_64-linux-gnu/libX11.so.6.3.0
+	0x000005935000-0x000005939000	/usr/lib/x86_64-linux-gnu/libX11.so.6.3.0
+	0x000005939000-0x000005953000	/lib/x86_64-linux-gnu/libpthread-2.27.so
+	0x000005953000-0x000005b52000	/lib/x86_64-linux-gnu/libpthread-2.27.so
+	0x000005b52000-0x000005b53000	/lib/x86_64-linux-gnu/libpthread-2.27.so
+	0x000005b53000-0x000005b54000	/lib/x86_64-linux-gnu/libpthread-2.27.so
+	0x000005b54000-0x000005b58000	
+	0x000005b58000-0x000005b5f000	/lib/x86_64-linux-gnu/librt-2.27.so
+	0x000005b5f000-0x000005d5e000	/lib/x86_64-linux-gnu/librt-2.27.so
+	0x000005d5e000-0x000005d5f000	/lib/x86_64-linux-gnu/librt-2.27.so
+	0x000005d5f000-0x000005d60000	/lib/x86_64-linux-gnu/librt-2.27.so
+	0x000005d60000-0x000005d63000	/lib/x86_64-linux-gnu/libdl-2.27.so
+	0x000005d63000-0x000005f62000	/lib/x86_64-linux-gnu/libdl-2.27.so
+	0x000005f62000-0x000005f63000	/lib/x86_64-linux-gnu/libdl-2.27.so
+	0x000005f63000-0x000005f64000	/lib/x86_64-linux-gnu/libdl-2.27.so
+	0x000005f64000-0x000005f7b000	/lib/x86_64-linux-gnu/libgcc_s.so.1
+	0x000005f7b000-0x00000617a000	/lib/x86_64-linux-gnu/libgcc_s.so.1
+	0x00000617a000-0x00000617b000	/lib/x86_64-linux-gnu/libgcc_s.so.1
+	0x00000617b000-0x00000617c000	/lib/x86_64-linux-gnu/libgcc_s.so.1
+	0x00000617c000-0x000006363000	/lib/x86_64-linux-gnu/libc-2.27.so
+	0x000006363000-0x000006563000	/lib/x86_64-linux-gnu/libc-2.27.so
+	0x000006563000-0x000006567000	/lib/x86_64-linux-gnu/libc-2.27.so
+	0x000006567000-0x000006569000	/lib/x86_64-linux-gnu/libc-2.27.so
+	0x000006569000-0x00000656d000	
+	0x00000656d000-0x000006593000	/usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0
+	0x000006593000-0x000006793000	/usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0
+	0x000006793000-0x000006794000	/usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0
+	0x000006794000-0x000006795000	/usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0
+	0x000006795000-0x000006797000	/usr/lib/x86_64-linux-gnu/libXau.so.6.0.0
+	0x000006797000-0x000006997000	/usr/lib/x86_64-linux-gnu/libXau.so.6.0.0
+	0x000006997000-0x000006998000	/usr/lib/x86_64-linux-gnu/libXau.so.6.0.0
+	0x000006998000-0x000006999000	/usr/lib/x86_64-linux-gnu/libXau.so.6.0.0
+	0x000006999000-0x00000699e000	/usr/lib/x86_64-linux-gnu/libXdmcp.so.6.0.0
+	0x00000699e000-0x000006b9d000	/usr/lib/x86_64-linux-gnu/libXdmcp.so.6.0.0
+	0x000006b9d000-0x000006b9e000	/usr/lib/x86_64-linux-gnu/libXdmcp.so.6.0.0
+	0x000006b9e000-0x000006b9f000	/usr/lib/x86_64-linux-gnu/libXdmcp.so.6.0.0
+	0x000006b9f000-0x000006ef1000	
+	0x000006ef1000-0x0000072f1000	
+	0x000058000000-0x00005823b000	/usr/lib/valgrind/memcheck-amd64-linux
+	0x00005843b000-0x000058441000	/usr/lib/valgrind/memcheck-amd64-linux
+	0x000058441000-0x000059e43000	
+	0x001002001000-0x001008c22000	
+	0x001008c8c000-0x001008cac000	
+	0x001008cac000-0x001008cae000	
+	0x001008cae000-0x001008dae000	
+	0x001008dae000-0x001008db0000	
+	0x001008db0000-0x001008db1000	/tmp/vgdb-pipe-shared-mem-vgdb-12383-by-user42-on-???
+	0x001008db1000-0x00100aefd000	
+	0x00100affd000-0x00100b3fd000	
+	0x00100b5fd000-0x00100bafd000	
+	0x00100bcf2000-0x00100bf34000	
+	0x001ffeffe000-0x001fff001000	
+	0x7ffc38158000-0x7ffc38179000	[stack]
+	0x7ffc381f8000-0x7ffc381fb000	[vvar]
+	0xffffffffff600000-0xffffffffff601000	[vsyscall]
+==12383==End of process memory map.
+==12383== 
+==12383== HEAP SUMMARY:
+==12383==     in use at exit: 32 bytes in 1 blocks
+==12383==   total heap usage: 10 allocs, 9 frees, 418 bytes allocated
+==12383== 
+==12383== 32 bytes in 1 blocks are still reachable in loss record 1 of 1
+==12383==    at 0x4C31B25: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12383==    by 0x5D617F4: _dlerror_run (dlerror.c:140)
+==12383==    by 0x5D61165: dlsym (dlsym.c:70)
+==12383==    by 0x4E9FF4: __interception::GetRealFunctionAddress(char const*, unsigned long*, unsigned long, unsigned long) (in /media/sf_42course/cub3D/cub3D)
+==12383==    by 0x4C3E63: __asan::InitializeAsanInterceptors() (in /media/sf_42course/cub3D/cub3D)
+==12383==    by 0x4E5DF3: __asan::AsanInitInternal() [clone .part.0] (in /media/sf_42course/cub3D/cub3D)
+==12383==    by 0x4010855: _dl_init (dl-init.c:104)
+==12383==    by 0x40010C9: ??? (in /lib/x86_64-linux-gnu/ld-2.27.so)
+==12383==    by 0x1: ???
+==12383==    by 0x1FFF00022A: ???
+==12383==    by 0x1FFF000232: ???
+==12383== 
+==12383== LEAK SUMMARY:
+==12383==    definitely lost: 0 bytes in 0 blocks
+==12383==    indirectly lost: 0 bytes in 0 blocks
+==12383==      possibly lost: 0 bytes in 0 blocks
+==12383==    still reachable: 32 bytes in 1 blocks
+==12383==         suppressed: 0 bytes in 0 blocks
+==12383== 
+==12383== For counts of detected and suppressed errors, rerun with: -v
+==12383== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

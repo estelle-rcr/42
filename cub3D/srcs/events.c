@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 12:03:29 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/13 01:13:04 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/19 13:53:35 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,9 @@ int	handle_keypress(int keycode, t_game *game)
 	// BONUS_FEATURES TO ADD
 	if (keycode == ESCAPE)
 	{
-		mlx_destroy_window(game->mlx, game->win);
-		game->win = NULL;
+		exit_game(game);
+		mlx_loop_end(game->mlx);
+		exit(0);
 	}
 	return (1);
 }
@@ -80,6 +81,10 @@ void	handle_bonus_keypress(int keycode, t_game *game)
 			game->gun_choice++;
 		else
 			game->gun_choice = 0;
+	}
+	if (keycode == M_KEY)
+	{
+		game->map.is_on = !game->map.is_on;
 	}
 }
 

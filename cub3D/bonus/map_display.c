@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 12:15:06 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/13 01:22:45 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/18 22:07:59 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ void	draw_player(t_game *game)
 	float y;
 
 	i = 0;
-	while (i < PLAYER_SIZE)
+	while (i < PLAYER_SIZE && game->map.is_on == 1)
 	{
 		j = 0;
 		while (j < PLAYER_SIZE)
 		{
-			x = game->player.pos.x * game->set.res.x * 1 / 8 + j;
-			y = game->player.pos.y * game->set.res.y * 1 / 8 + i;
+			x = game->ray.pos.x * game->set.res.x * 1 / 8 + j;
+			y = game->ray.pos.x  * game->set.res.y * 1 / 8 + i;
 			if (!hit_screen(game, x, y) && !printable_map(game, x, y))
 				my_mlx_pixel_put(&game->img, x, y, MAP_PLAYER);
 			j++;
@@ -65,7 +65,7 @@ void	draw_rect(t_game *game, t_axis pos, t_axis end, int color)
 	float	j;
 
 	i = 0;
-	while (pos.x + i < end.x)
+	while (pos.x + i < end.x && game->map.is_on == 1)
 	{
 		j = 0;
 		while (pos.y + j < end.y)

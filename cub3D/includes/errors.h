@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:19:20 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/12 20:34:53 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/16 14:19:34 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ typedef enum	e_errors
 	ERROR_OPEN_BMP,
 	ERROR_CLOSE_BMP,
 	ERROR_CLOSE_FILE,
+	ERROR_GNL,
 
 }				t_errors;
 

@@ -6,13 +6,13 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 21:17:24 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/13 01:16:46 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/18 22:02:50 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	draw_textured_cf(t_game *game, t_ray *ray, t_cf_data *cf)
+void	draw_textured_cf(t_game *game, t_ray *ray)
 {
 	int			y;
 	int 		x;
@@ -20,34 +20,34 @@ void	draw_textured_cf(t_game *game, t_ray *ray, t_cf_data *cf)
 
 	y = -1;
 	h = game->set.res.y;
-	ft_bzero(cf, sizeof(t_cf_data));				//enough for pitch and pos_z ?
+	ft_bzero(&game->cf, sizeof(t_cf_data));
 	while (++y < h)						// / 2 ?
 	{
-		setup_additionnal_text(game, ray, cf, y);
+		setup_additionnal_text(game, ray, &game->cf, y);
 		x = -1;
 		while (++x < game->set.res.x)
 		{
-			cf->cell_x = (int)(cf->floor.x);
-			cf->cell_y = (int)(cf->floor.y);
-			cf->tx = (int)(game->textures[5].width * (cf->floor.x -
-						cf->cell_x)) & (game->textures[5].width - 1);
-			cf->ty = (int)(game->textures[5].height * (cf->floor.y -
-						cf->cell_y)) & (game->textures[5].height - 1);
-			cf->floor.x += cf->floor_step.x;
-			cf->floor.y += cf->floor_step.y;
+			game->cf.cell_x = (int)(game->cf.floor.x);
+			game->cf.cell_y = (int)(game->cf.floor.y);
+			game->cf.tx = (int)(game->text_cf[0].width * (game->cf.floor.x -
+						game->cf.cell_x)) & (game->text_cf[0].width - 1);
+			game->cf.ty = (int)(game->text_cf[0].height * (game->cf.floor.y -
+						game->cf.cell_y)) & (game->text_cf[0].height - 1);
+			game->cf.floor.x += game->cf.floor_step.x;
+			game->cf.floor.y += game->cf.floor_step.y;
 			game->img.addr[y * game->img.line_length / 4 + x] =
-				game->textures[5].addr[cf->ty *
+				game->text_cf[0].addr[game->cf.ty *
 				game->textures[game->wall.txt_dir].line_length / 4
-				+ cf->tx];
+				+ game->cf.tx];
 			game->img.addr[(h - y - 1) * game->img.line_length / 4 + x] =
-				game->textures[6].addr[cf->ty *
+				game->text_cf[1].addr[game->cf.ty *
 				game->textures[game->wall.txt_dir].line_length / 4
-				+ cf->tx];
+				+ game->cf.tx];
 		}
 	}
 }
 
-void	setup_additionnal_text(t_game *game, t_ray *ray, t_cf_data *cf, int i)
+void	setup_additionnal_text(t_game *game, t_ray *ray, int i)
 {
 	int			is_floor;
 	int			h;
@@ -55,20 +55,41 @@ void	setup_additionnal_text(t_game *game, t_ray *ray, t_cf_data *cf, int i)
 
 	h = game->set.res.y;
 	w = game->set.res.x;
-	is_floor = (i > h / 2 + cf->pitch);
-	cf->ray_dir_0.x = ray->dir.x - ray->plane.x;
-	cf->ray_dir_0.y = ray->dir.y - ray->plane.y;
-	cf->ray_dir_1.x = ray->dir.x + ray->plane.x;
-	cf->ray_dir_1.y = ray->dir.y + ray->plane.y;
-	cf->p = is_floor ? i - h / 2 - cf->pitch : 2 - i + cf->pitch;
-	cf->cam_z = is_floor ? (0.5 * h + cf->pos_z) : (0.5 * h - cf->pos_z);
-//	cf->pos_z = 0.5 * h;
-//	cf->row_dist = cf->pos_z / cf->p;
-	cf->row_dist = cf->cam_z / cf->p;
-	cf->floor_step.x = cf->row_dist * (cf->ray_dir_1.x - cf->ray_dir_0.x)
+	is_floor = (i > h / 2 + game->cf.pitch);
+	game->cf.ray_dir_0.x = ray->dir.x - ray->plane.x;
+	game->cf.ray_dir_0.y = ray->dir.y - ray->plane.y;
+	game->cf.ray_dir_1.x = ray->dir.x + ray->plane.x;
+	game->cf.ray_dir_1.y = ray->dir.y + ray->plane.y;
+	game->cf.p = is_floor ? i - h / 2 - game->cf.pitch : 2 - i + game->cf.pitch;
+	game->cf.cam_z = is_floor ? (0.5 * h + game->cf.pos_z) : (0.5 * h - game->cf.pos_z);
+//	game->cf.pos_z = 0.5 * h;
+//	game->cf.row_dist = game->cf.pos_z / game->cf.p;
+	game->cf.row_dist = game->cf.cam_z / game->cf.p;
+	game->cf.floor_step.x = game->cf.row_dist * (game->cf.ray_dir_1.x - game->cf.ray_dir_0.x)
 						/ w;
-	cf->floor_step.y = cf->row_dist * (cf->ray_dir_1.y - cf->ray_dir_0.y)
+	game->cf.floor_step.y = game->cf.row_dist * (game->cf.ray_dir_1.y - game->cf.ray_dir_0.y)
 						/ w;
-	cf->floor.x = ray->pos.x * cf->row_dist * cf->ray_dir_0.x;
-	cf->floor.y = ray->pos.y * cf->row_dist * cf->ray_dir_0.y;
+	game->cf.floor.x = ray->pos.x * game->cf.row_dist * game->cf.ray_dir_0.x;
+	game->cf.floor.y = ray->pos.y * game->cf.row_dist * game->cf.ray_dir_0.y;
+}
+
+int	load_texture_cf(t_game *game)
+{
+	game->cf.ceil_txt = CEIL;
+	game->cf.floor_txt = FLOOR;
+	if (!(game->text_cf[0].img = mlx_xpm_file_to_image(game->mlx,
+		game->cf.ceil_txt, &(game->text_cf[0].width),
+		&(game->text_cf[0].height))))
+		return (ERROR_TXT_LOAD_IMG);
+	if (!(game->text_cf[1].img = mlx_xpm_file_to_image(game->mlx,
+		game->cf.floor_txt, &(game->text_cf[1].width),
+		&(game->text_cf[1].height))))
+		return (ERROR_TXT_LOAD_IMG);
+	game->text_cf[0].addr = (int *)mlx_get_data_addr(game->text_cf[0].img,
+		&game->text_cf[0].bpp, &game->text_cf[0].line_length,
+		&game->text_cf[0].endian);
+	game->text_cf[1].addr = (int *)mlx_get_data_addr(game->text_cf[1].img,
+		&game->text_cf[1].bpp, &game->text_cf[1].line_length,
+		&game->text_cf[1].endian);
+	return (1);
 }

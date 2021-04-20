@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 16:49:34 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/12 16:54:25 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/13 16:45:29 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 # define BITMAP_H
 
 # include <unistd.h>
-# include <fcntl.h>
-# include <math.h>
+# include <stdint.h>
 # include "cub3d.h"
-# include "libft/includes/libft.h"
 
 typedef struct		s_bitmapinfoheader
 {
@@ -42,8 +40,5 @@ typedef	struct		s_fileheader
 	uint32_t fileoffset;
 	t_bitmapinfoheader bitmapinfoheader;
 }						t_fileheader;
-
-int		screenshot(t_game *game);
-void	create_bmp_header(t_game *game, int fd);
 
 #endif
