@@ -6,11 +6,11 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 14:28:21 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/16 14:20:34 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/21 21:13:41 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 int	print_err_msg(int error)
 {
@@ -22,7 +22,6 @@ int	print_err_msg(int error)
 		return (error_map(error));
 	else if (error >= 21 && error <= 26)
 		return (error_mlx(error));
-
 	return (0);
 }
 
@@ -55,17 +54,17 @@ int	error_files(int error)
 int	error_rtc(int error)
 {
 	if (error == 8)
-		ft_putstr("Error\nThe resolution can't be less than 1 * 1 pixel.\n");
+		ft_putstr("Error\nThe resolution must be 2 positive numbers.\n");
 	else if (error == 9)
 		ft_putstr("Error\nToo many resolution parameters were provided.\n");
 	else if (error == 10)
-		ft_putstr("Error\nThe resolution must be 2 positive numbers.\n");
+		ft_putstr("Error\nThe resolution can't be less than 1 * 1 pixel.\n");
 	else if (error == 11)
 		ft_putstr("Error\nWrong arguments in the resolution parameter.\n");
 	else if (error == 12)
 		ft_putstr("Error\nWrong arguments in the texture parameter.\n");
 	else if (error == 13)
-		ft_putstr("Error\nThe texture parameter's argument is not valid.\n");
+		ft_putstr("Error\nOne texture parameter's argument is not valid.\n");
 	else if (error == 14)
 		ft_putstr("Error\nEach texture parameter must be given only once.\n");
 	else if (error == 15)
@@ -96,7 +95,7 @@ int	error_mlx(int error)
 		ft_putstr("Error\nCouldn't generate mlx window.\n");
 	else if (error == 23)
 		ft_putstr("Error\nCouldn't generate mlx image correctly.\n");
-    else if (error == 24)
+	else if (error == 24)
 		ft_putstr("Error\nCouldn't retrieve texture image.");
 	else if (error == 25)
 		ft_putstr("Error\nCouldn't destroy correctly MLX components.");

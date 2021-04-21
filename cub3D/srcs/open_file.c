@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 16:30:11 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/16 16:11:03 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/21 18:12:23 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_settings	*init_set(t_settings *set)
 	return (set);
 }
 
-int		check_extension(char *file, char *type)
+int			check_extension(char *file, char *type)
 {
 	int i;
 	int j;
@@ -51,7 +51,7 @@ int		check_extension(char *file, char *type)
 	return (0);
 }
 
-int		open_file(char *file)
+int			open_file(char *file)
 {
 	int	fd;
 
@@ -66,7 +66,7 @@ int		open_file(char *file)
 	return (fd);
 }
 
-int		is_whitespace(char *str)
+int			is_whitespace(char *str)
 {
 	int	i;
 
@@ -79,14 +79,14 @@ int		is_whitespace(char *str)
 	return (1);
 }
 
-int		read_file(char *file, t_settings *set)
+int			read_file(char *file, t_settings *set)
 {
 	char		*line;
 	int			ret;
 
 	init_set(set);
 	if ((set->fd = open_file(file)) == 0)
-		exit(0);
+		return (ERR_GNL);
 	while ((ret = get_next_line(set->fd, &line)) >= 0)
 	{
 		if (ret == -1)
@@ -94,7 +94,7 @@ int		read_file(char *file, t_settings *set)
 		if (*line && !is_whitespace(line))
 		{
 			if (!parse_file(line, set))
-				return (ERR_GNL);
+				return (0);
 		}
 		free(line);
 		if (ret == 0)
@@ -104,6 +104,6 @@ int		read_file(char *file, t_settings *set)
 	if (close(set->fd) == -1)
 		return (ERROR_CLOSE_FILE);
 	if (!check_map(set))
-		exit(0);
+		exit(1);
 	return (1);
 }

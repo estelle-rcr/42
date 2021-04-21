@@ -6,17 +6,17 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 16:41:22 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/16 12:27:28 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/21 21:18:59 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 int	check_params(char **params, t_settings *set)
 {
 	char	**valid_set;
 	int		(*settings_fct[NB_SETTINGS + 1])(char**, t_settings*);
-	int 	i;
+	int		i;
 	int		ret;
 
 	i = 0;
@@ -57,8 +57,7 @@ int	parse_file(char *line, t_settings *set)
 		if (!check_params(params, set))
 		{
 			free_tab(params);
-			free(line);
-			return (0);
+			exit_gnl(line, set);
 		}
 		free_tab(params);
 	}
@@ -69,7 +68,7 @@ int	parse_file(char *line, t_settings *set)
 			if (set->map)
 				free_map(set->map);
 			free(line);
-			return (0);
+			exit(1);
 		}
 	}
 	return (1);

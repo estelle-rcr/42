@@ -6,11 +6,11 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 12:22:54 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/16 12:22:58 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/21 16:34:02 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "get_next_line.h"
+#include "get_next_line.h"
 
 static size_t	ft_strlen(const char *s)
 {
@@ -24,7 +24,7 @@ static size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-char	*new_line(char *str)
+char			*new_line(char *str)
 {
 	char	*temp;
 	int		i;
@@ -46,7 +46,7 @@ char	*new_line(char *str)
 	return (temp);
 }
 
-char	*trunc_str(char *str)
+char			*trunc_str(char *str)
 {
 	char	*temp;
 	int		i;
@@ -73,7 +73,7 @@ char	*trunc_str(char *str)
 	return (temp);
 }
 
-int		get_next_line(int fd, char **line)
+int				get_next_line(int fd, char **line)
 {
 	int			ret;
 	char		*buf;

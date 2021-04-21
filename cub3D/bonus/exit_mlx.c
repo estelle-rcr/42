@@ -6,11 +6,11 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/11 20:09:37 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/18 21:11:25 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/21 21:14:25 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 int		exit_game(t_game *game)
 {
@@ -18,9 +18,10 @@ int		exit_game(t_game *game)
 	{
 		if (game->mlx)
 			free(game->mlx);
-		exit (0);
+		exit_free_settings(&game->set);
+		exit(1);
 	}
-	exit_free_settings(game);
+	exit_free_settings(&game->set);
 	if (game->sprite.zbuffer)
 		free(game->sprite.zbuffer);
 	if (game->obj)
@@ -31,12 +32,13 @@ int		exit_game(t_game *game)
 		free(game->sprite.distance);
 	if (game->mlx)
 		free(game->mlx);
-	exit (1);
+	mlx_loop_end(game);
+	exit(1);
 }
 
-int 	exit_free_mlx_components(t_game *game)
+int		exit_free_mlx_components(t_game *game)
 {
-	int i;
+	int	i;
 
 	if (game->mlx && game->img.img)
 		if (!mlx_destroy_image(game->mlx, game->img.img))
@@ -45,7 +47,7 @@ int 	exit_free_mlx_components(t_game *game)
 	while (++i < 5)
 	{
 		if (game->mlx && game->textures[i].img)
-			if(!mlx_destroy_image(game->mlx, game->textures[i].img))
+			if (!mlx_destroy_image(game->mlx, game->textures[i].img))
 				return (ERR_MLX_DESTROY);
 	}
 	if (game->mlx && game->win)
@@ -58,18 +60,31 @@ int 	exit_free_mlx_components(t_game *game)
 	return (1);
 }
 
-void	exit_free_settings(t_game *game)
+void	exit_free_settings(t_settings *set)
 {
-	if (game->set.no_txt)
-		free(game->set.no_txt);
-	if (game->set.so_txt)
-		free(game->set.so_txt);
-	if (game->set.ea_txt)
-		free(game->set.ea_txt);
-	if (game->set.we_txt)
-		free(game->set.we_txt);
-	if (game->set.s_txt)
-		free(game->set.s_txt);
-	if (game->set.map && *game->set.map)
-		free_tab(game->set.map);
+	if (set->no_txt)
+		free(set->no_txt);
+	if (set->so_txt)
+		free(set->so_txt);
+	if (set->ea_txt)
+		free(set->ea_txt);
+	if (set->we_txt)
+		free(set->we_txt);
+	if (set->s_txt)
+		free(set->s_txt);
+	if (set->map && *set->map)
+		free_tab(set->map);
+}
+
+int		exit_gnl(char *line, t_settings *set)
+{
+	char	**tab;
+
+	exit_free_settings(set);
+	tab = ft_get_file(set->fd, 0);
+	free_tab(tab);
+	free(line);
+	if (close(set->fd) == -1)
+		return (ERROR_CLOSE_FILE);
+	exit(1);
 }

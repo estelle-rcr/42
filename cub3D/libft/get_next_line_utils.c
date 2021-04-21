@@ -6,11 +6,11 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 12:22:44 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/15 12:01:51 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/21 16:34:28 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "get_next_line.h"
+#include "get_next_line.h"
 
 static size_t	ft_strlen(const char *s)
 {
@@ -24,7 +24,7 @@ static size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-char		*ft_strfind(const char *s, int c)
+char			*ft_strfind(const char *s, int c)
 {
 	char *str;
 
@@ -38,7 +38,7 @@ char		*ft_strfind(const char *s, int c)
 	return (0);
 }
 
-static void	*ft_memmove(void *dst, const void *src, size_t len)
+static void		*ft_memmove(void *dst, const void *src, size_t len)
 {
 	unsigned char		*d;
 	const unsigned char	*s;
@@ -56,7 +56,7 @@ static void	*ft_memmove(void *dst, const void *src, size_t len)
 	return (dst);
 }
 
-char		*ft_joinstr(char *s1, char *s2)
+char			*ft_joinstr(char *s1, char *s2)
 {
 	char	*tab;
 	int		size1;

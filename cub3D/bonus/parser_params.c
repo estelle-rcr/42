@@ -6,11 +6,11 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 16:49:56 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/12 20:00:08 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/21 21:18:56 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 int	check_resolution(char **params, t_settings *set)
 {

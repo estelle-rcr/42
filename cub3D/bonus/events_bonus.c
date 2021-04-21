@@ -6,11 +6,11 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/18 22:13:14 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/18 22:20:34 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/21 21:13:46 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "cub3d.h"
+#include "cub3d_bonus.h"
 
 void	handle_bonus_keypress(int keycode, t_game *game)
 {

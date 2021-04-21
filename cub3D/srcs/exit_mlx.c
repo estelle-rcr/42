@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/11 20:09:37 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/19 23:54:43 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/21 17:16:02 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int		exit_game(t_game *game)
 	{
 		if (game->mlx)
 			free(game->mlx);
-		exit (0);
+		exit_free_settings(&game->set);
+		exit(1);
 	}
 	exit_free_settings(&game->set);
 	if (game->sprite.zbuffer)
@@ -31,12 +32,13 @@ int		exit_game(t_game *game)
 		free(game->sprite.distance);
 	if (game->mlx)
 		free(game->mlx);
-	exit (1);
+	mlx_loop_end(game);
+	exit(1);
 }
 
-int 	exit_free_mlx_components(t_game *game)
+int		exit_free_mlx_components(t_game *game)
 {
-	int i;
+	int	i;
 
 	if (game->mlx && game->img.img)
 		if (!mlx_destroy_image(game->mlx, game->img.img))
@@ -45,7 +47,7 @@ int 	exit_free_mlx_components(t_game *game)
 	while (++i < 5)
 	{
 		if (game->mlx && game->textures[i].img)
-			if(!mlx_destroy_image(game->mlx, game->textures[i].img))
+			if (!mlx_destroy_image(game->mlx, game->textures[i].img))
 				return (ERR_MLX_DESTROY);
 	}
 	if (game->mlx && game->win)
@@ -72,4 +74,17 @@ void	exit_free_settings(t_settings *set)
 		free(set->s_txt);
 	if (set->map && *set->map)
 		free_tab(set->map);
+}
+
+int		exit_gnl(char *line, t_settings *set)
+{
+	char	**tab;
+
+	exit_free_settings(set);
+	tab = ft_get_file(set->fd, 0);
+	free_tab(tab);
+	free(line);
+	if (close(set->fd) == -1)
+		return (ERROR_CLOSE_FILE);
+	exit(1);
 }

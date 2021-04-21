@@ -6,11 +6,11 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 14:49:22 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/12 20:07:45 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/21 21:14:28 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 /*
 int	check_map(t_settings *set)
 {

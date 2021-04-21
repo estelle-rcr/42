@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 01:13:55 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/18 22:05:10 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/21 23:29:50 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,13 @@ int 	printable_map(t_game *game, float x, float y);
 void	draw_player(t_game *game);
 void	draw_rect(t_game *game, t_axis pos, t_axis end, int color);
 void	draw_map(t_game *game, t_settings *set);
+
+// raycasting text
+int			add_shade(double distance, int trgb);
+
+// parser_map_tabs.c									// issues freeing
+char		*replace_tabs(char *line);
+char		*dup_space(char *line);
+void		add_spaces(char *s, int i);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:44:54 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/19 14:59:11 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/21 18:06:55 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,23 +23,33 @@ int	valid_cells(char case1, char case2)
 		return (0);
 }
 
-int	comp_null_cells(char **map, int x, int y)
+int	comp_null_cells(char **map)
 {
-	if (ft_strchr(PLAY_CHARSET, map[x][y]) && !map[x][y + 1])
-		return (0);
-	else if (ft_strchr(PLAY_CHARSET, map[x][y]) && !map[x][y - 1])
-		return (0);
-	else if (ft_strchr(PLAY_CHARSET, map[x][y]) && (!map[x + 1] ||
-				!map[x + 1][y]))
-		return (0);
-	else if (ft_strchr(PLAY_CHARSET, map[x][y]) && (!map[x - 1] ||
-				!map[x - 1][y]))
-		return (0);
-	else
-		return (1);
+	int x;
+	int y;
+
+	x = -1;
+	while (map[++x])
+	{
+		y = -1;
+		while (map[x][++y])
+		{
+			if (ft_strchr(PLAY_CHARSET, map[x][y]) && !map[x][y + 1])
+				return (0);
+			else if (ft_strchr(PLAY_CHARSET, map[x][y]) && !map[x][y - 1])
+				return (0);
+			else if (ft_strchr(PLAY_CHARSET, map[x][y]) && (!map[x + 1] ||
+						!map[x + 1][y]))
+				return (0);
+			else if (ft_strchr(PLAY_CHARSET, map[x][y]) && (!map[x - 1] ||
+						!map[x - 1][y]))
+				return (0);
+		}
+	}
+	return (1);
 }
 
-int		valid_memory(t_settings *set, char **map, int x, int y)
+int	valid_memory(t_settings *set, char **map, int x, int y)
 {
 	if (x >= 0 && y >= 0 && x < set->map_height && y <
 			(int)ft_strlen(map[x]) && map[x][y])
@@ -70,11 +80,9 @@ int	is_valid_map(t_settings *set, char **map)
 			else if (x > 0 && valid_memory(set, map, x - 1, y) &&
 					!valid_cells(map[x][y], map[x - 1][y]))
 				return (0);
-			else if (!comp_null_cells(map, x, y))
-				return (0);
 		}
 	}
-	return (1);
+	return (comp_null_cells(map));
 }
 
 int	check_map(t_settings *set)

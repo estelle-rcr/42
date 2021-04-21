@@ -4,7 +4,6 @@ SRCS =	cub3d_utils.c\
 		errors.c\
 		events.c\
 		exit_mlx.c\
-		floodfill_check.c\
 		ft_get_file.c\
 		ft_split_sep.c\
 		init_mlx.c\
@@ -13,7 +12,6 @@ SRCS =	cub3d_utils.c\
 		open_file.c\
 		parser_check_map.c\
 		parser_cpy_map.c\
-		parser_map_tabs.c\
 		parser_params.c\
 		parser.c\
 		raycasting_init.c\
@@ -58,7 +56,7 @@ BONUSOBJS = ${addprefix ${PATH_BONUS},${BONUS:.c=.o}}
 
 CC = clang
 
-CFLAGS = -Wall -Werror -Wextra -g3 -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -g3
 
 LIBFT_DIR = libft
 

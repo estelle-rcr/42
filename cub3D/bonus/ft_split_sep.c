@@ -6,11 +6,11 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 16:52:27 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/16 12:26:44 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/21 21:14:33 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 static int		ft_is_sep(char *str)
 {

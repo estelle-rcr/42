@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 16:18:44 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/18 21:00:02 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/21 15:39:47 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ void	my_mlx_pixel_put(t_img_data *img, int x, int y, int color)
 {
 	int *dst;
 
-	dst = (img->addr + (y * img->line_length + x * (img->bpp / 8)));				// change to int *
+	dst = (img->addr + (y * img->line_length + x * (img->bpp / 8)));
 	*(unsigned int *)dst = color;
 }

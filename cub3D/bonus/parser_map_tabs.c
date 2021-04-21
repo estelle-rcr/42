@@ -6,11 +6,11 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/11 19:36:53 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/13 17:14:14 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/21 21:18:39 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 char	*replace_tabs(char *line)
 {

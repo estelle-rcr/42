@@ -6,11 +6,11 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 21:17:24 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/18 22:02:50 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/21 21:19:38 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 void	draw_textured_cf(t_game *game, t_ray *ray)
 {

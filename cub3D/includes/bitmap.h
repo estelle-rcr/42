@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 16:49:34 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/13 16:45:29 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/21 23:42:34 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <stdint.h>
 # include "cub3d.h"
 
-typedef struct		s_bitmapinfoheader
+typedef struct			s_bitmapinfoheader
 {
 	uint32_t dibheadersize;
 	uint32_t width;
@@ -32,13 +32,13 @@ typedef struct		s_bitmapinfoheader
 	uint32_t mostimpcolor;
 }						t_bitmapinfoheader;
 
-typedef	struct		s_fileheader
+typedef struct			s_fileheader
 {
-	uint8_t signature[2];
-	uint32_t filesize;
-	uint32_t reserved;
-	uint32_t fileoffset;
-	t_bitmapinfoheader bitmapinfoheader;
+	uint8_t				signature[2];
+	uint32_t			filesize;
+	uint32_t			reserved;
+	uint32_t			fileoffset;
+	t_bitmapinfoheader	bitmapinfoheader;
 }						t_fileheader;
 
 #endif

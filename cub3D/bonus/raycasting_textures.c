@@ -6,36 +6,13 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 11:28:39 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/18 20:49:12 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/21 21:26:33 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
-/*
-void	set_axis(t_axis *point, float x, float y)
-{
-	point->x = x;
-	point->y = y;
-}
+#include "cub3d_bonus.h"
 
-
-int is_wall(t_game *game, int axis_x, int axis_y)
-{
-	char **map;
-	int			x;
-	int			y;
-
-	map = game->set.map;
-	x = (int)axis_x;
-	y = (int)axis_y;
-	if (x < 0 || y < 0 || x >= game->set.res.x - 1 || y >= game->set.res.y - 1
-        || y > game->set.map_height || x > (int)ft_strlen(map[y]))
-		return (1);
-	else
-		return (map[y][x]);
-}*/
-
-int	load_texture(t_game *game)
+int		load_texture(t_game *game)
 {
 	if (!(game->textures[0].img = mlx_xpm_file_to_image(game->mlx,
 		game->set.no_txt, &(game->textures[0].width),
@@ -47,7 +24,7 @@ int	load_texture(t_game *game)
 		return (ERROR_TXT_LOAD_IMG);
 	if (!(game->textures[2].img = mlx_xpm_file_to_image(game->mlx,
 		game->set.we_txt, &(game->textures[2].width),
-		&(game->textures[2].height))))						// check east and west textures
+		&(game->textures[2].height))))
 		return (ERROR_TXT_LOAD_IMG);
 	if (!(game->textures[3].img = mlx_xpm_file_to_image(game->mlx,
 		game->set.ea_txt, &(game->textures[3].width),
@@ -81,7 +58,7 @@ void	get_addr_texture(t_game *game)
 }
 
 void	setup_wall_textures(t_game *game, int y)
-{	
+{
 	init_texture(game);
 	game->wall.step = 1.0 * game->textures[game->wall.txt_dir].height /
 						game->ray.line_height;
@@ -95,15 +72,15 @@ void	setup_wall_textures(t_game *game, int y)
 							game->wall.txt_x - 1;
 	game->wall.txt_pos = (game->ray.draw_start - game->set.res.y / 2 +
 							game->ray.line_height / 2) * game->wall.step;
- 	// 	game->wall.txt_pos = (ray->draw_start - game->cf.pitch - (game->cf.posZ / ray->perp_wall_dist) - game->set.res.y / 2 + ray->line_height / 2) * game->wall.step;
+	// 	game->wall.txt_pos = (ray->draw_start - game->cf.pitch - (game->cf.posZ / ray->perp_wall_dist) - game->set.res.y / 2 + ray->line_height / 2) * game->wall.step;
 	while (++y <= game->ray.draw_end)
-    {
-        game->wall.txt_y = (int)game->wall.txt_pos &
+	{
+		game->wall.txt_y = (int)game->wall.txt_pos &
 							(game->textures[game->wall.txt_dir].height - 1);
 		game->wall.txt_pos += game->wall.step;
 		if (y < game->set.res.y && game->ray.x < game->set.res.x)
-			game->img.addr[y * game->img.line_length / 4 + game->ray.x]
-			= darken_side_color(game);
+			game->img.addr[y * game->img.line_length / 4 + game->ray.x] =
+				= darken_side_color(game);
 	}
 }
 
@@ -117,4 +94,23 @@ int	darken_side_color(t_game *game)
 	if (game->ray.side == 1)
 		color = (color >> 1) & 8355711;
 	return (color);
+}
+
+void	init_texture(t_game *game)
+{
+	if (game->ray.side == 0 && game->ray.ray_dir.x < 0)
+		game->wall.txt_dir = 0;
+	if (game->ray.side == 0 && game->ray.ray_dir.x >= 0)
+		game->wall.txt_dir = 1;
+	if (game->ray.side == 1 && game->ray.ray_dir.y < 0)
+		game->wall.txt_dir = 2;
+	if (game->ray.side == 1 && game->ray.ray_dir.y >= 0)
+		game->wall.txt_dir = 3;
+	if (game->ray.side == 0)
+		game->wall.wall_x = game->ray.pos.y + game->ray.perp_wall_dist
+										* game->ray.ray_dir.y;
+	else
+		game->wall.wall_x = game->ray.pos.x + game->ray.perp_wall_dist
+										* game->ray.ray_dir.x;
+	game->wall.wall_x -= floor((game->wall.wall_x));
 }

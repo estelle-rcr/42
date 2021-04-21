@@ -6,11 +6,11 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 12:15:06 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/18 22:07:59 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/21 21:13:30 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 int	hit_screen(t_game *game, float x, float y)
 {
@@ -135,4 +135,27 @@ void	draw_ray(t_game *game, t_axis start, t_axis end)
 		pos.y += step.y;
 		i++;
 	}
+}
+
+void	set_axis(t_axis *point, float x, float y)
+{
+	point->x = x;
+	point->y = y;
+}
+
+
+int is_wall(t_game *game, int axis_x, int axis_y)
+{
+	char **map;
+	int			x;
+	int			y;
+
+	map = game->set.map;
+	x = (int)axis_x;
+	y = (int)axis_y;
+	if (x < 0 || y < 0 || x >= game->set.res.x - 1 || y >= game->set.res.y - 1
+        || y > game->set.map_height || x > (int)ft_strlen(map[y]))
+		return (1);
+	else
+		return (map[y][x]);
 }*/

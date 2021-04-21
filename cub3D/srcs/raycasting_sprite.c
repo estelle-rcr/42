@@ -6,11 +6,11 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/07 16:37:23 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/19 21:03:45 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/21 16:18:54 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "cub3d.h"
+#include "cub3d.h"
 
 void	setup_distance_order(t_game *game, t_ray *ray)
 {
@@ -29,9 +29,9 @@ void	setup_distance_order(t_game *game, t_ray *ray)
 
 void	sort_distance_order(t_game *game)
 {
-	int	i;
-	int j;
-	double temp;
+	int		i;
+	int		j;
+	double	temp;
 
 	i = -1;
 	while (++i < game->sprite.nb)
@@ -52,25 +52,30 @@ void	sort_distance_order(t_game *game)
 	}
 }
 
-void	setup_sprites(t_game *game, t_ray *ray, int i)
+void	setup_sprites(t_game *game, t_ray *ray)
 {
-	game->sprite.s_pos.x = game->obj[game->sprite.order[i]].x - ray->pos.x;
-	game->sprite.s_pos.y = game->obj[game->sprite.order[i]].y - ray->pos.y;
-	game->sprite.inv_det = 1.0 / (ray->plane.x * ray->dir.y - ray->dir.x * ray->plane.y);
-	game->sprite.transform.x = game->sprite.inv_det * (ray->dir.y * game->sprite.s_pos.x - ray->dir.x * game->sprite.s_pos.y);
-	game->sprite.transform.y = game->sprite.inv_det * (-ray->plane.y * game->sprite.s_pos.x + ray->plane.x * game->sprite.s_pos.y);
-	game->sprite.s_screenx = (int)((game->set.res.x / 2) * (1 + game->sprite.transform.x / game->sprite.transform.y));
-	game->sprite.s_height = abs((int)(game->set.res.y / (game->sprite.transform.y)));			// error recopy () ?
+	game->sprite.inv_det = 1.0 / (ray->plane.x * ray->dir.y - ray->dir.x *
+				ray->plane.y);
+	game->sprite.transform.x = game->sprite.inv_det * (ray->dir.y *
+				game->sprite.s_pos.x - ray->dir.x * game->sprite.s_pos.y);
+	game->sprite.transform.y = game->sprite.inv_det * (-ray->plane.y *
+				game->sprite.s_pos.x + ray->plane.x * game->sprite.s_pos.y);
+	game->sprite.s_screenx = (int)((game->set.res.x / 2) * (1 +
+				game->sprite.transform.x / game->sprite.transform.y));
+	game->sprite.s_height = abs((int)(game->set.res.y /
+				(game->sprite.transform.y)));
 	game->sprite.s_start.y = -game->sprite.s_height / 2 + game->set.res.y / 2;
 	if (game->sprite.s_start.y < 0)
 		game->sprite.s_start.y = 0;
 	game->sprite.s_end.y = game->sprite.s_height / 2 + game->set.res.y / 2;
-	if (game->sprite.s_end.y >= game->set.res.y) game->sprite.s_end.y = game->set.res.y - 1;
-	game->sprite.s_width = abs((int)(game->set.res.y / (game->sprite.transform.y)));		// error? >> (game->set.res.x / (game->sprite.transform.x)
-	game->sprite.s_start.x = -game->sprite.s_width / 2 + game->sprite.s_screenx;				// error ? .x
+	if (game->sprite.s_end.y >= game->set.res.y)
+		game->sprite.s_end.y = game->set.res.y - 1;
+	game->sprite.s_width = abs((int)(game->set.res.y /
+				(game->sprite.transform.y)));
+	game->sprite.s_start.x = -game->sprite.s_width / 2 + game->sprite.s_screenx;
 	if (game->sprite.s_start.x < 0)
 		game->sprite.s_start.x = 0;
-	game->sprite.s_end.x = game->sprite.s_width / 2 + game->sprite.s_screenx;					// error ? .x
+	game->sprite.s_end.x = game->sprite.s_width / 2 + game->sprite.s_screenx;
 	if (game->sprite.s_end.x >= game->set.res.x)
 		game->sprite.s_end.x = game->set.res.x - 1;
 }
@@ -87,7 +92,7 @@ void	loop_draw_sprite(t_game *game, int tex_x, int stripe)
 		d = (y) * 256 - game->set.res.y * 128 + game->sprite.s_height * 128;
 		tex_y = ((d * game->textures[4].height) / game->sprite.s_height) / 256;
 		if (game->textures[4].addr[tex_y * game->textures[4].line_length / 4 +
-			tex_x] != 0)																// if((color & 0x00FFFFFF) != 0)
+			tex_x] != 0)
 			game->img.addr[y * game->img.line_length / 4 + stripe] =
 				game->textures[4].addr[tex_y * game->textures[4].line_length
 				/ 4 + tex_x];
@@ -105,9 +110,13 @@ void	render_sprite(t_game *game)
 	setup_distance_order(game, &game->ray);
 	while (++i < game->sprite.nb)
 	{
-		setup_sprites(game, &game->ray, i);
-		stripe = game->sprite.s_start.x;
-		while (stripe < game->sprite.s_end.x)
+		game->sprite.s_pos.x = game->obj[game->sprite.order[i]].x -
+			game->ray.pos.x;
+		game->sprite.s_pos.y = game->obj[game->sprite.order[i]].y -
+			game->ray.pos.y;
+		setup_sprites(game, &game->ray);
+		stripe = game->sprite.s_start.x - 1;
+		while (++stripe < game->sprite.s_end.x)
 		{
 			tex_x = (int)(256 * (stripe - (-game->sprite.s_width / 2 +
 				game->sprite.s_screenx)) * game->textures[4].width /
@@ -116,7 +125,6 @@ void	render_sprite(t_game *game)
 				game->set.res.x && game->sprite.transform.y <
 				game->sprite.zbuffer[stripe])
 				loop_draw_sprite(game, tex_x, stripe);
-			stripe++;
 		}
 	}
 }

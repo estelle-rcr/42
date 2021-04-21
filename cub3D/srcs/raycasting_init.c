@@ -6,15 +6,14 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/07 00:55:37 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/14 23:26:46 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/21 16:28:55 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "cub3d.h"
+#include "cub3d.h"
 
-int	init_game(t_game *game)
+int		init_game(t_game *game)
 {
-//	ft_bzero(&game->player, sizeof(t_player));
 	game->player.forward = 0;
 	game->player.back = 0;
 	game->player.left = 0;
@@ -31,6 +30,8 @@ int	init_game(t_game *game)
 	game->sprite.zbuffer = NULL;
 	game->sprite.nb = 0;
 	game->obj = NULL;
+	game->ray.pos.x = (double)game->set.start_pos.y + 0.5;
+	game->ray.pos.y = (double)game->set.start_pos.x + 0.5;
 	init_ray_direction(game);
 	if (!(init_sprite(game)))
 		return (0);
@@ -42,8 +43,6 @@ int	init_game(t_game *game)
 
 void	init_ray_direction(t_game *game)
 {
-	game->ray.pos.x = (double)game->set.start_pos.y + 0.5;
-	game->ray.pos.y = (double)game->set.start_pos.x + 0.5;
 	game->ray.dir.x = 0;
 	game->ray.dir.y = 0;
 	game->ray.plane.x = 0;
@@ -75,8 +74,10 @@ void	init_ray(t_game *game)
 	game->ray.hit = 0;
 	game->ray.perp_wall_dist = 0;
 	game->ray.camerax = 2 * game->ray.x / (double)game->set.res.x - 1;
-	game->ray.ray_dir.x = game->ray.dir.x + game->ray.plane.x * game->ray.camerax;
-	game->ray.ray_dir.y = game->ray.dir.y + game->ray.plane.y * game->ray.camerax;
+	game->ray.ray_dir.x = game->ray.dir.x + game->ray.plane.x *
+		game->ray.camerax;
+	game->ray.ray_dir.y = game->ray.dir.y + game->ray.plane.y *
+		game->ray.camerax;
 	game->ray.map_x = (int)game->ray.pos.x;
 	game->ray.map_y = (int)game->ray.pos.y;
 	game->ray.move_speed = 0.1;
@@ -86,34 +87,15 @@ void	init_ray(t_game *game)
 	else if (game->ray.ray_dir.x == 0)
 		game->ray.delta_dist.x = 1;
 	else
-		game->ray.delta_dist.x = sqrt(1 + (game->ray.ray_dir.y * game->ray.ray_dir.y)
-									/ (game->ray.ray_dir.x * game->ray.ray_dir.x));
+		game->ray.delta_dist.x = sqrt(1 + (game->ray.ray_dir.y *
+			game->ray.ray_dir.y) / (game->ray.ray_dir.x * game->ray.ray_dir.x));
 	if (game->ray.ray_dir.x == 0)
 		game->ray.delta_dist.y = 0;
 	else if (game->ray.ray_dir.y == 0)
 		game->ray.delta_dist.y = 1;
 	else
-		game->ray.delta_dist.y = sqrt(1 + (game->ray.ray_dir.x * game->ray.ray_dir.x)
-									/ (game->ray.ray_dir.y * game->ray.ray_dir.y));
-}
-
-void	init_texture(t_game *game)
-{
-	if (game->ray.side == 0 && game->ray.ray_dir.x < 0)
-		game->wall.txt_dir = 0;
-	if (game->ray.side == 0 && game->ray.ray_dir.x >= 0)
-		game->wall.txt_dir = 1;
-	if (game->ray.side == 1 && game->ray.ray_dir.y < 0)
-		game->wall.txt_dir = 2;
-	if (game->ray.side == 1 && game->ray.ray_dir.y >= 0)
-		game->wall.txt_dir = 3;
-	if (game->ray.side == 0)
-		game->wall.wall_x = game->ray.pos.y + game->ray.perp_wall_dist
-										* game->ray.ray_dir.y;
-	else
-		game->wall.wall_x = game->ray.pos.x + game->ray.perp_wall_dist
-										* game->ray.ray_dir.x;
-	game->wall.wall_x -= floor((game->wall.wall_x));
+		game->ray.delta_dist.y = sqrt(1 + (game->ray.ray_dir.x *
+			game->ray.ray_dir.x) / (game->ray.ray_dir.y * game->ray.ray_dir.y));
 }
 
 void	init_obj(t_game *game)
