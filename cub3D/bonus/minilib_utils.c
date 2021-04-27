@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 16:18:44 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/21 21:18:23 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/27 20:49:07 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,35 @@ int		create_trgb(int t, int r, int g, int b)
 
 int		add_shade(double distance, int trgb)
 {
-	return (trgb | ((int)distance / 255) << 24);
+	int r;
+	int g;
+	int b;
+	
+	if (distance < 1.0)
+		return (trgb);
+	r = ((int)((0xFF0000 & trgb) >> 16) / (distance));
+	g = ((int)((0x00FF00 & trgb) >> 8) / (distance));
+	b = ((int)(0x0000FF & trgb) / (distance));
+	return (0 << 24 | r << 16 | g << 8 | b);
 }
 
-void	my_mlx_pixel_put(t_img_data *img, int x, int y, int color)
+int		add_shade_cf(double distance, int trgb)
 {
-	int *dst;
+	int r;
+	int g;
+	int b;
+	
+	if (distance < 0.0)
+		return ((0x000000 & trgb));
+	r = ((int)((0xFF0000 & trgb) >> 16) / (distance));
+	g = ((int)((0x00FF00 & trgb) >> 8) / (distance));
+	b = ((int)(0x0000FF & trgb) / (distance));
+	return (0 << 24 | r << 16 | g << 8 | b);
+}
 
-	dst = (img->addr + (y * img->line_length + x * (img->bpp / 8)));
-	*(unsigned int *)dst = color;
+int	hit_screen(t_game *game, int x, int y)
+{
+	if (x >= 0 && y >= 0 && x <= (int)game->set.res.x &&  y <= (int)game->set.res.y)
+		return (0);
+	return (1);
 }

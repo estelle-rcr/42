@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   settings.h                                         :+:      :+:    :+:   */
+/*   keys.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/18 12:00:38 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/18 21:52:36 by erecuero         ###   ########.fr       */
+/*   Created: 2021/03/16 00:11:48 by erecuero          #+#    #+#             */
+/*   Updated: 2021/04/18 22:19:51 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SETTINGS_H
-# define SETTINGS_H
-
-# define MAP_GROUND 0x00CECECE
-# define MAP_WALL 0x00606060
-# define MAP_SPRITES 0x000000FF
-# define MAP_PLAYER 0x0000FF00
-
-# define WALL_COLOR_N 0x006977A1
-# define WALL_COLOR_S 0x004682B4
-# define WALL_COLOR_W 0x0048B99A
-# define WALL_COLOR_E 0x00B0F2B6
-# define WALL_ERROR 0x00000000
+#ifndef KEYS_BONUS_H
+# define KEYS_BONUS_H
+# define FOV_ANGLE 60
+# define ESCAPE 65307
+# define W_KEY 119
+# define S_KEY 115
+# define A_KEY 97
+# define D_KEY 100
+# define ARROW_UP 65362
+# define ARROW_DOWN 65364
+# define ARROW_LEFT 65361
+# define ARROW_RIGHT 65363
+# define Q_KEY 113
+# define E_KEY 101
+# define M_KEY 109
+# define G_KEY 103
 
 #endif

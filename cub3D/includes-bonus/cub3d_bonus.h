@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 11:23:37 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/22 13:08:44 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/28 00:11:30 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#ifndef CUB3D_BONUS_H
+# define CUB3D_BONUS_H
 
 # include <stdlib.h>
 # include <stdarg.h>
@@ -28,13 +28,10 @@
 # include "../libft/includes/libft.h"
 # include "../libft/includes/get_next_line.h"
 # include "../minilibx-linux/mlx.h"
-# include "keys.h"
-# include "errors.h"
-# include "bitmap.h"
-# define MAP_CHARSET	"012NSEW"
-# define PLAY_CHARSET	"02NSEW"
-# define DIR_CHARSET	"NSEW"
-# define NB_SETTINGS	8
+# include "keys_bonus.h"
+# include "settings_bonus.h"
+# include "errors_bonus.h"
+# include "bitmap_bonus.h"
 
 typedef struct		s_axis
 {
@@ -104,6 +101,8 @@ typedef struct		s_player
 	int			right;
 	int			rotation_left;
 	int			rotation_right;
+	double		pitch;
+	float		cam_z;
 }					t_player;
 
 typedef struct		s_ray
@@ -147,11 +146,51 @@ typedef	struct		s_sprite
 	t_axis		s_end;
 }					t_sprite;
 
+typedef struct		s_cf_data
+{
+	char		*ceil_txt;
+	char		*floor_txt;
+	t_dblaxis	ray_dir_0;
+	t_dblaxis	ray_dir_1;
+	double		pos_z;
+	float		row_dist;
+	t_dblaxis	floor_step;
+	t_dblaxis	floor;
+	int			p;
+	int			cell_x;
+	int			cell_y;
+	int			tx;
+	int			ty;
+	int			is_floor;
+}					t_cf_data;
+
+typedef struct		s_map
+{
+	t_axis	start;
+	t_axis	end;
+	int		is_on;
+	int		size;
+}					t_map;
+
+typedef struct		s_bonus
+{
+	char	*light;
+	char	*food;
+	char	*vault;
+	char	*key_pu;
+	char	*gun_pu;
+	char	*gun_hud;
+	char	*knife;
+	char	*hud;
+}					t_bonus;
+
 typedef struct		s_game
 {
 	void		*mlx;
 	void		*win;
 	int			save;
+	int			sp_nb;
+	int			hud_size;
 	t_settings	set;
 	t_img_data	img;
 	t_player	player;
@@ -159,7 +198,10 @@ typedef struct		s_game
 	t_texture	wall;
 	t_sprite	sprite;
 	t_dblaxis	*obj;
-	t_text_data	textures[5];
+	t_text_data	textures[NB_TEXT];
+	t_cf_data	cf;
+	t_map		map;
+	t_bonus		adds;
 }					t_game;
 
 int					main(int ac, char **av);
@@ -194,8 +236,6 @@ int					valid_cells(char case1, char case2);
 int					valid_memory(t_settings *set, char **map, int x, int y);
 int					comp_null_cells(char **map);
 int					check_map(t_settings *set);
-int					create_trgb(int t, int r, int g, int b);
-void				my_mlx_pixel_put(t_img_data *img, int x, int y, int color);
 int					create_mlx_win(t_game *game);
 int					my_mlx_new_img(void *mlx, t_img_data *img, int x, int y);
 int					run_mlx(t_game *game);
@@ -213,17 +253,17 @@ void				rotation_left(t_ray *ray);
 int					init_game(t_game *game);
 void				init_ray(t_game *game);
 void				init_ray_direction(t_game *game);
+void				init_texture(t_game *game);
 void				init_obj(t_game *game);
 int					init_sprite(t_game *game);
 int					load_texture(t_game *game);
-void				init_texture(t_game *game);
 int					exit_textures(t_game *game);
 void				get_addr_texture(t_game *game);
 void				setup_wall_textures(t_game *game, int y);
 void				setup_distance_order(t_game *game, t_ray *ray);
 void				sort_distance_order(t_game *game);
 void				setup_sprites(t_game *game, t_ray *ray);
-void				loop_draw_sprite(t_game *game, int tex_x, int stripe);
+void				loop_draw_sprite(t_game *game, int tex_x, int stripe, int sp_nb);
 void				render_sprite(t_game *game);
 int					exit_game(t_game *game);
 int					exit_free_mlx_components(t_game *game);
@@ -231,5 +271,52 @@ void				exit_free_settings(t_settings *set);
 int					exit_gnl(char *line, t_settings *set);
 int					screenshot(t_game *game);
 void				create_bmp_header(t_game *game, int fd);
+
+
+// raycasting cf text
+void				draw_textured_cf(t_game *game, t_ray *ray);
+void				init_cf_textures(t_game *game);
+void				setup_additionnal_text(t_game *game, t_ray *ray, int y);
+void				setup_cf(t_game *game);
+
+// raycasting add sprites
+int					load_textures_bonus(t_game *game);
+int					load_add_sprites(t_game *game, char *text, int text_nb);
+int					find_sprite_nb(t_game *game, int x, int y);
+int					filter_sprite_bg(int color);
+int					check_sprite(t_game *game, int y);
+
+// raycasting player
+void				look_up_down(t_game *game, t_cf_data *cf);
+void				move_jump_crouch(t_game *game, t_cf_data *cf);
+void				handle_bonus_keypress(int keycode, t_game *game);
+void				handle_bonus_keyrelease(int keycode, t_game *game);
+
+// map_display_bonus
+void				init_map(t_game *game);
+void				draw_player(t_game *game);
+void				draw_rect(t_game *game, t_axis pos, t_axis end, int color);
+void				draw_map(t_game *game, t_settings *set);
+
+// raycasting text
+int					add_shade(double distance, int trgb);
+
+// parser_map_tabs.c									// issues freeing
+char				*replace_tabs(char *line);
+char				*dup_space(char *line);
+void				add_spaces(char *s, int i);
+
+// minilib utils
+int					add_shade(double distance, int trgb);
+int					add_shade_cf(double distance, int trgb);
+int					create_trgb(int t, int r, int g, int b);
+int					hit_screen(t_game *game, int x, int y);
+//void				my_mlx_pixel_put(t_img_data *img, int x, int y, int color);
+
+// display_hud
+void				draw_assets(t_game *game, int width, int height);
+void				draw_hud(t_game *game, int width, int height);
+//void				draw_gun(t_game *game, int width, int height);
+void				draw_gun(t_game *game, int width, int height, int y);
 
 #endif

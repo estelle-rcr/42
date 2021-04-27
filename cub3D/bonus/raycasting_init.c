@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/07 00:55:37 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/21 21:19:04 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/27 13:53:45 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,7 @@
 
 int		init_game(t_game *game)
 {
-	game->player.forward = 0;
-	game->player.back = 0;
-	game->player.left = 0;
-	game->player.right = 0;
-	game->player.rotation_left = 0;
-	game->player.rotation_right = 0;
+	ft_bzero(&game->player, sizeof(t_player));
 	game->textures[0].img = NULL;
 	game->textures[1].img = NULL;
 	game->textures[2].img = NULL;
@@ -32,6 +27,7 @@ int		init_game(t_game *game)
 	game->obj = NULL;
 	game->ray.pos.x = (double)game->set.start_pos.y + 0.5;
 	game->ray.pos.y = (double)game->set.start_pos.x + 0.5;
+	init_map(game);
 	init_ray_direction(game);
 	if (!(init_sprite(game)))
 		return (0);
@@ -111,7 +107,7 @@ void	init_obj(t_game *game)
 		j = -1;
 		while (++j < (int)ft_strlen(game->set.map[i]))
 		{
-			if (game->set.map[i][j] == '2')
+			if (ft_strchr(SPRITE_CHARSET, game->set.map[i][j]))
 			{
 				game->obj[nb].x = (double)i + 0.5;
 				game->obj[nb].y = (double)j + 0.5;
@@ -132,7 +128,7 @@ int		init_sprite(t_game *game)
 		j = -1;
 		while (++j < (int)ft_strlen(game->set.map[i]))
 		{
-			if (game->set.map[i][j] == '2')
+			if (ft_strchr(SPRITE_CHARSET, game->set.map[i][j]))
 				game->sprite.nb++;
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 21:17:24 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/21 21:19:38 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/27 21:14:01 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,78 +18,76 @@ void	draw_textured_cf(t_game *game, t_ray *ray)
 	int 		x;
 	int			h;
 
-	y = -1;
-	h = game->set.res.y;
-	ft_bzero(&game->cf, sizeof(t_cf_data));
-	while (++y < h)						// / 2 ?
+	h = (int)game->set.res.y;
+//	y = h / 2 + 1;
+	y = 0;
+	init_cf_textures(game);
+	while (++y < h)
 	{
-		setup_additionnal_text(game, ray, &game->cf, y);
-		x = -1;
+		setup_additionnal_text(game, ray, y);
+		x = 0;
 		while (++x < game->set.res.x)
 		{
-			game->cf.cell_x = (int)(game->cf.floor.x);
-			game->cf.cell_y = (int)(game->cf.floor.y);
-			game->cf.tx = (int)(game->text_cf[0].width * (game->cf.floor.x -
-						game->cf.cell_x)) & (game->text_cf[0].width - 1);
-			game->cf.ty = (int)(game->text_cf[0].height * (game->cf.floor.y -
-						game->cf.cell_y)) & (game->text_cf[0].height - 1);
-			game->cf.floor.x += game->cf.floor_step.x;
-			game->cf.floor.y += game->cf.floor_step.y;
-			game->img.addr[y * game->img.line_length / 4 + x] =
-				game->text_cf[0].addr[game->cf.ty *
-				game->textures[game->wall.txt_dir].line_length / 4
-				+ game->cf.tx];
-			game->img.addr[(h - y - 1) * game->img.line_length / 4 + x] =
-				game->text_cf[1].addr[game->cf.ty *
-				game->textures[game->wall.txt_dir].line_length / 4
-				+ game->cf.tx];
+			setup_cf(game);
+			if (game->cf.is_floor)
+				game->img.addr[y * game->img.line_length / 4 + x] =
+					add_shade_cf(game->cf.row_dist,
+					game->textures[FLOOR].addr[game->cf.ty *
+					game->textures[FLOOR].line_length / 4 + game->cf.tx]);
+			else
+				game->img.addr[y * game->img.line_length / 4 + x] =
+					add_shade_cf(game->cf.row_dist,
+					game->textures[CEIL].addr[game->cf.ty *
+					game->textures[CEIL].line_length / 4 + game->cf.tx]);
 		}
 	}
 }
 
-void	setup_additionnal_text(t_game *game, t_ray *ray, int i)
+void	init_cf_textures(t_game *game)
 {
-	int			is_floor;
+	ft_bzero(&game->cf, sizeof(t_cf_data));
+	game->cf.ray_dir_0.x = 0;
+	game->cf.ray_dir_0.y = 0;
+	game->cf.ray_dir_1.x = 0;
+	game->cf.ray_dir_1.y = 0;
+	game->cf.floor.x = 0;
+	game->cf.floor.y = 0;
+	game->cf.floor_step.x = 0;
+	game->cf.floor_step.y = 0;
+}
+
+void	setup_additionnal_text(t_game *game, t_ray *ray, int y)
+{
 	int			h;
 	int			w;
 
 	h = game->set.res.y;
 	w = game->set.res.x;
-	is_floor = (i > h / 2 + game->cf.pitch);
+	game->cf.is_floor = ((int)y > (int)h / 2 + game->player.pitch);
 	game->cf.ray_dir_0.x = ray->dir.x - ray->plane.x;
 	game->cf.ray_dir_0.y = ray->dir.y - ray->plane.y;
 	game->cf.ray_dir_1.x = ray->dir.x + ray->plane.x;
 	game->cf.ray_dir_1.y = ray->dir.y + ray->plane.y;
-	game->cf.p = is_floor ? i - h / 2 - game->cf.pitch : 2 - i + game->cf.pitch;
-	game->cf.cam_z = is_floor ? (0.5 * h + game->cf.pos_z) : (0.5 * h - game->cf.pos_z);
-//	game->cf.pos_z = 0.5 * h;
-//	game->cf.row_dist = game->cf.pos_z / game->cf.p;
-	game->cf.row_dist = game->cf.cam_z / game->cf.p;
-	game->cf.floor_step.x = game->cf.row_dist * (game->cf.ray_dir_1.x - game->cf.ray_dir_0.x)
-						/ w;
-	game->cf.floor_step.y = game->cf.row_dist * (game->cf.ray_dir_1.y - game->cf.ray_dir_0.y)
-						/ w;
-	game->cf.floor.x = ray->pos.x * game->cf.row_dist * game->cf.ray_dir_0.x;
-	game->cf.floor.y = ray->pos.y * game->cf.row_dist * game->cf.ray_dir_0.y;
+	game->cf.p = game->cf.is_floor ? (int)y - (int)h / 2 - game->player.pitch :
+					(int)h / 2 - (int)y + game->player.pitch;
+	game->cf.pos_z = 0.5 * h;
+	game->cf.row_dist = game->cf.pos_z / game->cf.p;
+	game->cf.floor_step.x = game->cf.row_dist * (game->cf.ray_dir_1.x -
+							game->cf.ray_dir_0.x) / w;
+	game->cf.floor_step.y = game->cf.row_dist * (game->cf.ray_dir_1.y -
+							game->cf.ray_dir_0.y) / w;
+	game->cf.floor.x = ray->pos.x + game->cf.row_dist * game->cf.ray_dir_0.x;
+	game->cf.floor.y = ray->pos.y + game->cf.row_dist * game->cf.ray_dir_0.y;
 }
 
-int	load_texture_cf(t_game *game)
+void	setup_cf(t_game *game)
 {
-	game->cf.ceil_txt = CEIL;
-	game->cf.floor_txt = FLOOR;
-	if (!(game->text_cf[0].img = mlx_xpm_file_to_image(game->mlx,
-		game->cf.ceil_txt, &(game->text_cf[0].width),
-		&(game->text_cf[0].height))))
-		return (ERROR_TXT_LOAD_IMG);
-	if (!(game->text_cf[1].img = mlx_xpm_file_to_image(game->mlx,
-		game->cf.floor_txt, &(game->text_cf[1].width),
-		&(game->text_cf[1].height))))
-		return (ERROR_TXT_LOAD_IMG);
-	game->text_cf[0].addr = (int *)mlx_get_data_addr(game->text_cf[0].img,
-		&game->text_cf[0].bpp, &game->text_cf[0].line_length,
-		&game->text_cf[0].endian);
-	game->text_cf[1].addr = (int *)mlx_get_data_addr(game->text_cf[1].img,
-		&game->text_cf[1].bpp, &game->text_cf[1].line_length,
-		&game->text_cf[1].endian);
-	return (1);
+	game->cf.cell_x = (int)(game->cf.floor.x);
+	game->cf.cell_y = (int)(game->cf.floor.y);
+	game->cf.tx = (int)(game->textures[FLOOR].width * (game->cf.floor.x -
+				game->cf.cell_x)) & (game->textures[FLOOR].width - 1);
+	game->cf.ty = (int)(game->textures[FLOOR].height * (game->cf.floor.y -
+				game->cf.cell_y)) & (game->textures[FLOOR].height - 1);
+	game->cf.floor.x += game->cf.floor_step.x;
+	game->cf.floor.y += game->cf.floor_step.y;
 }

@@ -51,7 +51,7 @@ int	run_mlx(t_game *game)
 		return (0);
 	if (!init_game(game))
 		return (0);
-	if (!load_texture(game))
+	if (!load_texture(game) || !load_textures_bonus(game))
 		return (0);
 	if (game->save == 1)
 		cast_rays(game);

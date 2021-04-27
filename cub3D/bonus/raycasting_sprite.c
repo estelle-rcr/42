@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/07 16:37:23 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/21 21:19:15 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/27 16:30:23 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,23 +80,33 @@ void	setup_sprites(t_game *game, t_ray *ray)
 		game->sprite.s_end.x = game->set.res.x - 1;
 }
 
-void	loop_draw_sprite(t_game *game, int tex_x, int stripe)
+void	loop_draw_sprite(t_game *game, int tex_x, int stripe, int i)
 {
 	int y;
 	int d;
 	int tex_y;
 
-	y = game->sprite.s_start.y;
-	while (y < game->sprite.s_end.y)
+	if (game->sprite.transform.y > 0 && stripe > 0 && stripe <
+		game->set.res.x && game->sprite.transform.y <
+		game->sprite.zbuffer[stripe])
 	{
-		d = (y) * 256 - game->set.res.y * 128 + game->sprite.s_height * 128;
-		tex_y = ((d * game->textures[4].height) / game->sprite.s_height) / 256;
-		if (game->textures[4].addr[tex_y * game->textures[4].line_length / 4 +
-			tex_x] != 0)
-			game->img.addr[y * game->img.line_length / 4 + stripe] =
-				game->textures[4].addr[tex_y * game->textures[4].line_length
-				/ 4 + tex_x];
-		y++;
+		y = game->sprite.s_start.y;
+		while (y < game->sprite.s_end.y)
+		{
+			d = (y) * 256 - game->set.res.y * 128 + game->sprite.s_height * 128;
+			tex_y = ((d * game->textures[game->sp_nb].height) /
+					game->sprite.s_height) / 256;
+			if (!filter_sprite_bg(game->textures[game->sp_nb].addr[tex_y *
+				game->textures[game->sp_nb].line_length / 4 + tex_x]))
+				{
+					game->img.addr[check_sprite(game, y) *
+						game->img.line_length / 4 + stripe] =
+						add_shade(game->sprite.distance[i],
+						game->textures[game->sp_nb].addr[tex_y *
+						game->textures[game->sp_nb].line_length / 4 + tex_x]);					
+				}
+			y++;
+		}
 	}
 }
 
@@ -118,13 +128,13 @@ void	render_sprite(t_game *game)
 		stripe = game->sprite.s_start.x - 1;
 		while (++stripe < game->sprite.s_end.x)
 		{
+			game->sp_nb = find_sprite_nb(game,
+					(int)game->obj[game->sprite.order[i]].x,
+					(int)game->obj[game->sprite.order[i]].y);
 			tex_x = (int)(256 * (stripe - (-game->sprite.s_width / 2 +
-				game->sprite.s_screenx)) * game->textures[4].width /
-				game->sprite.s_width) / 256;
-			if (game->sprite.transform.y > 0 && stripe > 0 && stripe <
-				game->set.res.x && game->sprite.transform.y <
-				game->sprite.zbuffer[stripe])
-				loop_draw_sprite(game, tex_x, stripe);
+				game->sprite.s_screenx)) * game->textures[game->sp_nb].width
+				/ game->sprite.s_width) / 256;
+			loop_draw_sprite(game, tex_x, stripe, i);
 		}
 	}
 }

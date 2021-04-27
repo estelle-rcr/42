@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_display.c                                      :+:      :+:    :+:   */
+/*   display_map.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 12:15:06 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/24 15:08:00 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/25 23:36:50 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void	draw_player(t_game *game)
 {
     float	i;
 	float	j;
-	float x;
-	float y;
+	float	x;
+	float	y;
 
 	i = 0;
 	x = (int)game->ray.pos.x * game->map.size + (int)(game->map.size / 2);
@@ -49,8 +49,8 @@ void	draw_player(t_game *game)
 
 void	draw_rect(t_game *game, t_axis pos, t_axis end, int color)
 {
-	float	i;
-	float	j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (pos.x + i < end.x)
@@ -85,7 +85,7 @@ void	draw_map(t_game *game, t_settings *set)
 			game->map.end.y = game->map.start.y + game->map.size;
 			if (set->map[i][j] == '0')
 				draw_rect(game, game->map.start, game->map.end, MAP_GROUND);
-			else if (set->map[i][j] == '2')
+			else if (ft_strchr(SPRITE_CHARSET, set->map[i][j]))
 				draw_rect(game, game->map.start, game->map.end, MAP_SPRITES);
 			else if (set->map[i][j] == '1')
 				draw_rect(game, game->map.start, game->map.end, MAP_WALL);
@@ -95,6 +95,7 @@ void	draw_map(t_game *game, t_settings *set)
 	}
 	draw_player(game);
 }
+
 
 /*
 void	draw_ray(t_game *game, t_axis start, t_axis end)

@@ -44,7 +44,7 @@ int		exit_free_mlx_components(t_game *game)
 		if (!mlx_destroy_image(game->mlx, game->img.img))
 			return (ERR_MLX_DESTROY);
 	i = -1;
-	while (++i < 5)
+	while (++i < NB_TEXT)
 	{
 		if (game->mlx && game->textures[i].img)
 			if (!mlx_destroy_image(game->mlx, game->textures[i].img))
@@ -87,4 +87,10 @@ int		exit_gnl(char *line, t_settings *set)
 	if (close(set->fd) == -1)
 		return (ERROR_CLOSE_FILE);
 	exit(1);
+}
+
+int		exit_textures(t_game *game)
+{
+	exit_game(game);
+	return (ERROR_TXT_LOAD_IMG);
 }

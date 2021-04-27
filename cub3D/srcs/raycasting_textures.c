@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 11:28:39 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/21 16:42:27 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/22 13:10:58 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,31 @@ int		load_texture(t_game *game)
 	if (!(game->textures[0].img = mlx_xpm_file_to_image(game->mlx,
 		game->set.no_txt, &(game->textures[0].width),
 		&(game->textures[0].height))))
-		return (ERROR_TXT_LOAD_IMG);
+		return (exit_textures(game));
 	if (!(game->textures[1].img = mlx_xpm_file_to_image(game->mlx,
 		game->set.so_txt, &(game->textures[1].width),
 		&(game->textures[1].height))))
-		return (ERROR_TXT_LOAD_IMG);
+		return (exit_textures(game));
 	if (!(game->textures[2].img = mlx_xpm_file_to_image(game->mlx,
 		game->set.we_txt, &(game->textures[2].width),
 		&(game->textures[2].height))))
-		return (ERROR_TXT_LOAD_IMG);
+		return (exit_textures(game));
 	if (!(game->textures[3].img = mlx_xpm_file_to_image(game->mlx,
 		game->set.ea_txt, &(game->textures[3].width),
 		&(game->textures[3].height))))
-		return (ERROR_TXT_LOAD_IMG);
+		return (exit_textures(game));
 	if (!(game->textures[4].img = mlx_xpm_file_to_image(game->mlx,
 		game->set.s_txt, &(game->textures[4].width),
 		&(game->textures[4].height))))
-		return (ERROR_TXT_LOAD_IMG);
+		return (exit_textures(game));
 	get_addr_texture(game);
 	return (1);
+}
+
+int		exit_textures(t_game *game)
+{
+	exit_game(game);
+	return (ERROR_TXT_LOAD_IMG);
 }
 
 void	get_addr_texture(t_game *game)
@@ -55,6 +61,25 @@ void	get_addr_texture(t_game *game)
 	game->textures[4].addr = (int *)mlx_get_data_addr(game->textures[4].img,
 		&game->textures[4].bpp, &game->textures[4].line_length,
 		&game->textures[4].endian);
+}
+
+void	init_texture(t_game *game)
+{
+	if (game->ray.side == 0 && game->ray.ray_dir.x < 0)
+		game->wall.txt_dir = 0;
+	if (game->ray.side == 0 && game->ray.ray_dir.x >= 0)
+		game->wall.txt_dir = 1;
+	if (game->ray.side == 1 && game->ray.ray_dir.y < 0)
+		game->wall.txt_dir = 2;
+	if (game->ray.side == 1 && game->ray.ray_dir.y >= 0)
+		game->wall.txt_dir = 3;
+	if (game->ray.side == 0)
+		game->wall.wall_x = game->ray.pos.y + game->ray.perp_wall_dist
+										* game->ray.ray_dir.y;
+	else
+		game->wall.wall_x = game->ray.pos.x + game->ray.perp_wall_dist
+										* game->ray.ray_dir.x;
+	game->wall.wall_x -= floor((game->wall.wall_x));
 }
 
 void	setup_wall_textures(t_game *game, int y)
@@ -83,23 +108,4 @@ void	setup_wall_textures(t_game *game, int y)
 			game->textures[game->wall.txt_dir].line_length / 4 +
 			game->wall.txt_x];
 	}
-}
-
-void	init_texture(t_game *game)
-{
-	if (game->ray.side == 0 && game->ray.ray_dir.x < 0)
-		game->wall.txt_dir = 0;
-	if (game->ray.side == 0 && game->ray.ray_dir.x >= 0)
-		game->wall.txt_dir = 1;
-	if (game->ray.side == 1 && game->ray.ray_dir.y < 0)
-		game->wall.txt_dir = 2;
-	if (game->ray.side == 1 && game->ray.ray_dir.y >= 0)
-		game->wall.txt_dir = 3;
-	if (game->ray.side == 0)
-		game->wall.wall_x = game->ray.pos.y + game->ray.perp_wall_dist
-										* game->ray.ray_dir.y;
-	else
-		game->wall.wall_x = game->ray.pos.x + game->ray.perp_wall_dist
-										* game->ray.ray_dir.x;
-	game->wall.wall_x -= floor((game->wall.wall_x));
 }

@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 20:19:48 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/21 21:19:46 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/27 22:34:39 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int		cast_rays(t_game *game)
 {
 	game->ray.x = 0;
+	draw_textured_cf(game, &game->ray);
 	while (game->ray.x < game->set.res.x)
 	{
 		init_ray(game);
@@ -28,6 +29,8 @@ int		cast_rays(t_game *game)
 		screenshot(game);
 	else
 	{
+		draw_map(game, &game->set);
+		draw_assets(game, (int)game->set.res.x, (int)game->set.res.y);
 		mlx_put_image_to_window(game->mlx, game->win, game->img.img, 0, 0);
 		move_forward_back(&game->ray, &game->player, game->set.map);
 		move_left_right(&game->ray, &game->player, game->set.map);
@@ -92,10 +95,10 @@ void	create_wall_stripes(t_game *game, t_ray *ray)
 		ray->perp_wall_dist = ((double)ray->map_y - ray->pos.y + (1 -
 								(double)ray->step_y) / 2) / ray->ray_dir.y;
 	ray->line_height = (int)(game->set.res.y / ray->perp_wall_dist);
-	ray->draw_start = -ray->line_height / 2 + game->set.res.y / 2;		// ray->draw_start = -ray->line_height / 2 + game->set.res.y / 2 + game->cf.pitch + (game->cf.posZ / ray->perp_wall_dist);
+	ray->draw_start = -ray->line_height / 2 + game->set.res.y / 2 + game->player.pitch;
 	if (ray->draw_start < 0)
 		ray->draw_start = 0;
-	ray->draw_end = ray->line_height / 2 + game->set.res.y / 2;			// + game->cf.pitch + (game->cf.posZ / ray->perp_wall_dist);
+	ray->draw_end = ray->line_height / 2 + game->set.res.y / 2 + game->player.pitch;
 	if (ray->draw_end >= game->set.res.y || ray->draw_end < 0)
 		ray->draw_end = game->set.res.y - 1;
 }
@@ -103,18 +106,8 @@ void	create_wall_stripes(t_game *game, t_ray *ray)
 void	draw_color(t_game *game, t_ray *ray)
 {
 	int j;
-	int i;
 
-	j = -1;
-	ray->draw_end = game->set.res.y - ray->draw_start;
-	i = ray->draw_end;
-	while (++j < ray->draw_start)
-		game->img.addr[j * game->img.line_length / 4 + ray->x] =
-			game->set.c_color;
+	j = ray->draw_start;
 	if (j <= ray->draw_end)
 		setup_wall_textures(game, j - 1);
-	j = i;
-	while (++j < game->set.res.y)
-		game->img.addr[j * game->img.line_length / 4 + ray->x] =
-			game->set.f_color;
 }

@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 11:31:08 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/21 21:19:09 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/25 23:51:46 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,21 @@
 void	move_forward_back(t_ray *ray, t_player *player, char **map)
 {
 	if (player->forward)
-	{
-		if (map[(int)(ray->pos.x + (ray->dir.x * ray->move_speed))]
-				[(int)ray->pos.y] == '0')
+	{ 
+		if (ft_strchr(WALKABLE_CHARSET, map[(int)(ray->pos.x + (ray->dir.x *
+			ray->move_speed))][(int)ray->pos.y]))
 			ray->pos.x += ray->dir.x * ray->move_speed;
-		if (map[(int)(ray->pos.x)][(int)(ray->pos.y + (ray->dir.y *
-						ray->move_speed))] == '0')
+		if (ft_strchr(WALKABLE_CHARSET, map[(int)(ray->pos.x)][(int)(ray->pos.y
+			+ (ray->dir.y * ray->move_speed))]))
 			ray->pos.y += ray->dir.y * ray->move_speed;
 	}
 	if (player->back)
 	{
-		if (map[(int)(ray->pos.x - ray->dir.x * ray->move_speed)]
-				[(int)ray->pos.y] == '0')
+		if (ft_strchr(WALKABLE_CHARSET, map[(int)(ray->pos.x - ray->dir.x *
+			ray->move_speed)][(int)ray->pos.y]))
 			ray->pos.x -= ray->dir.x * ray->move_speed;
-		if (map[(int)(ray->pos.x)][(int)(ray->pos.y - ray->dir.y *
-					ray->move_speed)] == '0')
+		if (ft_strchr(WALKABLE_CHARSET, map[(int)(ray->pos.x)][(int)(ray->pos.y
+			- ray->dir.y * ray->move_speed)]))
 			ray->pos.y -= ray->dir.y * ray->move_speed;
 	}
 }
@@ -38,20 +38,20 @@ void	move_left_right(t_ray *ray, t_player *player, char **map)
 {
 	if (player->right)
 	{
-		if (map[(int)(ray->pos.x + ray->dir.y * ray->move_speed)]
-				[(int)ray->pos.y] == '0')
+		if (ft_strchr(WALKABLE_CHARSET, map[(int)(ray->pos.x + ray->dir.y *
+			ray->move_speed)][(int)ray->pos.y]))
 			ray->pos.x += ray->dir.y * ray->move_speed;
-		if (map[(int)(ray->pos.x)][(int)(ray->pos.y - ray->dir.x *
-					ray->move_speed)] == '0')
+		if (ft_strchr(WALKABLE_CHARSET, map[(int)(ray->pos.x)][(int)(ray->pos.y
+			- ray->dir.x * ray->move_speed)]))
 			ray->pos.y -= ray->dir.x * ray->move_speed;
 	}
 	if (player->left)
 	{
-		if (map[(int)(ray->pos.x - ray->dir.y * ray->move_speed)]
-				[(int)ray->pos.y] == '0')
+		if (ft_strchr(WALKABLE_CHARSET, map[(int)(ray->pos.x - ray->dir.y *
+			ray->move_speed)][(int)ray->pos.y]))
 			ray->pos.x -= ray->dir.y * ray->move_speed;
-		if (map[(int)(ray->pos.x)][(int)(ray->pos.y + ray->dir.x *
-					ray->move_speed)] == '0')
+		if (ft_strchr(WALKABLE_CHARSET, map[(int)(ray->pos.x)][(int)(ray->pos.y
+			+ ray->dir.x * ray->move_speed)]))
 			ray->pos.y += ray->dir.x * ray->move_speed;
 	}
 }

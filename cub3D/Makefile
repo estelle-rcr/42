@@ -1,4 +1,4 @@
-NAME = cub3D
+NAME = Cub3D
 
 SRCS =	cub3d_utils.c\
 		errors.c\
@@ -25,7 +25,6 @@ BONUS =	cub3d_utils.c\
 		errors.c\
 		events.c\
 		exit_mlx.c\
-		floodfill_check.c\
 		ft_get_file.c\
 		ft_split_sep.c\
 		init_mlx.c\
@@ -34,7 +33,6 @@ BONUS =	cub3d_utils.c\
 		open_file.c\
 		parser_check_map.c\
 		parser_cpy_map.c\
-		parser_map_tabs.c\
 		parser_params.c\
 		parser.c\
 		raycasting_init.c\
@@ -43,8 +41,13 @@ BONUS =	cub3d_utils.c\
 		raycasting_textures.c\
 		raycasting.c\
 		save.c\
-		map_display.c\
+		floodfill_check.c\
+		parser_map_tabs.c\
+		events_bonus.c\
+		display_map.c\
 		raycasting_text_cf.c\
+		raycasting_add_sprites.c\
+		display_hud.c\
 
 PATH_SRCS = srcs/
 
@@ -68,7 +71,9 @@ MLX_LIB_LINUX = minilibx-linux/libmlx_Linux.a
 
 INC_DIR = includes
 
-HEADS = -I${LIBFT_DIR}/includes -I${MLX_DIR} -I${INC_DIR}
+INC_BONUS_DIR = includes-bonus
+
+HEADS = -I${LIBFT_DIR}/includes -I${MLX_DIR} -I${INC_DIR} -I${INC_BONUS_DIR}
 
 LFLAGS = -L ${LIBFT_DIR} -L ${MLX_DIR}
 
@@ -92,13 +97,13 @@ clean:
 			make clean -C ${LIBFT_DIR}
 
 fclean:     clean
-			${RM} ${NAME} ${MLX_LIB_LINUX} ${LIBFT_LIB}
+			${RM} ${NAME} ${NAME}_bonus ${MLX_LIB_LINUX} ${LIBFT_LIB}
 
 re:         fclean all
 
 bonus:		${BONUSOBJS}
 			make -C ${LIBFT_DIR}
 			make -C ${MLX_DIR}
-			${CC} ${CFLAGS} ${LFLAGS} ${LIBS} ${BONUSOBJS} -o ${NAME} ${LIBFT_LIB} ${MLX_LIB_LINUX}
+			${CC} ${CFLAGS} ${LFLAGS} ${LIBS} ${BONUSOBJS} -o ${NAME}_bonus ${LIBFT_LIB} ${MLX_LIB_LINUX}
 
 .PHONY:     all clean fclean re bonus

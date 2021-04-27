@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/21 15:28:07 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/21 21:13:54 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/27 13:59:47 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	handle_keypress(int keycode, t_game *game)
 	{
 		exit_game(game);
 	}
+	handle_bonus_keypress(keycode, game);
 	return (1);
 }
 
@@ -47,5 +48,7 @@ int	handle_keyrelease(int keycode, t_game *game)
 		game->player.rotation_right = 0;
 	if (keycode == ARROW_LEFT)
 		game->player.rotation_left = 0;
+	handle_bonus_keyrelease(keycode, game);
+	printf("%i\n", keycode);
 	return (1);
 }
