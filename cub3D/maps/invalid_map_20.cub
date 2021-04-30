@@ -1,0 +1,17 @@
+R 1200 600
+
+NO ./textures/purplestone.xpm
+SO ./textures/purplestone.xpm
+WE ./textures/purplestone.xpm
+EA ./textures/purpleston.xpm
+
+
+S ./textures/barrel.xpm
+F 48,48,48
+C 192,223,239
+
+1111111111111111111111111111
+100E000111111000200000000001
+1000000000111111111111111111
+1000S001111
+11111111

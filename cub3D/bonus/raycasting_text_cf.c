@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 21:17:24 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/27 21:14:01 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/30 17:39:15 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,12 @@
 
 void	draw_textured_cf(t_game *game, t_ray *ray)
 {
-	int			y;
-	int 		x;
-	int			h;
+	int	y;
+	int	x;
 
-	h = (int)game->set.res.y;
-//	y = h / 2 + 1;
 	y = 0;
 	init_cf_textures(game);
-	while (++y < h)
+	while (++y < (int)game->set.res.y)
 	{
 		setup_additionnal_text(game, ray, y);
 		x = 0;
@@ -90,4 +87,17 @@ void	setup_cf(t_game *game)
 				game->cf.cell_y)) & (game->textures[FLOOR].height - 1);
 	game->cf.floor.x += game->cf.floor_step.x;
 	game->cf.floor.y += game->cf.floor_step.y;
+}
+
+int		load_add_sprites(t_game *game, char *text, int text_nb)
+{
+	if (!(game->textures[text_nb].img = mlx_xpm_file_to_image(game->mlx,
+		text, &(game->textures[text_nb].width),
+		&(game->textures[text_nb].height))))
+		return (exit_textures(game));
+	game->textures[text_nb].addr =
+		(int *)mlx_get_data_addr(game->textures[text_nb].img,
+		&game->textures[text_nb].bpp, &game->textures[text_nb].line_length,
+		&game->textures[text_nb].endian);
+	return (1);
 }

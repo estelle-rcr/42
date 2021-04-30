@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 11:23:37 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/28 00:11:30 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/30 17:30:17 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,9 @@ typedef struct		s_player
 	int			rotation_left;
 	int			rotation_right;
 	double		pitch;
-	float		cam_z;
+	int			life;
+	int			key_found;
+	int			points;
 }					t_player;
 
 typedef struct		s_ray
@@ -176,12 +178,17 @@ typedef struct		s_bonus
 {
 	char	*light;
 	char	*food;
-	char	*vault;
+	char	*t_default;
 	char	*key_pu;
-	char	*gun_pu;
-	char	*gun_hud;
-	char	*knife;
+	char	*ivy;
 	char	*hud;
+	char	*gun_hud;
+	char	*key_hud;
+	char	*hud_1;
+	char	*hud_5;
+	char	*hud_0;
+	char	*win;
+	char	*lose;
 }					t_bonus;
 
 typedef struct		s_game
@@ -263,7 +270,8 @@ void				setup_wall_textures(t_game *game, int y);
 void				setup_distance_order(t_game *game, t_ray *ray);
 void				sort_distance_order(t_game *game);
 void				setup_sprites(t_game *game, t_ray *ray);
-void				loop_draw_sprite(t_game *game, int tex_x, int stripe, int sp_nb);
+void				loop_draw_sprite(t_game *game, int tex_x, int stripe,
+						int sp_nb);
 void				render_sprite(t_game *game);
 int					exit_game(t_game *game);
 int					exit_free_mlx_components(t_game *game);
@@ -271,52 +279,40 @@ void				exit_free_settings(t_settings *set);
 int					exit_gnl(char *line, t_settings *set);
 int					screenshot(t_game *game);
 void				create_bmp_header(t_game *game, int fd);
-
-
-// raycasting cf text
 void				draw_textured_cf(t_game *game, t_ray *ray);
 void				init_cf_textures(t_game *game);
 void				setup_additionnal_text(t_game *game, t_ray *ray, int y);
 void				setup_cf(t_game *game);
-
-// raycasting add sprites
-int					load_textures_bonus(t_game *game);
+void				load_textures_bonus(t_game *game);
+void				load_more_textures(t_game *game);
 int					load_add_sprites(t_game *game, char *text, int text_nb);
 int					find_sprite_nb(t_game *game, int x, int y);
 int					filter_sprite_bg(int color);
 int					check_sprite(t_game *game, int y);
-
-// raycasting player
 void				look_up_down(t_game *game, t_cf_data *cf);
 void				move_jump_crouch(t_game *game, t_cf_data *cf);
 void				handle_bonus_keypress(int keycode, t_game *game);
 void				handle_bonus_keyrelease(int keycode, t_game *game);
-
-// map_display_bonus
 void				init_map(t_game *game);
 void				draw_player(t_game *game);
 void				draw_rect(t_game *game, t_axis pos, t_axis end, int color);
 void				draw_map(t_game *game, t_settings *set);
-
-// raycasting text
 int					add_shade(double distance, int trgb);
-
-// parser_map_tabs.c									// issues freeing
-char				*replace_tabs(char *line);
-char				*dup_space(char *line);
-void				add_spaces(char *s, int i);
-
-// minilib utils
 int					add_shade(double distance, int trgb);
 int					add_shade_cf(double distance, int trgb);
 int					create_trgb(int t, int r, int g, int b);
 int					hit_screen(t_game *game, int x, int y);
-//void				my_mlx_pixel_put(t_img_data *img, int x, int y, int color);
-
-// display_hud
+int					filter_number(int color);
 void				draw_assets(t_game *game, int width, int height);
+void				update_hud(t_game *game, int text, int offset_x,
+						int offset_y);
 void				draw_hud(t_game *game, int width, int height);
-//void				draw_gun(t_game *game, int width, int height);
 void				draw_gun(t_game *game, int width, int height, int y);
+int					filter_assets(int color);
+void				handle_interaction(t_game *game);
+void				handle_life(t_game *game, int width, int hud_h);
+void				handle_keys(t_game *game, int width, int hud_h);
+void				handle_score(t_game *game, int width, int hud_h);
+void				end_of_game(t_game *game);
 
 #endif

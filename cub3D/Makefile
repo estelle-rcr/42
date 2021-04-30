@@ -1,4 +1,4 @@
-NAME = Cub3D
+NAME = cub3D
 
 SRCS =	cub3d_utils.c\
 		errors.c\
@@ -47,7 +47,8 @@ BONUS =	cub3d_utils.c\
 		display_map.c\
 		raycasting_text_cf.c\
 		raycasting_add_sprites.c\
-		display_hud.c\
+		display_assets.c\
+		handle_interaction.c\
 
 PATH_SRCS = srcs/
 

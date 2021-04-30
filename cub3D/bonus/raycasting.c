@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 20:19:48 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/27 22:34:39 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/30 16:42:10 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,13 @@ int		cast_rays(t_game *game)
 		game->ray.x++;
 	}
 	render_sprite(game);
+	draw_assets(game, (int)game->set.res.x, (int)game->set.res.y);
+	handle_interaction(game);
+	end_of_game(game);
 	if (game->save)
 		screenshot(game);
 	else
 	{
-		draw_map(game, &game->set);
-		draw_assets(game, (int)game->set.res.x, (int)game->set.res.y);
 		mlx_put_image_to_window(game->mlx, game->win, game->img.img, 0, 0);
 		move_forward_back(&game->ray, &game->player, game->set.map);
 		move_left_right(&game->ray, &game->player, game->set.map);
@@ -95,10 +96,12 @@ void	create_wall_stripes(t_game *game, t_ray *ray)
 		ray->perp_wall_dist = ((double)ray->map_y - ray->pos.y + (1 -
 								(double)ray->step_y) / 2) / ray->ray_dir.y;
 	ray->line_height = (int)(game->set.res.y / ray->perp_wall_dist);
-	ray->draw_start = -ray->line_height / 2 + game->set.res.y / 2 + game->player.pitch;
+	ray->draw_start = -ray->line_height / 2 + game->set.res.y / 2 +
+						game->player.pitch;
 	if (ray->draw_start < 0)
 		ray->draw_start = 0;
-	ray->draw_end = ray->line_height / 2 + game->set.res.y / 2 + game->player.pitch;
+	ray->draw_end = ray->line_height / 2 + game->set.res.y / 2 +
+					game->player.pitch;
 	if (ray->draw_end >= game->set.res.y || ray->draw_end < 0)
 		ray->draw_end = game->set.res.y - 1;
 }

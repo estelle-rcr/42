@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/07 00:55:37 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/27 13:53:45 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/30 17:26:52 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int		init_game(t_game *game)
 {
 	ft_bzero(&game->player, sizeof(t_player));
+	game->player.life = PLAYER_LIFE;
 	game->textures[0].img = NULL;
 	game->textures[1].img = NULL;
 	game->textures[2].img = NULL;
@@ -76,8 +77,8 @@ void	init_ray(t_game *game)
 		game->ray.camerax;
 	game->ray.map_x = (int)game->ray.pos.x;
 	game->ray.map_y = (int)game->ray.pos.y;
-	game->ray.move_speed = 0.1;
-	game->ray.rotation_speed = 0.033 * 1.8;
+	game->ray.move_speed = MOVE_SPEED;
+	game->ray.rotation_speed = ROTATION_SPEED * 1.8;
 	if (game->ray.ray_dir.y == 0)
 		game->ray.delta_dist.x = 0;
 	else if (game->ray.ray_dir.x == 0)

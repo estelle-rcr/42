@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:47:30 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/21 21:15:00 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/29 18:00:07 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,9 @@ int	run_mlx(t_game *game)
 		return (0);
 	if (!init_game(game))
 		return (0);
-	if (!load_texture(game) || !load_textures_bonus(game))
+	if (!load_texture(game))
 		return (0);
+	load_textures_bonus(game);
 	if (game->save == 1)
 		cast_rays(game);
 	else
@@ -66,5 +67,3 @@ int	run_mlx(t_game *game)
 	exit_game(game);
 	return (1);
 }
-
-    //((t_xvar*)(game->mlx))->      clean mlx leaks

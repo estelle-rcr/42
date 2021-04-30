@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/07 16:37:23 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/27 16:30:23 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/28 18:17:24 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,13 +98,11 @@ void	loop_draw_sprite(t_game *game, int tex_x, int stripe, int i)
 					game->sprite.s_height) / 256;
 			if (!filter_sprite_bg(game->textures[game->sp_nb].addr[tex_y *
 				game->textures[game->sp_nb].line_length / 4 + tex_x]))
-				{
-					game->img.addr[check_sprite(game, y) *
-						game->img.line_length / 4 + stripe] =
-						add_shade(game->sprite.distance[i],
-						game->textures[game->sp_nb].addr[tex_y *
-						game->textures[game->sp_nb].line_length / 4 + tex_x]);					
-				}
+				game->img.addr[check_sprite(game, y) * game->img.line_length / 4
+					+ stripe] = add_shade(game->sprite.distance[i],
+							game->textures[game->sp_nb].addr[tex_y *
+							game->textures[game->sp_nb].line_length / 4 +
+							tex_x]);
 			y++;
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 11:28:39 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/27 21:16:31 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/28 18:18:58 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	init_texture(t_game *game)
 	game->wall.wall_x -= floor((game->wall.wall_x));
 }
 
-int	darken_side_color(t_game *game)
+int		darken_side_color(t_game *game)
 {
 	int color;
 
@@ -102,8 +102,8 @@ void	setup_wall_textures(t_game *game, int y)
 	if (game->ray.side == 1 && game->ray.ray_dir.y < 0)
 		game->wall.txt_x = game->textures[game->wall.txt_dir].width -
 							game->wall.txt_x - 1;
-	game->wall.txt_pos = (game->ray.draw_start - game->player.pitch - game->set.res.y / 2 +
-							game->ray.line_height / 2) * game->wall.step;
+	game->wall.txt_pos = (game->ray.draw_start - game->player.pitch -
+			game->set.res.y / 2 + game->ray.line_height / 2) * game->wall.step;
 	while (++y <= game->ray.draw_end)
 	{
 		game->wall.txt_y = (int)game->wall.txt_pos &

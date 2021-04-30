@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 11:31:08 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/25 23:51:46 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/04/28 18:21:23 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	move_forward_back(t_ray *ray, t_player *player, char **map)
 {
 	if (player->forward)
-	{ 
+	{
 		if (ft_strchr(WALKABLE_CHARSET, map[(int)(ray->pos.x + (ray->dir.x *
 			ray->move_speed))][(int)ray->pos.y]))
 			ray->pos.x += ray->dir.x * ray->move_speed;
