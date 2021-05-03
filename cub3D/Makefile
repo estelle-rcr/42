@@ -41,8 +41,6 @@ BONUS =	cub3d_utils.c\
 		raycasting_textures.c\
 		raycasting.c\
 		save.c\
-		floodfill_check.c\
-		parser_map_tabs.c\
 		events_bonus.c\
 		display_map.c\
 		raycasting_text_cf.c\

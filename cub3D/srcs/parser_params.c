@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 16:49:56 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/20 14:43:19 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/05/03 14:29:21 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ int	check_textures(char **params, t_settings *set)
 	int		i;
 	char	**valid_set;
 	char	***textures_set;
+	int		fd;
 
-	if (params[2] != NULL || !params[1])
-		return (print_err_msg(ERR_TEX_INPUTS));
-	if (!(ft_strnstr(params[1], "./", 2)) || ft_strlen(params[1]) <= 2)
+	if (params[2] != NULL || !params[1] || ft_strlen(params[1]) <= 2 ||
+		(fd = open(params[1], O_RDONLY)) == -1)
 		return (print_err_msg(ERR_TEX_FORMAT));
 	valid_set = (char *[NB_SETTINGS - 2]) {"NO", "SO", "WE", "EA", "S", 0};
 	textures_set = (char **[NB_SETTINGS - 2]) {&set->no_txt, &set->so_txt,
@@ -59,6 +59,8 @@ int	check_textures(char **params, t_settings *set)
 				(*textures_set)[i] = ft_strdup(params[1]);
 		}
 	}
+	if (close(fd) == -1)
+		return (ERROR_CLOSE_FILE);
 	return (1);
 }
 

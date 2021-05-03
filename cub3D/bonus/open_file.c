@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 16:30:11 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/21 21:18:28 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/05/03 14:12:44 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,11 @@ int			read_file(char *file, t_settings *set)
 
 	init_set(set);
 	if ((set->fd = open_file(file)) == 0)
-		return (ERR_GNL);
+		return (ERR_OPENING_FILE);
 	while ((ret = get_next_line(set->fd, &line)) >= 0)
 	{
 		if (ret == -1)
-			exit(0);
+			exit(ERR_GNL);
 		if (*line && !is_whitespace(line))
 		{
 			if (!parse_file(line, set))
