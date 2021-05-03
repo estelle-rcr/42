@@ -16,7 +16,7 @@ We have to rebuild the essentials functionnalities of printf in order to re-use 
 
 ### 4th project: cub3D
 We create a small 3D game inspired from Wolfenstein, a 90's game played in first-person view. We first make a parser to ensure the input file provided by the user is correct and that all the required data is provided in the right format. Then, we use the minilibX to display the game in 2D and then in 3D using the raycasting method.  
-I added many bonus: a HUD, fog and reliefs, points and victory, object pick-up, life, keys, jumps and crouch, textures on floor and ceiling... 
+I added many bonuses: a HUD, fog and reliefs, points and victory, object pick-up, life, keys, a display/hide map, look up and down, textures on floor and ceiling... 
   
   
 ![save](https://user-images.githubusercontent.com/25255182/116879212-ad382180-ac20-11eb-82e3-c0a6d190a477.jpg)
