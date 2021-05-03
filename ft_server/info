@@ -1,0 +1,73 @@
+
+// Non root user
+sudo groupadd docker
+sudo usermod -aG docker $USER
+
+service nginx stop
+
+// INSTALL from Docker docs
+sudo apt-get remove docker docker-engine docker.io containerd runc
+
+sudo apt-get update
+
+sudo apt-get install docker-ce docker-ce-cli containerd.io
+
+
+// SCRIPT
+
+curl -fsSL https://get.docker.com -o get-docker.sh
+
+ sudo sh get-docker.sh
+
+
+// OVERCOME INCORRECT PERMISSIONS
+ sudo chown "$USER":"$USER" /home/"$USER"/.docker -R
+
+ sudo chmod g+rwx "$HOME/.docker" -R
+
+
+
+
+// UNINSTALL DOCKER engine
+
+sudo apt-get purge docker-ce docker-ce-cli containerd.io
+
+sudo rm -rf /var/lib/docker
+
+sudo rm -rf /var/lib/containerd
+
+
+
+// LAUNCH container
+
+Liste des container :
+
+docker ps
+
+Liste des images :
+
+docker images
+
+Pour continuer avec les commandes de base, vous pouvez démarrer un conteneur en arrière-plan avec la commande suivante :
+
+docker start containerID/NAME
+
+Accédez à un conteneur démarré avec celle-ci :
+
+docker attach containerID/NAME
+
+Et enfin pour l’arrêter il faudra exécuter :
+
+docker stop containerID/NAME
+
+Finalement, la suppression d’un conteneur se fera avec la commande suivante :
+
+docker rm containerID/NAME
+
+
+
+#wget http://fr.wordpress.org/latest-fr_FR.tar.gz
+#tar -xzvf latest-fr_FR.tar.gz
+#wget https://files.phpmyadmin.net/phpMyAdmin/4.9.0.1/phpMyAdmin-4.9.0.1-all-languages.tar.gz
+#tar -xzvf phpMyAdmin-4.9.0.1-all-languages.tar.gz
+#mv phpMyAdmin-4.9.0.1-all-languages phpMyAdmin
