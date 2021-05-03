@@ -16,11 +16,15 @@ We have to rebuild the essentials functionnalities of printf in order to re-use 
 
 ### 4th project: cub3D
 We create a small 3D game inspired from Wolfenstein, a 90's game played in first-person view. We first make a parser to ensure the input file provided by the user is correct and that all the required data is provided in the right format. Then, we use the minilibX to display the game in 2D and then in 3D using the raycasting method.  
-I added many bonus: a HUD, fog and reliefs, points and victory, object pick-up, life, keys, jumps and crouch, textures on floor and ceiling...  
+I added many bonus: a HUD, fog and reliefs, points and victory, object pick-up, life, keys, jumps and crouch, textures on floor and ceiling... 
+  
+  
+![save](https://user-images.githubusercontent.com/25255182/116879212-ad382180-ac20-11eb-82e3-c0a6d190a477.jpg)
+  
 I added two small scripts in shell to compile and check leaks with valgrind. The first script is used as follow: './leaks.sh cub3D maps.cub' and check the program with one map in input, the result is in a log file. The second is used as follow: './test_invalid_maps.sh cub3D maps/' and check multiple invalid map files and output the OK/KO from valgrind tests on the terminal and the log files for each map files in a dedicated directory.
   
 ### 5th project: ft_server
-The ft_server project aims at creating a Docker image running with LEMP stack (Linux, Nginx, MySQL, PHP) to host a Wordpress website and its database. It encompasses a self-signed SSL certificate and a on-off switch for the index.
+The ft_server project aims at creating a Docker image running with LEMP stack (Linux, Nginx, MySQL, PHP) to host a Wordpress website and its database. It encompasses a self-signed SSL certificate and an on-off switch for the index.
   
     
 That's all folks!
