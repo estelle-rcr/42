@@ -1,23 +1,21 @@
 FROM debian:buster
 
-#RUN apt-get update && apt-get upgrade
-RUN apt-get update && apt-get install -y \
-	nginx \
-	mariadb-server \
+RUN apt-get -y update && apt-get -y install mariadb-server \
 	wget \
 	php \
+	php-cli \
+	php-cgi \
+	php-mbstring \
 	php-fpm \
-	php-mysql
-	&& systemctl start mariadb
+	php-mysql \
+	nginx
 
-COPY srcs ./root/
+COPY srcs/setup.sh srcs/index_switch.sh ./
+COPY srcs/config/ /tmp/
+COPY srcs/tests /tmp/tests
 
-WORKDIR /root/
+ENV AUTOINDEX on
+
+EXPOSE 80 443
 
 CMD bash setup.sh
-#sudo apt-get install docker-ce docker-ce-cli containerd.io
-#  && curl -fsSL https://get.docker.com -o get-docker.sh
-#service nginx stop
-#libnss3-tools
-
-
