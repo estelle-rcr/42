@@ -1,27 +1,27 @@
-## ft_server
+# ft_server
 
-### How to start:
+## How to start:
 
-# BUILD Docker image (use --no-cache when working on it):
+### BUILD Docker image (use --no-cache when working on it):  
   `sudo docker build --no-cache -t name .`
 
-# RUN the container:
-On the Virtual machine, stop the already ongoing nginx service:
+### RUN the container:
+On the Virtual machine, stop the already ongoing nginx service:  
   `sudo service nginx stop`
 
-  Open the container in 'interactive' mode for testing:
+  Open the container in 'interactive' mode for testing:  
   `sudo docker run -it -p 80:80 -p 443:443 name`
 
-  Open the container in detach mode:
+  Open the container in detach mode:  
   `sudo docker run -d --p 80:80 -p 443:443 name`
 
-  By default, the index is at on, it can be changed to off or on when launching:
+  By default, the index is at on, it can be changed to off or on when launching:  
   `sudo docker run -d --p 80:80 -p 443:443 --env=AUTOINDEX=off name`
 
-	It can also be changed when the server is running in interactive mode by executing in the container's command line the index_switch exec at the root:
-	`./index_switch.sh`
+  It can also be changed when the server is running in interactive mode by executing in the container's command line the index_switch exec at the root:  
+  `./index_switch.sh`
 
-# RUN the container:
+### RUN the container:
   `sudo docker system prune`
   OR:
   `sudo docker ps -a`
@@ -30,7 +30,7 @@ On the Virtual machine, stop the already ongoing nginx service:
   `sudo docker rmi ID_img`  
 
 
-### List of resources:
+## List of resources:
 
 * Understanding the overall Docker technology: https://docs.docker.com/get-started/overview/
 * Post-installation steps for Ubuntu (42VM): https://docs.docker.com/engine/install/linux-postinstall/
