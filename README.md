@@ -24,7 +24,7 @@ I added many bonuses: a HUD, fog and reliefs, points and victory, object pick-up
 I added two small scripts in shell to compile and check leaks with valgrind. The first script is used as follow: './leaks.sh cub3D maps.cub' and check the program with one map in input, the result is in a log file. The second is used as follow: './test_invalid_maps.sh cub3D maps/' and check multiple invalid map files and output the OK/KO from valgrind tests on the terminal and the log files for each map files in a dedicated directory.
   
 ### 5th project: ft_server
-The ft_server project aims at creating a Docker image running with LEMP stack (Linux, Nginx, MySQL, PHP) to host a Wordpress website and its database. It encompasses a self-signed SSL certificate and an on-off switch for the index.
+The ft_server project aims at creating a Docker container running with the LEMP stack (Linux, Nginx, MySQL, PHP) to host a Wordpress website, a mySQL database and a phpMyAdmin interface. It encompasses a self-signed SSL certificate using openSSL and an on-off switch for the index (through a variable and through a script).
   
     
 That's all folks!
