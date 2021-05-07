@@ -2,7 +2,8 @@
 
 ## How to start:
 
-### BUILD Docker image (use --no-cache when working on it):  
+### BUILD Docker image:  
+ (use --no-cache when working on it)  
   `sudo docker build --no-cache -t name .`
 
 ### RUN the container:
@@ -21,7 +22,7 @@ On the Virtual machine, stop the already ongoing nginx service:
   It can also be changed when the server is running in interactive mode by executing in the container's command line the index_switch exec at the root:  
   `./index_switch.sh`
 
-### RUN the container:
+### CLEAN containers and images:
   `sudo docker system prune`
   OR:
   `sudo docker ps -a`
