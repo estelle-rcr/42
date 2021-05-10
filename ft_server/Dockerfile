@@ -10,7 +10,7 @@ RUN apt-get -y update && apt-get -y install mariadb-server \
 	php-mysql \
 	nginx
 
-COPY srcs/setup.sh srcs/index_switch.sh ./
+COPY srcs/setup.sh srcs/index_switch.sh /tmp/
 COPY srcs/config/ /tmp/
 COPY srcs/tests /tmp/tests
 
@@ -18,4 +18,4 @@ ENV AUTOINDEX on
 
 EXPOSE 80 443
 
-CMD bash setup.sh
+CMD bash /tmp/setup.sh

@@ -44,11 +44,12 @@ echo "CREATE USER 'wordpress'@'localhost';" | mysql -u root
 echo "SET password FOR 'wordpress'@'localhost' = password('password');" | mysql -u root
 echo "GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpress'@'localhost' IDENTIFIED BY 'password';" | mysql -u root
 echo "FLUSH PRIVILEGES;" | mysql -u root
+mysql wordpress -u root < /tmp/wordpress.sql
 
-# start nginx & php & bash command line & process never sleep
+# start nginx & php & bash command line
 service nginx start
 service nginx status
 /etc/init.d/php7.3-fpm start
 /etc/init.d/php7.3-fpm status
 bash
-sleep infinity
+#sleep infinity
