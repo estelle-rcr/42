@@ -20,7 +20,7 @@ On the Virtual machine, stop the already ongoing nginx service:
   `sudo docker run -d --p 80:80 -p 443:443 --env=AUTOINDEX=off name`
 
   It can also be changed when the server is running in interactive mode by executing in the container's command line the index_switch exec at the root:  
-  `./index_switch.sh`
+  `./tmp/index_switch.sh`
 
 ### CLEAN containers and images:
   `sudo docker system prune`
