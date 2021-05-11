@@ -20,14 +20,14 @@ The project runs only on a Linux distribution.
   `make bonus`
 
   Start the program:
-  `./cub3D map_subject.cub` to play
-     OR `./cub3D map_subject.cub --save` to export a screenshot of the first view
+  `./cub3D map_subject.cub` to play  
+     OR `./cub3D map_subject.cub --save` to export a screenshot of the first view  
 
   To play the bonus version (with the HUD, etc.):
-    `./cub3D_bonus map_bonus.cub` to play
-      OR `./cub3D_bonus map_bonus.cub --save` to export a screenshot of the first view
+    `./cub3D_bonus map_bonus.cub` to play  
+      OR `./cub3D_bonus map_bonus.cub --save` to export a screenshot of the first view 
   
 #### Keyboard instructions:
-  On a QWERTY keyboard, directionnal moves are done using: W-S-A-D
-    Rotational moves: left and right arrows
-      Show/hide map: press M
+  On a QWERTY keyboard, directionnal moves are done using: W-S-A-D. 
+  Rotational moves: left and right arrows. 
+  Show/hide map: press M. 
