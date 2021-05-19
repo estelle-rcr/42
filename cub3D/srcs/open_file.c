@@ -86,7 +86,7 @@ int			read_file(char *file, t_settings *set)
 
 	init_set(set);
 	if ((set->fd = open_file(file)) == 0)
-		return (ERR_OPENING_FILE);
+		return (0);
 	while ((ret = get_next_line(set->fd, &line)) >= 0)
 	{
 		if (ret == -1)

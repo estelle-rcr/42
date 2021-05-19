@@ -17,12 +17,12 @@ void	handle_interaction(t_game *game)
 	int	found;
 
 	found = game->set.map[(int)(game->ray.pos.x)][(int)(game->ray.pos.y)];
-	if (found == FOOD - 2 + '0')
+	if (found == FOOD - 2 + '0' && game->player.life < 100)
 	{
 		game->player.life += 50;
 		game->set.map[(int)(game->ray.pos.x)][(int)(game->ray.pos.y)] = '7';
 	}
-	if (found == IVY - 2 + '0')
+	if (found == IVY - 2 + '0' && game->player.life > 0)
 	{
 		game->player.life -= 50;
 		game->set.map[(int)(game->ray.pos.x)][(int)(game->ray.pos.y)] = '7';

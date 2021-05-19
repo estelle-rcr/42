@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:47:30 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/29 18:00:07 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/05/03 21:36:49 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	run_mlx(t_game *game)
 {
 	if (!(game->mlx = mlx_init()))
 		return (ERROR_INIT_MLX);
-	if (!create_mlx_win(game))
+	if (game->save == 0 && !create_mlx_win(game))
 		return (0);
 	if (!my_mlx_new_img(game->mlx, &game->img, game->set.res.x,
 						game->set.res.y))

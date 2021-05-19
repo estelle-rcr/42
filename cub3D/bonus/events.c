@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/21 15:28:07 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/29 17:51:41 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/05/04 12:02:59 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,5 @@ int	handle_keyrelease(int keycode, t_game *game)
 	if (keycode == ARROW_LEFT)
 		game->player.rotation_left = 0;
 	handle_bonus_keyrelease(keycode, game);
-	printf("%i\n", keycode);
 	return (1);
 }

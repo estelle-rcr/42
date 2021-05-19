@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/29 17:58:00 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/30 16:43:14 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/05/04 14:24:57 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int		exit_free_mlx_components(t_game *game)
 			if (!mlx_destroy_image(game->mlx, game->textures[i].img))
 				return (ERR_MLX_DESTROY);
 	}
-	if (game->mlx && game->win)
+	if (game->save == 0 && game->mlx && game->win)
 		if (!(mlx_destroy_window(game->mlx, game->win)))
 			return (ERR_MLX_DESTROY);
 	if (game->mlx)

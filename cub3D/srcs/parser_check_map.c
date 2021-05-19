@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:44:54 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/21 18:06:55 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/05/11 16:29:41 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,11 @@ int	comp_null_cells(char **map)
 			else if (ft_strchr(PLAY_CHARSET, map[x][y]) && (!map[x + 1] ||
 						!map[x + 1][y]))
 				return (0);
-			else if (ft_strchr(PLAY_CHARSET, map[x][y]) && (!map[x - 1] ||
+			else if (ft_strchr(PLAY_CHARSET, map[x][y]) && (x == 0 ||
 						!map[x - 1][y]))
+				return (0);
+			else if (ft_strchr(PLAY_CHARSET, map[x][y]) &&
+						(int)ft_strlen(map[x - 1]) < y)
 				return (0);
 		}
 	}
@@ -77,16 +80,22 @@ int	is_valid_map(t_settings *set, char **map)
 			else if (valid_memory(set, map, x + 1, y) && map[x + 1][y]
 						&& !valid_cells(map[x][y], map[x + 1][y]))
 				return (0);
-			else if (x > 0 && valid_memory(set, map, x - 1, y) &&
-					!valid_cells(map[x][y], map[x - 1][y]))
+			else if ((x > 0 && valid_memory(set, map, x - 1, y) &&
+					!valid_cells(map[x][y], map[x - 1][y])) ||
+					!comp_null_cells(map))
 				return (0);
 		}
 	}
-	return (comp_null_cells(map));
+	return (1);
 }
 
 int	check_map(t_settings *set)
 {
+	if (!set->map)
+	{
+		exit_free_settings(set);
+		return (print_err_msg(ERR_INVALID_MAP));
+	}
 	if (!is_valid_map(set, set->map))
 	{
 		exit_free_settings(set);
