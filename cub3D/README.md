@@ -29,6 +29,10 @@ The project runs only on a Linux distribution.
       OR `./cub3D_bonus map_bonus.cub --save` to export a screenshot of the first view 
   
 #### Keyboard instructions:
-  On a QWERTY keyboard, directionnal moves are done using: W-S-A-D. 
+  On a QWERTY keyboard, directionnal moves are done using: W-S-A-D.   
+  
   Rotational moves: left and right arrows. 
+    
+  Bonus - Look up and down: up and down arrows.
+  
   Show/hide map: press M. 
