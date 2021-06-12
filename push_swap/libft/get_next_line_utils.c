@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 12:22:44 by erecuero          #+#    #+#             */
-/*   Updated: 2021/04/21 16:34:28 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/06/08 13:56:35 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static size_t	ft_strlen(const char *s)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (s && s[i])
@@ -24,9 +24,9 @@ static size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-char			*ft_strfind(const char *s, int c)
+char	*ft_strfind(const char *s, int c)
 {
-	char *str;
+	char	*str;
 
 	if (!s)
 		return (0);
@@ -38,13 +38,13 @@ char			*ft_strfind(const char *s, int c)
 	return (0);
 }
 
-static void		*ft_memmove(void *dst, const void *src, size_t len)
+static void	*ft_memmove(void *dst, const void *src, size_t len)
 {
 	unsigned char		*d;
 	const unsigned char	*s;
 
-	d = (unsigned char*)dst;
-	s = (unsigned char*)src;
+	d = (unsigned char *)dst;
+	s = (unsigned char *)src;
 	if (!dst && !src)
 		return (NULL);
 	if (s < d)
@@ -56,7 +56,7 @@ static void		*ft_memmove(void *dst, const void *src, size_t len)
 	return (dst);
 }
 
-char			*ft_joinstr(char *s1, char *s2)
+char	*ft_joinstr(char *s1, char *s2)
 {
 	char	*tab;
 	int		size1;
@@ -66,11 +66,19 @@ char			*ft_joinstr(char *s1, char *s2)
 		return (NULL);
 	size1 = ft_strlen(s1);
 	size2 = ft_strlen(s2);
-	if (!(tab = malloc((size1 + size2 + 1) * sizeof(char))))
+	tab = malloc((size1 + size2 + 1) * sizeof(char));
+	if (!tab)
 		return (NULL);
 	ft_memmove(tab, s1, size1);
 	ft_memmove(tab + size1, s2, size2);
 	tab[size1 + size2] = '\0';
 	free(s1);
 	return (tab);
+}
+
+void	helper_gnl(char *buf, char *line, char *str)
+{
+	free(buf);
+	*line = new_line(str);
+	str = trunc_str(str);
 }

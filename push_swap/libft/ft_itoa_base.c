@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 11:50:31 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/16 12:25:39 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/06/08 14:49:19 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static	int	ft_len(unsigned long long n, int len_base_to)
 {
-	int		count;
+	int	count;
 
 	count = 0;
 	if (n <= 0)
@@ -27,7 +27,7 @@ static	int	ft_len(unsigned long long n, int len_base_to)
 	return (count);
 }
 
-char		*ft_itoa_base(unsigned long long nb, char *base_to)
+char	*ft_itoa_base(unsigned long long nb, char *base_to)
 {
 	int		count;
 	int		sign;
@@ -37,7 +37,8 @@ char		*ft_itoa_base(unsigned long long nb, char *base_to)
 	sign = 0;
 	base_len = ft_strlen(base_to);
 	count = ft_len(nb, base_len);
-	if (!(tab = malloc((count + 1) * sizeof(char))))
+	tab = malloc((count + 1) * sizeof(char));
+	if (!tab)
 		return (NULL);
 	tab[count--] = '\0';
 	if (nb < 0)

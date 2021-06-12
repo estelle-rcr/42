@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 12:04:18 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/16 12:24:42 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/06/08 14:04:46 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ char	*ft_strdup(const char *s1)
 	i = 0;
 	while (s1[size])
 		++size;
-	if (!(s2 = malloc((size + 1) * sizeof(char))))
+	s2 = malloc((size + 1) * sizeof(char));
+	if (!s2)
 		return (NULL);
 	while (s1[i])
 	{

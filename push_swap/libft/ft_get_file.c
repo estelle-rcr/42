@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/16 14:41:58 by erecuero          #+#    #+#             */
-/*   Updated: 2021/05/20 12:53:53 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/06/08 15:08:04 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ char	**ft_get_file(int fd, int lvl)
 		tab = ft_get_file(fd, lvl + 1);
 	else
 	{
-		if (!(tab = malloc((lvl + 2) * sizeof(char *))))
+		tab = malloc((lvl + 2) * sizeof(char *));
+		if (!tab)
 			return (NULL);
 		tab[lvl] = line;
 		tab[lvl + 1] = NULL;

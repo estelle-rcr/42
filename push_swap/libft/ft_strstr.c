@@ -6,15 +6,15 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 16:08:21 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/16 12:23:08 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/06/08 14:02:28 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 char	*ft_strstr(char *str, char *to_find)
 {
-	int i;
-	int j;
-	int length;
+	int	i;
+	int	j;
+	int	length;
 
 	i = 0;
 	j = 0;

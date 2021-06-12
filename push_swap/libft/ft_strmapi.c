@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 12:07:38 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/16 12:23:13 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/06/08 14:03:37 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 		return (NULL);
 	if (s)
 	{
-		if (!(tab = ft_strdup((char const *)s)))
+		tab = ft_strdup((char const *)s);
+		if (!tab)
 			return (NULL);
 		i = 0;
 		while (tab[i])

@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 18:20:29 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/16 12:23:09 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/06/08 14:03:07 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*ft_strrchr(const char *s, int c)
 {
-	char *str;
+	char	*str;
 
 	str = NULL;
 	while (*s)

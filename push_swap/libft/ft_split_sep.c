@@ -6,15 +6,15 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/20 21:52:59 by erecuero          #+#    #+#             */
-/*   Updated: 2021/05/20 12:41:42 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/06/08 14:11:04 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		ft_is_sep(char *str, char *charset)
+static int	ft_is_sep(char *str, char *charset)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (charset[i])
@@ -26,9 +26,9 @@ static int		ft_is_sep(char *str, char *charset)
 	return (0);
 }
 
-static int		ft_word_len(char *str, char *charset)
+static int	ft_word_len(char *str, char *charset)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (*str)
@@ -42,11 +42,11 @@ static int		ft_word_len(char *str, char *charset)
 	return (i);
 }
 
-static int		ft_word_count(char *str, char *charset)
+static int	ft_word_count(char *str, char *charset)
 {
-	int i;
-	int flag;
-	int count;
+	int	i;
+	int	flag;
+	int	count;
 
 	i = 0;
 	flag = 0;
@@ -65,10 +65,10 @@ static int		ft_word_count(char *str, char *charset)
 	return (count);
 }
 
-static char		**ft_create_tabs(char *str, char *charset, char **tab)
+static char	**ft_create_tabs(char *str, char *charset, char **tab)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = -1;
 	j = 0;
@@ -79,8 +79,8 @@ static char		**ft_create_tabs(char *str, char *charset, char **tab)
 			if (j == 0)
 			{
 				i++;
-				if (!(tab[i] = malloc(sizeof(char) *
-								((ft_word_len(str, charset) + 1)))))
+				tab[i] = malloc(sizeof(char) * (ft_word_len(str, charset) + 1));
+				if (!tab)
 					return (ft_free_tab(tab));
 			}
 			tab[i][j] = *str;
@@ -93,13 +93,14 @@ static char		**ft_create_tabs(char *str, char *charset, char **tab)
 	return (tab);
 }
 
-char		**ft_split_sep(char *str, char *charset)
+char	**ft_split_sep(char *str, char *charset)
 {
 	char	**tab;
 	int		count;
 
 	count = ft_word_count(str, charset);
-	if (!(tab = malloc(sizeof(char *) * (count + 1))))
+	tab = malloc(sizeof(char *) * (count + 1));
+	if (!tab)
 		return (NULL);
 	tab[count] = 0;
 	tab = ft_create_tabs(str, charset, tab);

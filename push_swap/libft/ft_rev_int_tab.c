@@ -6,14 +6,14 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 15:00:54 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/16 12:24:54 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/06/08 14:14:21 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 void	ft_rev_int_tab(int *tab, int size)
 {
-	int i;
-	int swap;
+	int	i;
+	int	swap;
 
 	i = 0;
 	while (i < size / 2)

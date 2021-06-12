@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/29 14:04:59 by erecuero          #+#    #+#             */
-/*   Updated: 2021/06/01 16:44:27 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/06/08 15:12:07 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ t_vars	*init_vars(void)
 	if (vars == 0)
 		return (NULL);
 	ft_bzero(vars, sizeof(t_vars));
-	vars->ops_list = (char *[12]) {"sa", "sb", "ss", "pa", "pb", "ra", "rb", "rr", "rra",
-						"rrb", "rrr", 0};
+	vars->ops_list = (char *[12]){"sa", "sb", "ss", "pa", "pb", "ra", "rb",
+		"rr", "rra", "rrb", "rrr", 0};
 	return (vars);
 }
 
@@ -46,5 +46,5 @@ t_stack	*add_new_stack(t_stack *first, int nb)
 			tmp = tmp->next;
 		tmp->next = stack;
 	}
-	return (stack);
+	return (first);
 }

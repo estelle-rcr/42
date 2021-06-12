@@ -6,13 +6,13 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 15:09:23 by erecuero          #+#    #+#             */
-/*   Updated: 2021/02/16 15:09:27 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/06/08 13:58:13 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 void	ft_swap(int *a, int *b)
 {
-	int swap;
+	int	swap;
 
 	swap = *a;
 	*a = *b;

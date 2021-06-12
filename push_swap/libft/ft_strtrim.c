@@ -6,13 +6,13 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 12:06:46 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/16 12:23:06 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/06/08 14:01:51 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char		*ft_strtrim(char const *s1, char const *set)
+char	*ft_strtrim(char const *s1, char const *set)
 {
 	char	*tab;
 	int		start;
@@ -31,7 +31,8 @@ char		*ft_strtrim(char const *s1, char const *set)
 	}
 	if (start > end)
 		end = start;
-	if (!(tab = malloc((end - start + 1) * sizeof(char))))
+	tab = malloc((end - start + 1) * sizeof(char));
+	if (!tab)
 		return (NULL);
 	ft_memcpy(tab, s1 + start, end - start);
 	tab[end - start] = '\0';

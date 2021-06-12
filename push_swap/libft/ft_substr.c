@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 12:06:00 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/16 12:24:07 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/06/08 14:01:13 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,16 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		return (NULL);
 	if (start >= ft_strlen(s))
 	{
-		if (!(sub = malloc(sizeof(char))))
+		sub = malloc(sizeof(char));
+		if (!sub)
 			return (NULL);
 		sub[0] = '\0';
 		return (sub);
 	}
 	while (start--)
 		s++;
-	if (!(sub = malloc((len + 1) * sizeof(char))))
+	sub = malloc((len + 1) * sizeof(char));
+	if (!sub)
 		return (NULL);
 	i = 0;
 	while (i < len)

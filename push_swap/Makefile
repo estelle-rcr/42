@@ -11,7 +11,7 @@ INCLUDES = includes
 
 CC = clang
 
-CFLAGS = -Wall -Werror -Wextra -g3 -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -g3
 
 RM = rm -rf
 
@@ -33,6 +33,6 @@ clean:
 fclean:	clean
 		${RM} ${NAME} ${LIBS}
 
-re: flcean all
+re: fclean all
 
 .PHONY:	all clean fclean re

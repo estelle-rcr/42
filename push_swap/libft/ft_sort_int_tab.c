@@ -6,15 +6,15 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 15:07:37 by erecuero          #+#    #+#             */
-/*   Updated: 2021/03/16 12:24:52 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/06/08 14:14:07 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 void	ft_sort_int_tab(int *tab, int size)
 {
-	int count;
-	int swap;
-	int i;
+	int	count;
+	int	swap;
+	int	i;
 
 	count = 1;
 	while (count < (size + 1))

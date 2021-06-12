@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 12:39:43 by erecuero          #+#    #+#             */
-/*   Updated: 2021/06/01 16:57:48 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/06/08 15:08:33 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	**ft_free_tab(char **tab)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (tab && tab[++i])
