@@ -1,32 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   sort.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/30 12:23:06 by erecuero          #+#    #+#             */
-/*   Updated: 2021/06/08 13:57:36 by erecuero         ###   ########.fr       */
+/*   Created: 2021/06/22 18:19:27 by erecuero          #+#    #+#             */
+/*   Updated: 2021/06/28 19:09:59 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
+#include "push_swap.h"
 
-# define GET_NEXT_LINE_H
-# include <unistd.h>
-# include <stdlib.h>
+void	sort_input(t_vars *vars)
+{
+/*	if (vars->nb_input < 5)
+		sort_few(vars);*/
+	final_output(vars);
+}
+/*
+void	sort_few(t_vars)
+{
 
-# ifndef BUFFER_SIZE
-
-#  define BUFFER_SIZE 31
-
-# endif
-
-char	*ft_strfind(const char *s, int c);
-char	*ft_joinstr(char *s1, char *s2);
-void	helper_gnl(char *buf, char **line, char *str);
-char	*trunc_str(char *str);
-char	*new_line(char *str);
-int		get_next_line(int fd, char **line);
-
-#endif
+}
+*/

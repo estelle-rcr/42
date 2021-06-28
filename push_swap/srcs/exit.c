@@ -12,12 +12,6 @@
 
 #include "push_swap.h"
 
-int	simple_exit(void)
-{
-	ft_putstr("Error\n");
-	return (0);
-}
-
 static void	free_stack(t_stack *stack)
 {
 	t_stack	*tmp;
@@ -84,6 +78,7 @@ int	exit_free(t_vars *vars)
 			free(vars->int_list);
 //		if (vars->ops_list)
 //			free(vars->ops_list);
+		free(vars);
 	}
 	exit(0);
 }

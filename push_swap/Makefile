@@ -3,7 +3,14 @@ NAME = push_swap
 SRCS =	main.c\
 		exit.c\
 		init.c\
-		parse_args.c\
+		parser.c\
+		sort.c\
+		ops_push.c\
+		ops_reverse.c\
+		ops_rotate.c\
+		ops_swap.c\
+		helpers.c\
+		print.c\
 
 OBJS =${addprefix srcs/,${SRCS:.c=.o}}
 

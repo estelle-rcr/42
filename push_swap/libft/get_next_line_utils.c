@@ -76,7 +76,7 @@ char	*ft_joinstr(char *s1, char *s2)
 	return (tab);
 }
 
-void	helper_gnl(char *buf, char *line, char *str)
+void	helper_gnl(char *buf, char **line, char *str)
 {
 	free(buf);
 	*line = new_line(str);

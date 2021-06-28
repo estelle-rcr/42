@@ -1,34 +1,54 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/20 12:28:09 by erecuero          #+#    #+#             */
-/*   Updated: 2021/06/03 18:59:36 by erecuero         ###   ########.fr       */
+/*   Created: 2021/06/28 19:06:57 by erecuero          #+#    #+#             */
+/*   Updated: 2021/06/28 19:14:36 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	main(int ac, char **av)
+int	count_stack_nb(t_stack *stack)
 {
-	t_vars	*vars;
+	t_stack	*tmp;
+	int		i;
 
-	if (ac < 2)
-		return (0);
-	else
+	i = 0;
+	if (stack)
 	{
-		vars = init_vars();
-		if (vars == NULL)
-			exit_free(vars);
-//		if (ac == 2)
-//			parse_list(vars, av);
-		else
-			parse_args(vars, av);
-		check_input(vars);
-		sort_input(vars);
-		exit_free(vars);
+		tmp = stack;
+		while (tmp->next)
+		{
+			i++;
+			tmp = tmp->next;
+		}
 	}
+	return (++i);
+}
+
+int	is_sorted(t_stack *stack)
+{
+	t_stack	*tmp;
+	t_stack	*cmp;
+
+	if (stack)
+	{
+		tmp = stack;
+		while (tmp->next)
+		{
+			cmp = tmp->next;
+			while (cmp)
+			{
+				if (tmp->nb > cmp->nb)
+					return (0);
+				cmp = cmp->next;
+			}
+			tmp = tmp->next;
+		}
+	}
+	return (1);
 }

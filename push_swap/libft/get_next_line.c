@@ -77,7 +77,7 @@ char	*trunc_str(char *str)
 
 static char	*malloc_buf(char *buf, int buffer_size)
 {
-	buf = malloc(sizeof(char) * BUFFER_SIZE + 1);
+	buf = malloc(sizeof(char) * buffer_size + 1);
 	if (!buf)
 		return (NULL);
 	return (buf);
@@ -91,8 +91,9 @@ int	get_next_line(int fd, char **line)
 
 	if (fd < 0 || !line || BUFFER_SIZE <= 0)
 		return (-1);
+	buf = 0;
 	if (!malloc_buf(buf, BUFFER_SIZE))
-		return (NULL);
+		return (-1);
 	ret = 1;
 	while (!ft_strfind(str, '\n') && (ret != 0))
 	{

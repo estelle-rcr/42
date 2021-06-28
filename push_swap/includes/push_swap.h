@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 13:00:59 by erecuero          #+#    #+#             */
-/*   Updated: 2021/06/08 15:14:46 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/06/28 19:09:38 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct s_stack
 
 typedef struct s_ops
 {
-	int				op;
+	int				nb;
 	struct s_ops	*next;
 }				t_ops;
 
@@ -40,16 +40,57 @@ typedef struct s_vars
 	int			len_b;
 }				t_vars;
 
+typedef enum	e_errors
+{
+	SA,
+	SB,
+	SS,
+	PA,
+	PB,
+	RA,
+	RB,
+	RR,
+	RRA,
+	RRB,
+	RRR
+}				t_errors;
+
 int				main(int ac, char **av);
-int				parse_args(t_vars *vars, char **av);
-int				parse_list(t_vars *vars, char **av);
+
 t_vars			*init_vars(void);
-t_stack			*add_new_stack(t_stack *first, int nb);
-int				ft_atoi_extended(const char *str, t_vars *vars);
+t_stack			*add_new_item(t_stack *first, int nb);
+t_ops			*add_new_op(t_ops *first, int nb);
+
+int				ft_atoi_extended(const char *str, t_vars *vars, int *j);
 int				parse_args(t_vars *vars, char **av);
-int				parse_list(t_vars *vars, char **av);
 int				check_input(t_vars *vars);
+
+int				count_stack_nb(t_stack *stack);
+int				is_sorted(t_stack *stack);
+
 int				exit_free_error(t_vars *vars);
 int				exit_free(t_vars *vars);
+
+void			sort_input(t_vars *vars);
+
+int				f_sa(t_vars *vars);
+int				f_sb(t_vars *vars);
+int 			f_ss(t_vars *vars);
+
+int				f_pa(t_vars *vars);
+int				f_pb(t_vars *vars);
+
+int				f_ra(t_vars *vars);
+int				f_rb(t_vars *vars);
+int				f_rr(t_vars *vars);
+
+int				f_rra(t_vars *vars);
+int				f_rrb(t_vars *vars);
+int				f_rrr(t_vars *vars);
+
+void			print_stacks(t_vars *vars);
+void			print_ops(t_vars *vars);
+void 			final_output(t_vars *vars);
+
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/29 14:04:59 by erecuero          #+#    #+#             */
-/*   Updated: 2021/06/08 15:12:07 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/06/28 18:57:11 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,10 @@ t_vars	*init_vars(void)
 	if (vars == 0)
 		return (NULL);
 	ft_bzero(vars, sizeof(t_vars));
-	vars->ops_list = (char *[12]){"sa", "sb", "ss", "pa", "pb", "ra", "rb",
-		"rr", "rra", "rrb", "rrr", 0};
 	return (vars);
 }
 
-t_stack	*add_new_stack(t_stack *first, int nb)
+t_stack	*add_new_item(t_stack *first, int nb)
 {
 	t_stack	*stack;
 	t_stack	*tmp;
@@ -45,6 +43,29 @@ t_stack	*add_new_stack(t_stack *first, int nb)
 		while (tmp->next)
 			tmp = tmp->next;
 		tmp->next = stack;
+	}
+	return (first);
+}
+
+t_ops	*add_new_op(t_ops *first, int nb)
+{
+	t_ops	*op;
+	t_ops	*tmp;
+
+	tmp = first;
+	op = NULL;
+	op = (t_ops *)malloc(sizeof(t_ops));
+	if (op == NULL)
+		return (NULL);
+	op->nb = nb;
+	op->next = NULL;
+	if (!first)
+		first = op;
+	else
+	{
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = op;
 	}
 	return (first);
 }
