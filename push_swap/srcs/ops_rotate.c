@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 15:22:20 by erecuero          #+#    #+#             */
-/*   Updated: 2021/06/28 16:38:11 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/06/28 19:33:46 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	f_ra(t_vars *vars)
 	}
 	tmp_a->next = first;
 	first->next = 0;
-	ft_putstr("ra\n");
 	return (1);
 }
 
@@ -48,7 +47,6 @@ int	f_rb(t_vars *vars)
 	}
 	tmp_b->next = first;
 	first->next = 0;
-	ft_putstr("rb\n");
 	return (1);
 }
 
@@ -61,7 +59,5 @@ int	f_rr(t_vars *vars)
 		ret = 1;
 	if (f_rb(vars))
 		ret = 1;
-	if (ret)
-		ft_putstr("rr\n");
 	return (ret);
 }

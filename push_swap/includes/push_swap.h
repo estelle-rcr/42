@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 13:00:59 by erecuero          #+#    #+#             */
-/*   Updated: 2021/06/28 19:09:38 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/06/30 11:45:59 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,14 @@ typedef struct s_vars
 	t_stack		*start_a;
 	t_stack		*start_b;
 	t_ops		*ops;
-	int			*int_list;			// not useful?
 	char		**ops_list;
 	int			nb_input;
 	int			len_a;
 	int			len_b;
+	int			max;
+	int			pos_max;
+	int			min;
+	int			pos_min;
 }				t_vars;
 
 typedef enum	e_errors
@@ -67,11 +70,19 @@ int				check_input(t_vars *vars);
 
 int				count_stack_nb(t_stack *stack);
 int				is_sorted(t_stack *stack);
+void			find_max(t_vars *vars);
+void			find_min(t_vars *vars);
+void			do_op(t_vars *vars, int(*f)(t_vars*), int op);
 
 int				exit_free_error(t_vars *vars);
 int				exit_free(t_vars *vars);
 
 void			sort_input(t_vars *vars);
+void			sort_few(t_vars *vars);
+void			sort_three(t_vars *vars);
+void			sort_many(t_vars *vars);
+
+void			sort_some(t_vars *vars);
 
 int				f_sa(t_vars *vars);
 int				f_sb(t_vars *vars);
@@ -90,7 +101,7 @@ int				f_rrr(t_vars *vars);
 
 void			print_stacks(t_vars *vars);
 void			print_ops(t_vars *vars);
-void 			final_output(t_vars *vars);
+
 
 
 #endif

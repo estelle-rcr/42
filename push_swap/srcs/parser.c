@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 13:47:17 by erecuero          #+#    #+#             */
-/*   Updated: 2021/06/28 19:08:22 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/06/28 19:35:42 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ int	check_input(t_vars *vars)
 
 	if (vars->nb_input <= 1)
 		return (exit_free(vars));
+	if (is_sorted(vars->start_a))
+		return (exit_free(vars));
 	if (vars->start_a)
 	{
 		tmp = vars->start_a;
@@ -90,7 +92,5 @@ int	check_input(t_vars *vars)
 		}
 		return (1);
 	}
-	if (is_sorted(vars->start_a))
-		return (exit_free(vars));
 	return (exit_free_error(vars));
 }

@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 19:02:12 by erecuero          #+#    #+#             */
-/*   Updated: 2021/06/28 19:21:54 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/06/28 19:40:03 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,9 @@ void	print_stacks(t_vars *vars)
 void	print_ops(t_vars *vars)
 {
 	t_ops	*tmp;
+	int i;
 
+	i = 0;
 	if (vars->ops)
 	{
 		tmp = vars->ops;
@@ -59,35 +61,17 @@ void	print_ops(t_vars *vars)
 		{
 			ft_putstr(vars->ops_list[tmp->nb]);
 			ft_putstr("\n");
+			i++;
 			tmp = tmp->next;
 		}
 		ft_putstr(vars->ops_list[tmp->nb]);
+		ft_putstr("\n");
 	}
-}
-
-void final_output(t_vars *vars)
-{
-	/*	ft_putstr("\n--------------------------------\n");
-	ft_putstr("to be sorted");
-	print_stacks(vars);
-	ft_putstr("\n--------------------------------\n");*/
-//	f_sa(vars);
-//	vars->ops = add_new_op(vars->ops, SA);
-//	print_stacks(vars);
-	ft_putstr("\n--------------------------------\n");
-	ft_putstr("results:\n");
-	print_ops(vars);
-	ft_putstr("\n--------------------------------\n");
-/*	f_pb(vars);
+		ft_putstr("\n--------------------------------\n");
+		ft_putstr("results:\n");
+		ft_putnbr(i);
+		ft_putstr(" ops\n");
 		print_stacks(vars);
-	f_pb(vars);
-		print_stacks(vars);
-	f_sa(vars);
-		print_stacks(vars);
-	f_pa(vars);
-		print_stacks(vars);
-	f_pa(vars);
-		print_stacks(vars);
-	f_pa(vars);
-		print_stacks(vars);*/
+		ft_putstr("\n--------------------------------\n");
+	exit_free(vars);
 }

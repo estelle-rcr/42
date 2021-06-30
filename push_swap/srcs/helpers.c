@@ -52,3 +52,61 @@ int	is_sorted(t_stack *stack)
 	}
 	return (1);
 }
+
+void	find_max(t_vars *vars)
+{
+	t_stack	*tmp;
+	int		pos;
+
+	tmp = vars->start_a;
+	pos = 0;
+	vars->max = vars->start_a->nb;
+	vars->pos_max = vars->len_a;
+	while (tmp->next)
+	{
+		if (tmp->nb > vars->max)
+		{
+			vars->max = tmp->nb;
+			vars->pos_max = vars->len_a - pos; 
+		}
+		pos++;
+		tmp = tmp->next;
+	}
+	if (tmp->nb > vars->max)
+	{
+		vars->max = tmp->nb;
+		vars->pos_max = vars->len_a - pos; 
+	}
+}
+
+void	find_min(t_vars *vars)
+{
+	t_stack	*tmp;
+	int		pos;
+
+	tmp = vars->start_a;
+	pos = 0;
+	vars->min = vars->start_a->nb;
+	vars->pos_min = vars->len_a;
+	while (tmp->next)
+	{
+		if (tmp->nb < vars->min)
+		{
+			vars->min = tmp->nb;
+			vars->pos_min = vars->len_a - pos; 
+		}
+		pos++;
+		tmp = tmp->next;
+	}
+	if (tmp->nb < vars->min)
+	{
+		vars->min = tmp->nb;
+		vars->pos_min = vars->len_a - pos; 
+	}
+}
+
+void	do_op(t_vars *vars, int(*f)(t_vars *), int op)
+{
+	if ((*f)(vars))
+		vars->ops = add_new_op(vars->ops, op);
+}

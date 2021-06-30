@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/29 14:13:53 by erecuero          #+#    #+#             */
-/*   Updated: 2021/06/08 15:10:51 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/06/28 19:37:09 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,6 @@ int	exit_free_error(t_vars *vars)
 			free_stack(vars->start_b);
 		if (vars->ops)
 			free_ops(vars->ops);
-		if (vars->int_list)
-			free(vars->int_list);
-//		if (vars->ops_list)
-//			free(vars->ops_list);
 		free(vars);
 		ft_putstr("Error\n");
 	}
@@ -74,10 +70,6 @@ int	exit_free(t_vars *vars)
 			free_stack(vars->start_b);
 		if (vars->ops)
 			free_ops(vars->ops);
-		if (vars->int_list)
-			free(vars->int_list);
-//		if (vars->ops_list)
-//			free(vars->ops_list);
 		free(vars);
 	}
 	exit(0);

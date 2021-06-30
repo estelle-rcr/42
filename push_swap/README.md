@@ -17,3 +17,10 @@ Build the programme using the makefile:
    Check the program with the official checker from 42 (Linux distribution or Mac):
   `ARG="0 2 7 -1 1 6"; ./push_swap $ARG | ./checkers/checker_linux $ARG`
     `ARG="0 2 7 -1 100 6"; ./push_swap $ARG | ./checkers/checker_MAC $ARG`
+
+  Generate random numbers to test the algo on a list of 100 and 500 numbers:
+  For 100 numbers: `./push_swap $(shuf -i 0-10000 -n 100)`
+  For 500 numbers: `./push_swap $(shuf -i 0-1000000 -n 500)`
+
+  Or: `shuf -i 0-1000 -n 100 > rand100.txt`
+  Then: `./push_swap "$(< rand.txt)" | ./checkers/checker_linux "$(< rand.txt)"`
