@@ -1,7 +1,7 @@
 # Push Swap
 
 ### The project
-We create a program that sort efficiently a list of numbers (positive and negative) with a given set of authorized operations (such as invert two numbers, etc.). We must sort the numbers respecting a maximum number of operations according to the list given in input (max 12 operations for 5 numbers, less than 1500 for 100 numbers and less than 11500 for 500 numbers). For bigger list of numbers, the quick sort algorithm is used for better sorting performances.
+We create a program that sort efficiently a list of numbers (positive and negative) with a given set of authorized operations (such as invert two numbers, etc.). We must sort the numbers respecting a maximum number of operations according to the list given in input (max 12 operations for 5 numbers, less than 1500 for 100 numbers and less than 11500 for 500 numbers). For bigger list of numbers, the algorithm is improved by chunking the list of numbers for better performances.
 
 ### How to use it
 Build the programme using the makefile:
