@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 13:00:59 by erecuero          #+#    #+#             */
-/*   Updated: 2021/06/30 11:45:59 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/07/08 20:20:01 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,13 @@ typedef struct s_vars
 	int			pos_max;
 	int			min;
 	int			pos_min;
+	int			unsorted_value;
+	int			unsorted_pos;
+	int			block_size;
+	int			*input_list;
 }				t_vars;
 
-typedef enum	e_errors
+typedef enum	e_id_ops
 {
 	SA,
 	SB,
@@ -56,7 +60,7 @@ typedef enum	e_errors
 	RRA,
 	RRB,
 	RRR
-}				t_errors;
+}				t_id_ops;
 
 int				main(int ac, char **av);
 
@@ -69,20 +73,16 @@ int				parse_args(t_vars *vars, char **av);
 int				check_input(t_vars *vars);
 
 int				count_stack_nb(t_stack *stack);
-int				is_sorted(t_stack *stack);
-void			find_max(t_vars *vars);
-void			find_min(t_vars *vars);
+void			attribute_pos_value(t_vars *vars, int i, int nb, int next_nb);
+int				is_sorted(t_vars *vars, t_stack *stack);
+int				is_rev_sorted(t_stack *stack);
+int				get_last_nb(t_stack *stack);
+void			find_max(t_vars *vars, t_stack *stack);
+void			find_min(t_vars *vars, t_stack *stack);
 void			do_op(t_vars *vars, int(*f)(t_vars*), int op);
 
 int				exit_free_error(t_vars *vars);
 int				exit_free(t_vars *vars);
-
-void			sort_input(t_vars *vars);
-void			sort_few(t_vars *vars);
-void			sort_three(t_vars *vars);
-void			sort_many(t_vars *vars);
-
-void			sort_some(t_vars *vars);
 
 int				f_sa(t_vars *vars);
 int				f_sb(t_vars *vars);
@@ -102,6 +102,15 @@ int				f_rrr(t_vars *vars);
 void			print_stacks(t_vars *vars);
 void			print_ops(t_vars *vars);
 
+void			sort_input(t_vars *vars);
+void			sort_few(t_vars *vars);
+void			sort_many(t_vars *vars);
+void			sort_some(t_vars *vars);
 
+void			sort_by_block(t_vars *vars, int end);
+void			sort_last_three(t_vars *vars, int end);
+void			merge_blocks(t_vars *vars, int i);
+void			final_rotation(t_vars *vars);
+void			correct_last_values(t_vars	*vars);
 
 #endif

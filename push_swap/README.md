@@ -5,10 +5,9 @@ We create a program that sort efficiently a list of numbers (positive and negati
 
 ### How to use it
 Build the programme using the makefile:
-  `make`
+  `make` or `make re`
 
-  Compile the bonus version:
-  `make bonus`
+  To clean the compilation files: `make clean` or `make fclean`
 
   Use the program in either way:
   `./push_swap 0 2 7 -1 100 6`
@@ -22,5 +21,7 @@ Build the programme using the makefile:
   For 100 numbers: `./push_swap $(shuf -i 0-10000 -n 100)`
   For 500 numbers: `./push_swap $(shuf -i 0-1000000 -n 500)`
 
-  Or: `shuf -i 0-1000 -n 100 > rand100.txt`
-  Then: `./push_swap "$(< rand.txt)" | ./checkers/checker_linux "$(< rand.txt)"`
+  Or: `shuf -i 0-1000 -n 100 > rand100.txt && ./push_swap $(cat rand100.txt) | ./checkers/checker_Mac $(cat rand100.txt)`
+
+  You can also use the bash script for valgrind test as such:
+  `ARG="0 2 7 -1 100 6"; ./leaks.sh push_swap $ARG`

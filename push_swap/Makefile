@@ -4,13 +4,15 @@ SRCS =	main.c\
 		exit.c\
 		init.c\
 		parser.c\
-		sort.c\
 		ops_push.c\
 		ops_reverse.c\
 		ops_rotate.c\
 		ops_swap.c\
 		helpers.c\
+		helpers_stacks.c\
 		print.c\
+		sort.c\
+		sort_many.c\
 
 OBJS =${addprefix srcs/,${SRCS:.c=.o}}
 
