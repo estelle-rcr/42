@@ -10,7 +10,6 @@ SRCS =	main.c\
 		ops_swap.c\
 		helpers.c\
 		helpers_stacks.c\
-		print.c\
 		sort.c\
 		sort_many.c\
 

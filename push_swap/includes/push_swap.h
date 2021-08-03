@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 13:00:59 by erecuero          #+#    #+#             */
-/*   Updated: 2021/07/08 20:20:01 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/07/12 16:40:16 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define PUSH_SWAP_H
 
 # include "../libft/includes/libft.h"
-# include <stdio.h>							// printf
+# include <stdio.h>
 
 typedef struct s_stack
 {
@@ -47,7 +47,7 @@ typedef struct s_vars
 	int			*input_list;
 }				t_vars;
 
-typedef enum	e_id_ops
+typedef enum e_id_ops
 {
 	SA,
 	SB,
@@ -73,20 +73,22 @@ int				parse_args(t_vars *vars, char **av);
 int				check_input(t_vars *vars);
 
 int				count_stack_nb(t_stack *stack);
-void			attribute_pos_value(t_vars *vars, int i, int nb, int next_nb);
 int				is_sorted(t_vars *vars, t_stack *stack);
+void			attribute_pos_value(t_vars *vars, int i, int nb, int next_nb);
 int				is_rev_sorted(t_stack *stack);
-int				get_last_nb(t_stack *stack);
+
 void			find_max(t_vars *vars, t_stack *stack);
 void			find_min(t_vars *vars, t_stack *stack);
+int				get_last_nb(t_stack *stack);
 void			do_op(t_vars *vars, int(*f)(t_vars*), int op);
+void			print_ops(t_vars *vars);
 
 int				exit_free_error(t_vars *vars);
 int				exit_free(t_vars *vars);
 
 int				f_sa(t_vars *vars);
 int				f_sb(t_vars *vars);
-int 			f_ss(t_vars *vars);
+int				f_ss(t_vars *vars);
 
 int				f_pa(t_vars *vars);
 int				f_pb(t_vars *vars);
@@ -99,13 +101,10 @@ int				f_rra(t_vars *vars);
 int				f_rrb(t_vars *vars);
 int				f_rrr(t_vars *vars);
 
-void			print_stacks(t_vars *vars);
-void			print_ops(t_vars *vars);
-
 void			sort_input(t_vars *vars);
 void			sort_few(t_vars *vars);
-void			sort_many(t_vars *vars);
 void			sort_some(t_vars *vars);
+void			sort_many(t_vars *vars);
 
 void			sort_by_block(t_vars *vars, int end);
 void			sort_last_three(t_vars *vars, int end);

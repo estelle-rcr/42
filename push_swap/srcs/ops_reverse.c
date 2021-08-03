@@ -15,8 +15,8 @@
 int	f_rra(t_vars *vars)
 {
 	t_stack	*tmp_a;
-	t_stack *last;
-	t_stack *start;
+	t_stack	*last;
+	t_stack	*start;
 
 	if (!vars->start_a || !vars->start_a->next)
 		return (0);
@@ -34,8 +34,8 @@ int	f_rra(t_vars *vars)
 int	f_rrb(t_vars *vars)
 {
 	t_stack	*tmp_b;
-	t_stack *last;
-	t_stack *start;
+	t_stack	*last;
+	t_stack	*start;
 
 	if (!vars->start_b || !vars->start_b->next)
 		return (0);

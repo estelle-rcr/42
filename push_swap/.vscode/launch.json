@@ -1,25 +1,33 @@
 {
+	// Use IntelliSense to learn about possible attributes.
+	// Hover to view descriptions of existing attributes.
+	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "(lldb) Joindre",
-			"type": "cppdbg",
-			"request": "attach",
-			"program": "/Users/estellerecuero/code/42/push_swap/push_swap",
-			"processId": "${command:pickProcess}",
-			"MIMode": "lldb"
-		},
-		{
-			"name": "(lldb) Lancer",
+			"name": "(lldb) Launch",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "/Users/estellerecuero/code/42/push_swap/push_swap",
-			"args": ["621090", "45820"],
+			"program": "/Users/erecuero/42-course/push_swap/push_swap",
+			"args": ["12045", "8", "1", "4", "6", "60", "12", "80", "7", "140", "25789", "44", "64", "604", "444", "62", "601",  "4440", "628", "6014"],
 			"stopAtEntry": false,
-			"cwd": "/Users/estellerecuero/code/42/push_swap",
+			"cwd": "/Users/erecuero/42-course/push_swap/",
 			"environment": [],
 			"externalConsole": false,
 			"MIMode": "lldb"
 		},
-    ],
+		{
+			"name": "clang - Build and debug active file",
+			"type": "cppdbg",
+			"request": "launch",
+			"program": "/Users/erecuero/42-course/push_swap/push_swap",
+			"args": [],
+			"stopAtEntry": false,
+			"cwd": "/Users/erecuero/42-course/push_swap/",
+			"environment": [],
+			"externalConsole": false,
+			"MIMode": "lldb",
+			"preLaunchTask": "C/C++: clang build active file"
+		}
+	]
 }

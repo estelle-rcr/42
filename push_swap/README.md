@@ -13,7 +13,7 @@ Build the programme using the makefile:
   `./push_swap 0 2 7 -1 100 6`
   `ARG="0 2 7 -1 100 6"; ./push_swap $ARG`
 
-   Check the program with the official checker from 42 (Linux distribution or Mac):
+   Check the program with the official checkers from 42 (Linux distribution or Mac):
   `ARG="0 2 7 -1 1 6"; ./push_swap $ARG | ./checkers/checker_linux $ARG`
     `ARG="0 2 7 -1 100 6"; ./push_swap $ARG | ./checkers/checker_MAC $ARG`
 
@@ -21,7 +21,9 @@ Build the programme using the makefile:
   For 100 numbers: `./push_swap $(shuf -i 0-10000 -n 100)`
   For 500 numbers: `./push_swap $(shuf -i 0-1000000 -n 500)`
 
-  Or: `shuf -i 0-1000 -n 100 > rand100.txt && ./push_swap $(cat rand100.txt) | ./checkers/checker_Mac $(cat rand100.txt)`
+  Or: `shuf -i 0-1000 -n 100 > test_files/rand100 && ./push_swap $(cat test_files/rand100) | ./checkers/checker_Mac $(cat test_files/rand100)`
+
+  Or (for 42's Macs): `ARG=`ruby -e "puts (-500..500).to_a.shuffle.join(' ')"`; ./push_swap $ARG | ./checkers/checker_Mac $ARG`
 
   You can also use the bash script for valgrind test as such:
   `ARG="0 2 7 -1 100 6"; ./leaks.sh push_swap $ARG`

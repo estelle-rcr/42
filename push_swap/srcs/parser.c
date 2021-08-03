@@ -35,7 +35,6 @@ int	ft_atoi_extended(const char *str, t_vars *vars, int *j)
 	if (nb * (long)sign > 2147483647 || nb * (long)sign < -2147483648)
 		return (exit_free_error(vars));
 	if ((str[*j] && !(str[*j] >= 9 && str[*j] <= 13) && str[*j] != 32))
-									// behavior to be checked against checker on "" an " " with & without other nbs
 		return (exit_free_error(vars));
 	return ((int)nb * sign);
 }
@@ -64,8 +63,10 @@ int	parse_args(t_vars *vars, char **av)
 	return (1);
 }
 
-// function check_input checks for number list with 1 arg (exit normal)
-// and for duplicates (exit error)
+/*
+// function check_input checks implicitly for number list with 1 number 
+// as input (exit normal) and explicitly for duplicates (exit error)
+*/
 
 int	check_input(t_vars *vars)
 {

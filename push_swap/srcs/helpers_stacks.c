@@ -47,7 +47,6 @@ int	is_sorted(t_vars *vars, t_stack *stack)
 			if (tmp->nb > cmp->nb)
 			{
 				attribute_pos_value(vars, i, tmp->nb, tmp->next->nb);
-
 				return (0);
 			}
 			tmp = tmp->next;

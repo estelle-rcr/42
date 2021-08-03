@@ -18,12 +18,9 @@ void	sort_by_block(t_vars *vars, int end)
 
 	if (end <= 1)
 		return ;
-	i = 0;
-	while (i < end)
-	{
+	i = -1;
+	while (++i < end)
 		do_op(vars, &f_pb, PB);
-		i++;
-	}
 	find_max(vars, vars->start_b);
 	vars->len_b = count_stack_nb(vars->start_b);
 	while (vars->len_b > 3 && !is_rev_sorted(vars->start_b))
@@ -88,11 +85,8 @@ void	merge_blocks(t_vars *vars, int i)
 		else if (vars->start_b->nb < vars->min && vars->start_a->nb
 			== vars->min)
 			do_op(vars, &f_pa, PA);
-		else if (vars->start_b->nb > vars->max || vars->start_b->nb
-			< vars->min)
-			do_op(vars, &f_rra, RRA);
-		else if (vars->start_b->nb > get_last_nb(vars->start_a) &&
-			vars->start_b->nb < vars->start_a->nb)
+		else if (vars->start_b->nb > get_last_nb(vars->start_a)
+			&& vars->start_b->nb < vars->start_a->nb)
 			do_op(vars, &f_pa, PA);
 		else
 			do_op(vars, &f_rra, RRA);
@@ -121,7 +115,8 @@ void	correct_last_values(t_vars	*vars)
 			do_op(vars, &f_rra, RRA);
 	}
 	do_op(vars, &f_pb, PB);
-	while (!(get_last_nb(vars->start_a) < vars->unsorted_value && vars->start_a->nb > vars->unsorted_value))
+	while (!(get_last_nb(vars->start_a) < vars->unsorted_value
+			&& vars->start_a->nb > vars->unsorted_value))
 	{
 		if (vars->unsorted_pos <= vars->nb_input / 2)
 			do_op(vars, &f_ra, RA);
