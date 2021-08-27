@@ -9,10 +9,19 @@ Build the programme using the makefile:
 
   To clean the compilation files: `make clean` or `make fclean`
 
-  Use the program in either way:
+  Use the program:
   `./pipex infile "cmd1" "cmd2" outfile`
 
-   Check the program's leaks with:  valgrind --trace-children=yes --leak-check=full --show-leak-kinds=all ./pipex infile "grep a1" "wc -w" outfile
+   Check the program's leaks with: `valgrind --trace-children=yes --leak-check=full --show-leak-kinds=all ./pipex infile "grep a1" "wc -w" outfile`
+
+### Bonus
+Handle multiple pipes together such as: `< file1 cmd1 | cmd2 | cmd3 ... | cmdn > file2``
+
+ Build the programme using the makefile:
+  `make bonus`
+
+  Use the program:
+  `./pipex infile "cmd1" "cmd2" "cmd3" [...] "cmd-n" outfile`
 
 ### Resources on the topic
 Understanding the pipe functionning in C and parent/child fork principle:

@@ -2,10 +2,11 @@ NAME = pipex
 
 SRCS =	main.c\
 		ft_pipex.c\
-		ft_join_path.c\
-		errors.c\
+		utils.c\
 
 OBJS =${addprefix srcs/,${SRCS:.c=.o}}
+
+BONUS_OBJS =${addprefix bonus/,${SRCS:.c=.o}}
 
 INCLUDES = includes
 
@@ -15,7 +16,7 @@ CFLAGS = -Wall -Werror -Wextra -g3
 
 RM = rm -rf
 
-LIBS = libft/libft.a
+LIB = libft/libft.a
 
 .c.o:
 		${CC} ${CFLAGS} -I${INCLUDES} -c $< -o ${<:.c=.o}
@@ -23,16 +24,20 @@ LIBS = libft/libft.a
 all:	${NAME}
 
 $(NAME):	${OBJS}
-		make -C libft
-		${CC} ${CFLAGS} -L libft -o ${NAME} ${OBJS} ${LIBS}
+			make -C libft
+			${CC} ${CFLAGS} -L libft -o ${NAME} ${OBJS} ${LIB}
+
+bonus:		${BONUS_OBJS}
+			make -C libft
+			${CC} ${CFLAGS} -L libft -o ${NAME}_bonus ${BONUS_OBJS} ${LIB}
 
 clean:
-		${RM} ${OBJS}
-		make clean -C libft
+			${RM} ${OBJS} ${BONUS_OBJS}
+			make clean -C libft
 
-fclean:	clean
-		${RM} ${NAME} ${LIBS}
+fclean:		clean
+			${RM} ${NAME} ${NAME}_bonus ${LIB}
 
-re: fclean all
+re: 		fclean all
 
-.PHONY:	all clean fclean re
+.PHONY:		all clean fclean re

@@ -1,0 +1,25 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "(lldb) Joindre",
+			"type": "cppdbg",
+			"request": "attach",
+			"program": "/Users/estellerecuero/code/42/pipex/pipex_bonus",
+			"processId": "${command:pickProcess}",
+			"MIMode": "lldb"
+		},
+		{
+			"name": "(lldb) Lancer",
+			"type": "cppdbg",
+			"request": "launch",
+			"program": "/Users/estellerecuero/code/42/pipex/pipex_bonus",
+			"args": ["infile", "ls -l", "grep all", "wc -l", "outfile"],
+			"stopAtEntry": false,
+			"cwd": "/Users/estellerecuero/code/42/pipex",
+			"environment": [],
+			"externalConsole": false,
+			"MIMode": "lldb"
+		},
+    ],
+}

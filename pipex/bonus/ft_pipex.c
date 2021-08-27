@@ -6,11 +6,11 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 12:57:01 by erecuero          #+#    #+#             */
-/*   Updated: 2021/08/23 23:29:11 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/08/27 16:36:46 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
 char	**get_paths_envp(char **envp)
 {
@@ -58,52 +58,47 @@ void	exec_child_proc(char *cmd_av, char **envp)
 	exit_error(ERR_CMD, cmd_av);
 }
 
-int	handle_child_one(int infile, char **av, char **envp, int *end)
+void	handle_children(char *av, char **envp)
 {
-	if (dup2(infile, STDIN_FILENO) < 0)
-		exit_error(ERR_DUP, NULL);
-	if (dup2(end[1], STDOUT_FILENO) < 0)
-		exit_error(ERR_DUP, NULL);
-	close(end[0]);
-	close(infile);
-	exec_child_proc(av[2], envp);
-	exit(EXIT_FAILURE);
+	t_pid	parent;
+	int		pipe_end[2];
+	int		status;
+
+	status = 0;
+	if (pipe(pipe_end) == -1)
+		exit_error(ERR_PIPE, NULL);
+	parent = fork();
+	if (parent < 0)
+		exit_error(ERR_FORK, NULL);
+	if (!parent)
+	{
+		close(pipe_end[0]);
+		if (dup2(pipe_end[1], STDOUT_FILENO) < 0)
+			exit_error(ERR_DUP, NULL);
+		exec_child_proc(av, envp);
+		exit(EXIT_FAILURE);
+	}
+	else
+	{
+		waitpid(parent, &status, 0);
+		close(pipe_end[1]);
+		if (dup2(pipe_end[0], STDIN_FILENO) < 0)
+			exit_error(ERR_DUP, NULL);
+	}
 }
 
-int	handle_child_two(int outfile, char **av, char **envp, int *end)
+void	ft_pipex(int infile, int outfile, int ac, char **av, char **envp)
 {
-	if (dup2(end[0], STDIN_FILENO) < 0)
+	int	i;
+
+	if (dup2(infile, STDIN_FILENO) < 0)
 		exit_error(ERR_DUP, NULL);
 	if (dup2(outfile, STDOUT_FILENO) < 0)
 		exit_error(ERR_DUP, NULL);
-	close(end[1]);
-	close(outfile);
-	exec_child_proc(av[3], envp);
+	i = 2;
+	handle_children(av[i], envp);
+	while (++i < ac - 2)
+		handle_children(av[i], envp);
+	exec_child_proc(av[ac - 2], envp);
 	exit(EXIT_FAILURE);
-}
-
-void	ft_pipex(int infile, int outfile, char **av, char **envp)
-{
-	int		end[2];
-	int		status;
-	t_pid	child1;
-	t_pid	child2;
-
-	status = 0;
-	if (pipe(end) == -1)
-		exit_error(ERR_PIPE, NULL);
-	child1 = fork();
-	if (child1 < 0)
-		exit_error(ERR_FORK, NULL);
-	if (child1 == 0)
-		handle_child_one(infile, av, envp, end);
-	child2 = fork();
-	if (child2 < 0)
-		exit_error(ERR_FORK, NULL);
-	if (child2 == 0)
-		handle_child_two(outfile, av, envp, end);
-	close(end[0]);
-	close(end[1]);
-	waitpid(child1, &status, 0);
-	waitpid(child2, &status, 0);
 }
