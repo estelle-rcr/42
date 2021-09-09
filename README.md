@@ -26,6 +26,9 @@ The aim of this project is to discover sorting algorithms, basic order and compl
 We use a set of mandatory operations and two stacks to sort a list of numbers given as an input of the program. We must be efficient enough to stay under the recommended number of operations according to the input list given. We are finally benchmarked on a list of 100 and 500 random numbers.
 
 ### 7th project: pipex
-This project is an introduction to the UNIX world and to the next project Minishell. We have to rebuild the pipe function of the terminal using aprogram such as: `./pipex infile "cmd1" "cmd2" outfile`. It should be equal to the terminal use of : `< infile cmd1 | cmd2 > file2` where cmd are any shell command with its parameters (ex: `wc -l` or `ls -lA`). In the bonus part, I handle multiple commands through pipes in order to be able to reproduce the shell syntax: `< infile cmd1 | cmd2 | ... | cmd_n > file2`
+This project is an introduction to the UNIX world and to the next project Minishell. We have to rebuild the pipe function of the terminal so that our program should be equal to the terminal use of : `< infile cmd1 | cmd2 > outfile`. In the bonus part, I handle multiple commands and pipes.
+
+### 8th project: philosophers
+On going.
 
 That's all folks!
