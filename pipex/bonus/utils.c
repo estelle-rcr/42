@@ -75,7 +75,6 @@ char	*ft_join_path(char const *s1, char c, char const *s2)
 	return (tab);
 }
 
-
 char	**ft_free_dbl_tabs(char **tab1, char**tab2)
 {
 	int	i;
@@ -91,7 +90,8 @@ char	**ft_free_dbl_tabs(char **tab1, char**tab2)
 	return (0);
 }
 
-void	ft_free_all_exit(char **cmd_args, char **cmd_paths, char *cmd, int code_error)
+void	ft_free_all_exit(char **cmd_args, char **cmd_paths, char *cmd,
+							int code_error)
 {
 	ft_free_dbl_tabs(cmd_args, cmd_paths);
 	free(cmd);

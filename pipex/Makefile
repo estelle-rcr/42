@@ -29,14 +29,15 @@ $(NAME):	${OBJS}
 
 bonus:		${BONUS_OBJS}
 			make -C libft
-			${CC} ${CFLAGS} -L libft -o ${NAME}_bonus ${BONUS_OBJS} ${LIB}
+			rm ${NAME}
+			${CC} ${CFLAGS} -L libft -o ${NAME} ${BONUS_OBJS} ${LIB}
 
 clean:
 			${RM} ${OBJS} ${BONUS_OBJS}
 			make clean -C libft
 
 fclean:		clean
-			${RM} ${NAME} ${NAME}_bonus ${LIB}
+			${RM} ${NAME} ${LIB}
 
 re: 		fclean all
 

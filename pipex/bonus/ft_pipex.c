@@ -76,7 +76,6 @@ void	handle_children(char *av, char **envp)
 		if (dup2(pipe_end[1], STDOUT_FILENO) < 0)
 			exit_error(ERR_DUP, NULL);
 		exec_child_proc(av, envp);
-		exit(EXIT_FAILURE);
 	}
 	else
 	{
@@ -87,10 +86,18 @@ void	handle_children(char *av, char **envp)
 	}
 }
 
-void	ft_pipex(int infile, int outfile, int ac, char **av, char **envp)
+void	ft_pipex(int ac, char **av, char **envp)
 {
 	int	i;
+	int	infile;
+	int	outfile;
 
+	infile = open(av[1], O_RDONLY);
+	if (infile <= 0)
+		exit_error(ERR_INFILE, av[1]);
+	outfile = open(av[ac - 1], O_CREAT | O_RDWR | O_TRUNC, 0644);
+	if (outfile <= 0)
+		exit_error(ERR_OUTFILE, av[ac - 1]);
 	if (dup2(infile, STDIN_FILENO) < 0)
 		exit_error(ERR_DUP, NULL);
 	if (dup2(outfile, STDOUT_FILENO) < 0)
@@ -100,5 +107,4 @@ void	ft_pipex(int infile, int outfile, int ac, char **av, char **envp)
 	while (++i < ac - 2)
 		handle_children(av[i], envp);
 	exec_child_proc(av[ac - 2], envp);
-	exit(EXIT_FAILURE);
 }

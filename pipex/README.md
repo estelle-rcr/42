@@ -21,7 +21,7 @@ Handle multiple pipes together such as: `< file1 cmd1 | cmd2 | cmd3 ... | cmdn >
   `make bonus`
 
   Use the program:
-  `./pipex infile "cmd1" "cmd2" "cmd3" [...] "cmd-n" outfile`
+  `./pipex_bonus infile "cmd1" "cmd2" "cmd3" [...] "cmd-n" outfile`
 
 ### Resources on the topic
 Understanding the pipe functionning in C and parent/child fork principle:

@@ -23,6 +23,8 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <string.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 
 typedef int	t_pid;
 
@@ -38,6 +40,7 @@ int		exit_error(int error_code, char *var);
 void	exit_other_errors(int error_code);
 char	*ft_join_path(char const *s1, char c, char const *s2);
 char	**ft_free_dbl_tabs(char **tab1, char**tab2);
-void	ft_free_all_exit(char **cmd_args, char **cmd_paths, char *cmd, int code_error);
+void	ft_free_all_exit(char **cmd_args, char **cmd_paths, char *cmd,
+			int code_error);
 
 #endif

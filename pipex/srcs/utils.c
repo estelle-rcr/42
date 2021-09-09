@@ -6,7 +6,7 @@
 /*   By: erecuero <erecuero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/22 13:56:26 by erecuero          #+#    #+#             */
-/*   Updated: 2021/08/23 22:58:53 by erecuero         ###   ########.fr       */
+/*   Updated: 2021/09/09 11:37:19 by erecuero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@ int	exit_error(int error_code, char *var)
 {
 	if (error_code == ERR_ARGS)
 	{
-		write(STDERR_FILENO, "parse error near ", 19);
+		write(STDERR_FILENO, "parse error near ", 17);
 		write(STDERR_FILENO, var, ft_strlen(var));
+		write(STDERR_FILENO, "\n", 1);
 	}
 	else if (error_code == ERR_INFILE)
 	{
@@ -33,6 +34,7 @@ int	exit_error(int error_code, char *var)
 	{
 		write(STDERR_FILENO, "command not found: ", 19);
 		write(STDERR_FILENO, var, ft_strlen(var));
+		write(STDERR_FILENO, "\n", 1);
 	}
 	else
 		exit_other_errors(error_code);
@@ -75,7 +77,6 @@ char	*ft_join_path(char const *s1, char c, char const *s2)
 	return (tab);
 }
 
-
 char	**ft_free_dbl_tabs(char **tab1, char**tab2)
 {
 	int	i;
@@ -91,7 +92,8 @@ char	**ft_free_dbl_tabs(char **tab1, char**tab2)
 	return (0);
 }
 
-void	ft_free_all_exit(char **cmd_args, char **cmd_paths, char *cmd, int code_error)
+void	ft_free_all_exit(char **cmd_args, char **cmd_paths, char *cmd,
+							int code_error)
 {
 	ft_free_dbl_tabs(cmd_args, cmd_paths);
 	free(cmd);

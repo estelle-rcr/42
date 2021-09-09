@@ -22,7 +22,7 @@ int	main(int ac, char **av, char **envp)
 	infile = open(av[1], O_RDONLY);
 	if (infile <= 0)
 		exit_error(ERR_INFILE, av[1]);
-	outfile = open(av[4], O_CREAT | O_RDWR | O_TRUNC, 0777);
+	outfile = open(av[4], O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (outfile <= 0)
 		exit_error(ERR_OUTFILE, av[4]);
 	ft_pipex(infile, outfile, av, envp);
