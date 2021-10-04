@@ -29,6 +29,7 @@ We use a set of mandatory operations and two stacks to sort a list of numbers gi
 This project is an introduction to the UNIX world and to the next project Minishell. We have to rebuild the pipe function of the terminal so that our program should be equal to the terminal use of : `< infile cmd1 | cmd2 > outfile`. In the bonus part, I handle multiple commands and pipes.
 
 ### 8th project: philosophers
-On going.
+This project is about solving the classic Dining Philosophers problem. We use threads (light parallel processes within a program) and mutex (mutual exclusion of a shared resource) to solve it.
+
 
 That's all folks!
