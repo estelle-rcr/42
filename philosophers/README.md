@@ -1,4 +1,4 @@
-# Pipex
+# Philosophers
 
 ### The project
 This project is about solving the classic Dining Philosophers problem. We can use threads (light parallel processes within a program) and mutex (mutual exclusion of a shared resource) to solve it. We create a unique program handling a certain number of philosophers who each sleep, eat, and sleep in parallel but cannot eat all at the same time as they share a limited number of forks. We have to avoid letting them starve to death.
