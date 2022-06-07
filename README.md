@@ -27,18 +27,18 @@ We use a set of mandatory operations and two stacks to sort a list of numbers gi
 This project is an introduction to the UNIX world and to the next project Minishell. We have to rebuild the pipe function of the terminal so that our program should be equal to the terminal use of : `< infile cmd1 | cmd2 > outfile`. In the bonus part, I handle multiple commands and pipes.
 
 ### 8th project: philosophers
-This project is about solving the classic Dining Philosophers problem which is about resources sharing. We use threads (light parallel processes within a program) and mutex (mutual exclusion of a shared resource) to solve it.
+This project is about solving the classic Dining Philosophers problem on resources sharing. We use threads (light parallel processes within a program) and mutex (mutual exclusion of a shared resource) to solve it.
 
 ### 9th project: minishell
-In team of 2, we created a 'mini' version of Bash (norm posix) which is a shell (software that interprets and executes the various commands that we type in the terminal). We implemented a lexer, a parser, and an interpreter to handle complex commands (multi pipes, multi redirections, appends and heredocs, etc.)
+In team of 2, we created a 'mini' version of a shell, the software that interprets and executes the various commands that we type in the terminal. We implemented a lexer, a parser, and an interpreter to handle complex inline commands (multi pipes, multi redirections, appends and heredocs, etc.)
 
 ### 10th project: CPP pool
 The CPP pool makes us discover the C plus plus language and all its specificities in 9 modules: allocation, operator overloads, polymorphism, inheritances, abstract class & interfaces, exceptions, casts, templates, containers.
 
 ### 11th project: Inception
-This project aims at creating a structure of Docker containers for each services of a website (Wordpress, Nginx, MariaDB).
+This project aims at creating a network of Docker containers using Docker compose. Each services of a website (Wordpress, Nginx, MariaDB) has its own Docker container and a network handled by Docker compose manage the container's relationships and their volumes.
 
-### 12th project: Ft_containers
-Soon
+### 12th project: ft_containers
+This projects aims at recoding the containers Vector, Map and Stack from the STL in C++.
 
 That's all folks!
