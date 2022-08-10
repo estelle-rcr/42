@@ -38,7 +38,10 @@ The CPP pool makes us discover the C plus plus language and all its specificitie
 ### 11th project: Inception
 This project aims at creating a network of Docker containers using Docker compose. Each services of a website (Wordpress, Nginx, MariaDB) has its own Docker container and a network handled by Docker compose manage the container's relationships and their volumes.
 
-### 12th project: ft_containers
+### 12th project: ft_IRC
+This project aims at building an Internet Relay Chat server using sockets in cpp. The server handles mutliple connections from clients (using either netcat - a TCP requests handler - or IRSSI - an IRC client).
+
+### 13th project: ft_containers
 This projects aims at recoding the containers Vector, Map and Stack from the STL in C++.
 
 That's all folks!
