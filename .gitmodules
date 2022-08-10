@@ -1,3 +1,6 @@
 [submodule "cpp"]
 	path = cpp
 	url = git@github.com:estelle-rcr/CPP.git
+[submodule "ft_irc"]
+	path = ft_irc
+	url = git@github.com:estelle-rcr/ft_irc.git
