@@ -19,11 +19,8 @@ This project aims at rebuilding 3 containers from the STD library in CPP: vector
 
 ### How to use it
 The project runs only on a Linux distribution.
-  Compile the mandatory project:
+  Compile the project using Makefile:
   `make`
-
-  Compile the bonus version:
-  `make bonus`
 
   Start the program:
   `./ft_containers`
