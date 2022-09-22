@@ -44,4 +44,7 @@ This project aims at building an Internet Relay Chat server using sockets in cpp
 ### 13th project: ft_containers
 This projects aims at recoding the containers Vector, Map and Stack from the STL in C++.
 
+### 14th project: ft_transcendence [ON GOING]
+Building a single web-page application serving a Pong game, a chat, user authentication and rankings using NestJS for back end and Typescript frameworks for front end.
+
 That's all folks!
