@@ -4,3 +4,6 @@
 [submodule "ft_irc"]
 	path = ft_irc
 	url = git@github.com:estelle-rcr/ft_irc.git
+[submodule "ft_transcendAnce"]
+	path = ft_transcendAnce
+	url = git@github.com:cnstll/ft_transcendAnce.git
